@@ -15,4 +15,9 @@ If you face permission issues during yarn installation
 run :
 sudo chown -R $USER:$GROUP ~/.config
 
-5. You should be able to send messages using users.
+8. You should be able to send messages using users.
+
+
+To run tests :
+
+9. Run cucumber features
