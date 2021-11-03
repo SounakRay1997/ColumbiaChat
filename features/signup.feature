@@ -21,5 +21,4 @@ Feature: signup on Columbia Chat
   Scenario: when I signup my data should be added to the database
     When I am on the ColumbiaChat signin page
     And I click on "Signup"
-    Then I fill up my details on the signup page
-    Then my details should be saved in the users database and there would be "5" users in the database
+    Then I fill in username as "Bruce_Wayne", email as "batman@columbia.edu" and password as "wayne_enterprise" on the signup page and database is updated
