@@ -35,6 +35,7 @@ group :development, :test do
   gem 'sqlite3', '~> 1.4'
   gem 'rspec-rails'
   gem 'shoulda-matchers', '~> 5.0'
+  gem 'rails-controller-testing'
 end
 
 group :production do 
