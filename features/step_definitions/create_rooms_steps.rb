@@ -6,7 +6,8 @@ Given(/^the following rooms exist:$/) do |table|
 end
 
 And(/^I should have options to send messages to "([^"]*)", "([^"]*)", "([^"]*)", "([^"]*)"$/) do |arg1, arg2, arg3, arg4|
-  assert page.has_content? (arg1) and page.has_content? (arg2) and page.has_content? (arg3) and page.has_content? (arg4)
+  puts (page.body)
+  expect(page.body).to have_content(arg1) and expect(page.body).to have_content(arg2) and expect(page.body).to have_content(arg3) and expect(page.body).to have_content(arg4)
 end
 
 Then(/^"([^"]*)" should see a new room named "([^"]*)"$/) do |arg1, arg2|
@@ -15,7 +16,7 @@ Then(/^"([^"]*)" should see a new room named "([^"]*)"$/) do |arg1, arg2|
     And I fill in "username" with "#{arg1}"
     And I press "Sign in"
   )
-  assert page.has_content? (arg2)
+  expect(page.body).to have_content(arg2)
 end
 
 And(/^"([^"]*)" should not see a new room named "([^"]*)"$/) do |arg1, arg2|
@@ -24,5 +25,5 @@ And(/^"([^"]*)" should not see a new room named "([^"]*)"$/) do |arg1, arg2|
     And I fill in "username" with "#{arg1}"
     And I press "Sign in"
   )
-  assert page.has_no_content? (arg2)
+  expect(page.body).to have_no_content(arg2)
 end

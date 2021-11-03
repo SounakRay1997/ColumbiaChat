@@ -8,7 +8,7 @@ Feature: creating a new room
 
     Given the following rooms exist:
       | name                      | is_private | created_at           |  updated_at          |
-      | Food Lovers               | false      | 2021-10-25 09:53:42  | 2021-10-29 10:34:32  |
+      | Food lovers               | false      | 2021-10-25 09:53:42  | 2021-10-29 10:34:32  |
       | music                     | false      | 2021-10-26 10:34:32  | 2021-10-30 14:45:54  |
       | ice skating               | false      | 2021-10-26 13:32:37  | 2021-10-30 13:32:37  |
       | halloween party           | false      | 2021-10-27 14:45:54  | 2021-10-31 10:34:32  |

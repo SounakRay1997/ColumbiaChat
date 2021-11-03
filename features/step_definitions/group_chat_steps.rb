@@ -11,7 +11,7 @@ Then(/^I should see the message "([^"]*)" on the group chat titled "([^"]*)"$/) 
     And I press "Sign in"
   )
   click_link(arg2)
-  assert page.has_content? (arg1)
+  expect(page.body).to have_content(arg1)
 end
 
 And(/^I should not see the message "([^"]*)" on the group chat titled "([^"]*)"$/) do |arg1, arg2|
@@ -21,5 +21,5 @@ And(/^I should not see the message "([^"]*)" on the group chat titled "([^"]*)"$
     And I press "Sign in"
   )
   click_link(arg2)
-  assert page.has_no_content? (arg1)
+  expect(page.body).to have_no_content(arg1)
 end

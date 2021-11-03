@@ -47,7 +47,7 @@ Then(/^"([^"]*)" should see the message "([^"]*)" on the chat with "([^"]*)"$/) 
     And I press "Sign in"
   )
   click_link(arg3)
-  assert page.has_content? (arg2)
+  expect(page.body).to have_content(arg2)
 end
 
 And(/^"([^"]*)" should not see the message "([^"]*)" on the chat with "([^"]*)"$/) do |arg1, arg2, arg3|
@@ -57,5 +57,5 @@ And(/^"([^"]*)" should not see the message "([^"]*)" on the chat with "([^"]*)"$
     And I press "Sign in"
   )
   click_link(arg3)
-  assert page.has_no_content? (arg2)
+  expect(page.body).to have_no_content(arg2)
 end
