@@ -15,7 +15,3 @@ run :
 sudo chown -R $USER:$GROUP ~/.config
 
 5. You should be able to send messages using users.
-6. To create users:
-run:
-rails console
-User.create(username:'username', email:'email', password:'password')
