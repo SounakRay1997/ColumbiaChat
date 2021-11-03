@@ -1,10 +1,11 @@
 # README
 
 1. Clone Repository
-2. run rails db:migrate
-3. run rails db:seed
-4. run rails s
-5. If you get issues related to webpack not finding application
+2. bundle install --without production
+4. run rails db:migrate
+5. run rails db:seed
+6. run rails s
+7. If you get issues related to webpack not finding application
 run :
 ```
 npm install --global yarn
