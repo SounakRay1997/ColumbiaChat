@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe SessionsController, type: :controller do
-    let(:user_params) { { username: 'potato' } }
+    let(:user_params) { { username: 'Umang_Raj' } }
     let(:params) { {session: user_params} }
     subject { post signin_path, params: params}
     render_views
@@ -14,6 +14,9 @@ describe SessionsController, type: :controller do
     #     # expect { subject }.to change { User.count }
     #     # User.last.tap { |user| expect(user.username).to eq user_params[:username] }
     #   end
+    before(:each) do 
+        @user = User.create({username: "Umang_Raj", email: "umang@columbia.edu", password: "test"})
+    end
 
     it 'logs in existing user' do
         post(:create, params: params)

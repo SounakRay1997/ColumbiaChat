@@ -20,4 +20,7 @@ sudo chown -R $USER:$GROUP ~/.config
 
 To run tests :
 
-9. Run cucumber features
+9. Run :
+```
+cucumber features
+```
