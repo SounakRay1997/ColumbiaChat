@@ -59,6 +59,7 @@ group :test do
   gem 'webdrivers'
   gem 'cucumber-rails', require: false
   gem 'cucumber-rails-training-wheels'
+  gem 'simplecov', :require => false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
