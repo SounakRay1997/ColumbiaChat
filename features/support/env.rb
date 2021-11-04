@@ -41,6 +41,12 @@ rescue NameError
   raise "You need to add database_cleaner to your Gemfile (in the :test group) if you wish to use it."
 end
 
+SimpleCov.start do
+  add_filter '/app/channels/'
+  add_filter '/app/mailers/'
+  add_filter '/app/jobs/'
+end
+
 # You may also want to configure DatabaseCleaner to use different strategies for certain features and scenarios.
 # See the DatabaseCleaner documentation for details. Example:
 #
