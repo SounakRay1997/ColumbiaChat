@@ -23,4 +23,5 @@ To run tests :
 9. Run :
 ```
 cucumber features
+bundle exec rspec
 ```
