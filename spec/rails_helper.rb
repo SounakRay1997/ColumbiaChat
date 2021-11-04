@@ -33,7 +33,11 @@ end
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
-
+  SimpleCov.start do
+    add_filter '/app/channels/'
+    add_filter '/app/mailers/'
+    add_filter '/app/jobs/'
+  end
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
