@@ -1,7 +1,6 @@
 # README
 
-## Columbia Chat
-## Group Number : 4
+## Columbia Chat (Group Number : 4)
 
 
 Team member names and UNIs :
