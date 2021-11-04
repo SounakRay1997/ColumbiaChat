@@ -18,11 +18,6 @@ class UsersController < ApplicationController
       @user = User.new(user_params)
       if @user.save
         redirect_to ""
-        # Handle a successful save.
-        puts("all done")
-      else
-       
-        puts("error")
       end
     end
 
