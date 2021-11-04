@@ -1,7 +1,9 @@
 # README
 
 (1) Run
+```
     git clone git@github.com:SounakRay1997/ESaaS-Project-iter1-submission.git
+```
 (2) cd ESaaS-Project-iter1-submission
 
 (3) Run
