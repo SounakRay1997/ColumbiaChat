@@ -6,5 +6,3 @@ test:
 
 production:
   adapter: redis
-  url: <%= ENV.fetch("REDISTOGO_URL") { "redis://localhost:6379/1" } %>
-  channel_prefix: Columbia_Chat_production
