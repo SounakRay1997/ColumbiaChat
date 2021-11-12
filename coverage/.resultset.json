@@ -1,227 +1,7 @@
 {
   "Cucumber Features": {
     "coverage": {
-      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/models/room.rb": {
-        "lines": [
-          1,
-          1,
-          55,
-          1,
-          1,
-          27,
-          null,
-          1,
-          26,
-          null,
-          null,
-          1,
-          9,
-          9,
-          18,
-          null,
-          9,
-          null,
-          null
-        ]
-      },
-      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/models/application_record.rb": {
-        "lines": [
-          1,
-          1,
-          null
-        ]
-      },
-      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/controllers/application_controller.rb": {
-        "lines": [
-          1,
-          1,
-          null,
-          1,
-          237,
-          210,
-          null,
-          null,
-          null,
-          1,
-          31,
-          31,
-          31,
-          null,
-          null,
-          1,
-          0,
-          null,
-          null,
-          1,
-          0,
-          0,
-          null,
-          null
-        ]
-      },
-      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/helpers/application_helper.rb": {
-        "lines": [
-          1,
-          null
-        ]
-      },
-      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/helpers/rooms_helper.rb": {
-        "lines": [
-          1,
-          null
-        ]
-      },
-      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/models/user.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          55,
-          1,
-          42,
-          null,
-          null
-        ]
-      },
-      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/controllers/sessions_controller.rb": {
-        "lines": [
-          1,
-          null,
-          1,
-          31,
-          31,
-          31,
-          null,
-          0,
-          null,
-          null,
-          null,
-          1,
-          0,
-          0,
-          null,
-          null,
-          null,
-          null,
-          1,
-          2,
-          2,
-          null,
-          null,
-          null
-        ]
-      },
-      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/controllers/rooms_controller.rb": {
-        "lines": [
-          1,
-          1,
-          32,
-          32,
-          32,
-          32,
-          32,
-          null,
-          null,
-          1,
-          1,
-          null,
-          null,
-          1,
-          10,
-          10,
-          10,
-          10,
-          10,
-          10,
-          10,
-          null,
-          10,
-          null,
-          null
-        ]
-      },
-      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/models/message.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          6,
-          1,
-          null,
-          1,
-          5,
-          3,
-          3,
-          null,
-          null,
-          null
-        ]
-      },
-      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/controllers/messages_controller.rb": {
-        "lines": [
-          1,
-          1,
-          5,
-          5,
-          null,
-          null,
-          1,
-          null,
-          1,
-          5,
-          null,
-          null
-        ]
-      },
-      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/controllers/users_controller.rb": {
-        "lines": [
-          1,
-          1,
-          12,
-          12,
-          12,
-          12,
-          12,
-          12,
-          12,
-          12,
-          12,
-          null,
-          12,
-          null,
-          null,
-          1,
-          null,
-          1,
-          1,
-          1,
-          null,
-          null,
-          null,
-          1,
-          1,
-          null,
-          null,
-          1,
-          1,
-          12,
-          12,
-          null,
-          null,
-          null,
-          null,
-          null
-        ]
-      },
-      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/models/participant.rb": {
-        "lines": [
-          1,
-          1,
-          1,
-          null
-        ]
-      },
-      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/mailers/application_mailer.rb": {
+      "/Users/sounakray/RubymineProjects/ESaaS-Project-iter2/app/mailers/application_mailer.rb": {
         "lines": [
           0,
           0,
@@ -231,7 +11,84 @@
         "branches": {
         }
       },
-      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/jobs/application_job.rb": {
+      "/Users/sounakray/RubymineProjects/ESaaS-Project-iter2/app/models/room.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/sounakray/RubymineProjects/ESaaS-Project-iter2/app/models/participant.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/sounakray/RubymineProjects/ESaaS-Project-iter2/app/models/message.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/sounakray/RubymineProjects/ESaaS-Project-iter2/app/models/application_record.rb": {
+        "lines": [
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/sounakray/RubymineProjects/ESaaS-Project-iter2/app/models/user.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null
+        ],
+        "branches": {
+        }
+      },
+      "/Users/sounakray/RubymineProjects/ESaaS-Project-iter2/app/jobs/application_job.rb": {
         "lines": [
           0,
           null,
@@ -244,7 +101,173 @@
         "branches": {
         }
       },
-      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/channels/application_cable/connection.rb": {
+      "/Users/sounakray/RubymineProjects/ESaaS-Project-iter2/app/controllers/messages_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/sounakray/RubymineProjects/ESaaS-Project-iter2/app/controllers/application_controller.rb": {
+        "lines": [
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/sounakray/RubymineProjects/ESaaS-Project-iter2/app/controllers/rooms_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/sounakray/RubymineProjects/ESaaS-Project-iter2/app/controllers/users_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/sounakray/RubymineProjects/ESaaS-Project-iter2/app/controllers/sessions_controller.rb": {
+        "lines": [
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/sounakray/RubymineProjects/ESaaS-Project-iter2/app/helpers/rooms_helper.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/sounakray/RubymineProjects/ESaaS-Project-iter2/app/helpers/application_helper.rb": {
+        "lines": [
+          0,
+          0
+        ],
+        "branches": {
+        }
+      },
+      "/Users/sounakray/RubymineProjects/ESaaS-Project-iter2/app/channels/application_cable/connection.rb": {
         "lines": [
           0,
           0,
@@ -254,7 +277,7 @@
         "branches": {
         }
       },
-      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/channels/application_cable/channel.rb": {
+      "/Users/sounakray/RubymineProjects/ESaaS-Project-iter2/app/channels/application_cable/channel.rb": {
         "lines": [
           0,
           0,
@@ -265,7 +288,7 @@
         }
       }
     },
-    "timestamp": 1635986743
+    "timestamp": 1636735522
   },
   "RSpec": {
     "coverage": {
