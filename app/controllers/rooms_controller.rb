@@ -8,6 +8,14 @@ class RoomsController < ApplicationController
 
     @courses = Course.all 
     @departments = Course.distinct.pluck(:department_code)
+    @select_departments = Course.where(department_code: params["dept_id"]).pluck(:course_title, :course_subtitle).uniq!
+    @select_departments.each do |n|
+      if n[1].nil?
+        n[1] = ""
+      end 
+    end 
+    puts @select_departments
+
   end
 
   def create
@@ -27,4 +35,5 @@ class RoomsController < ApplicationController
     @departments = Course.distinct.pluck(:department_code)
     render "index"
   end
+  
 end

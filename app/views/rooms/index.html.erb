@@ -11,20 +11,20 @@
     </div>
     <h4> Rooms </h4>
     <%= render partial: "layouts/new_room_form" %>
-    
-    
-    <%
-=begin%>
- <%= select_tag 'dept_name', options_for_select(@courses.map{|course|["#{course.department}", course.department_code]})%> 
-<%
-=end%>
-    <%= select_tag 'dept_name', options_for_select(@departments.map{|course|["#{course}", course]})%>
+
+  <%= form_tag('/rooms', :method => :get) do %>
+    <%= select_tag 'dept_id', options_for_select(@departments.map{|course|["#{course}", course]})%>
+    <%= submit_tag("Search") %>
+  <% end %>
+  
+  <% @select_departments.each do |users| %>
+    <%= users[0] + " : " + users[1] + "\n" %>
+  <% end %>
 
     <div>
       <%= turbo_stream_from "rooms" %>
       <div id="rooms">
         <%= render @rooms %>
-        <p> "potato" </p>
       </div>
     </div>
 
