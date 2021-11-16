@@ -1,7 +1,21 @@
-<%= form_for (:session) do |f| %>
-  <%= f.label :username, 'Enter your username' %>
-  <%= f.text_field :username, autocomplete: 'off' %>
-  <%= f.submit 'Sign in' %>
+<h1>Sign In</h1>
+
+<% if flash[:message] %>
+  <div class="alert alert-danger">
+    <span class="error"><%= flash[:message] %></span>
+  </div>
 <% end %>
 
-<%= link_to "Signup", :controller => 'sessions', :action => 'signup' %>
+<div class="inline">
+  <%= form_for(:session, :html => { :id => 'phx-signup-form' }) do |f| %>
+  <%= f.text_field :username, placeholder: "Username", :required => true %>
+  <br />
+    <br />
+  <%= f.password_field :password, placeholder: "Password", :required => true %>
+  <br />
+    <br />
+  <%= f.submit 'Sign In' %>
+<% end %>
+</div>
+
+<p>Do not have an account yet. <%= link_to "Sign Up", :controller => 'sessions', :action => 'signup' %> and create a new account. </p>

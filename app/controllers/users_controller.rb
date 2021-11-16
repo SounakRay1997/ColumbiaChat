@@ -16,12 +16,26 @@ class UsersController < ApplicationController
     def create
       #byebug
       @user = User.new(user_params)
-      @user.save
-      redirect_to '/signin'
+      if @user.validate
+        @user.save
+        redirect_to '/signin'
+      elsif @user.errors.first[0].eql?(:username) && @user.errors.first[1].eql?("has already been taken")
+        flash[:message]="This username already exists. Please choose a different username."
+        redirect_to '/signup'
+      elsif @user.errors.first[0].eql?(:email) and @user.errors.first[1].eql?("has already been taken")
+        flash[:message]="You already have an account. Please sign in with your existing account."
+        redirect_to '/signup'
+      elsif @user.errors.first[0].eql?(:email) and @user.errors.first[1].eql?("is invalid")
+        flash[:message]="Please use your LionMail Account to Sign Up."
+        redirect_to '/signup'
+      else
+        flash[:message]="Password and Confirm Password must match."
+        redirect_to '/signup'
+      end
     end
 
     def user_params
-      params.require(:user).permit(:email, :password, :username)
+      params.require(:user).permit(:email, :password, :username, :password_confirmation, :name)
     end
   
     private

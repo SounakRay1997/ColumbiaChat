@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_30_111236) do
+ActiveRecord::Schema.define(version: 2021_11_15_214729) do
 
   create_table "messages", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -44,6 +44,9 @@ ActiveRecord::Schema.define(version: 2021_10_30_111236) do
     t.string "password"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "email_confirmed", default: false
+    t.string "confirm_token"
+    t.string "name"
   end
 
   add_foreign_key "messages", "rooms"

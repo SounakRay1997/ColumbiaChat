@@ -2,10 +2,12 @@ class SessionsController < ApplicationController
 
     def create
       user = User.find_by(username: params[:session][:username])
+      password = params[:session][:password]
       if user
-        log_in(user)
+        log_in(user, password)
       else
-        render 'new'
+        flash[:message]="Incorrect Username or Password"
+        redirect_to '/signin'
       end
     end
   
