@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_14_041914) do
+ActiveRecord::Schema.define(version: 2021_11_17_194103) do
 
   create_table "courses", force: :cascade do |t|
     t.string "course_code"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2021_11_14_041914) do
     t.boolean "is_private", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "dept_code", default: "NONE"
   end
 
   create_table "users", force: :cascade do |t|

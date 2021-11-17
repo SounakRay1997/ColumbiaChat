@@ -17,14 +17,19 @@
     <%= submit_tag("Search") %>
   <% end %>
   
-  <% @select_departments.each do |users| %>
+  <%
+=begin%>
+ <% @select_departments.each do |users| %>
     <%= users[0] + " : " + users[1] + "\n" %>
-  <% end %>
+  <% end %> 
+<%
+=end%>
 
     <div>
       <%= turbo_stream_from "rooms" %>
       <div id="rooms">
-        <%= link_to "Edit Book" %> <%= render @rooms %>
+        <%= render @private_rooms %>
+        <%= render @rooms %>
       </div>
     </div>
 

@@ -3,6 +3,9 @@ class RoomsController < ApplicationController
     @current_user = current_user
     redirect_to '/signin' unless @current_user
     @rooms = Room.public_rooms
+    if not params["dept_id"].nil?
+      @rooms = @rooms.dept_rooms(params["dept_id"])
+    end
 
     @users = User.all_except(@current_user)
     @user_names = User.all_except(@current_user).pluck(:username)
@@ -11,21 +14,8 @@ class RoomsController < ApplicationController
 
     @courses = Course.all 
     @departments = Course.distinct.pluck(:department_code)
-    if params["dept_id"].nil?
-      @select_departments = Course.all.pluck(:course_title, :course_subtitle).uniq!
-    else
-      @select_departments = Course.where(department_code: params["dept_id"]).pluck(:course_title, :course_subtitle).uniq!
-    end
-
-  
-    if @select_departments
-      @select_departments.each do |n|
-        if n[1].nil?
-          n[1] = ""
-        end 
-      end 
-    end 
-
+    
+    @private_rooms = Room.joins("INNER JOIN participants ON rooms.id = participants.room_id AND participants.user_id = #{current_user.id}").uniq unless not current_user
   end
 
   def create
@@ -39,39 +29,23 @@ class RoomsController < ApplicationController
         sel_users.each do |s_user|
             user = User.where(username: s_user)
             Participant.create(user_id: user.first.id, room_id: @room.id)
-        end 
+        end
+        Participant.create(user_id: current_user.id, room_id: @room.id) #Add Current User
       end
-      @rooms = Room.all
-      puts "potato98957857"
-      # for i in @rooms do 
-      #   puts i.name
-      # end 
-      puts "potato858585"
-      # puts current_user.username
-      # if sel_users.include? current_user.username 
-      # broadcast_append_to "rooms"
-      # end 
-
+      @private_rooms = Room.joins("INNER JOIN participants ON rooms.id = participants.room_id AND participants.user_id = #{current_user.id}").uniq unless not current_user
+     
     end
 
     @current_user = current_user
     @users = User.all_except(@current_user)
     @user_names = User.all_except(@current_user).pluck(:username)
-
+    @rooms = Room.public_rooms
     @courses = Course.all 
     @departments = Course.distinct.pluck(:department_code)
-    if params["dept_id"].nil?
-      @select_departments = Course.all.pluck(:course_title, :course_subtitle).uniq!
-    else
-      @select_departments = Course.where(department_code: params["dept_id"]).pluck(:course_title, :course_subtitle).uniq!
+    @rooms = Room.public_rooms
+    if not params["dept_id"].nil?
+      @rooms = @rooms.dept_rooms(params["dept_id"])
     end
-    if @select_departments
-      @select_departments.each do |n|
-        if n[1].nil?
-          n[1] = ""
-        end 
-      end 
-    end 
     render "index"
   end
 
@@ -79,25 +53,18 @@ class RoomsController < ApplicationController
     @current_user = current_user
     @single_room = Room.find(params[:id])
     @rooms = Room.public_rooms
+    @private_rooms = Room.joins("INNER JOIN participants ON rooms.id = participants.room_id AND participants.user_id = #{current_user.id}").uniq unless not current_user
     @users = User.all_except(@current_user)
+    @user_names = User.all_except(@current_user).pluck(:username)
     @room = Room.new
     @message = Message.new
     @messages = @single_room.messages
 
     @courses = Course.all 
     @departments = Course.distinct.pluck(:department_code)
-    if params["dept_id"].nil?
-      @select_departments = Course.all.pluck(:course_title, :course_subtitle).uniq!
-    else
-      @select_departments = Course.where(department_code: params["dept_id"]).pluck(:course_title, :course_subtitle).uniq!
+    if not params["dept_id"].nil?
+      @rooms = @rooms.dept_rooms(params["dept_id"])
     end
-    if @select_departments
-      @select_departments.each do |n|
-        if n[1].nil?
-          n[1] = ""
-        end 
-      end 
-    end 
     render "index"
   end
   
