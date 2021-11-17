@@ -6,6 +6,12 @@
   </div>
 <% end %>
 
+<% if flash[:success] %>
+  <div class="alert alert-success">
+    <span class="success"><%= flash[:success] %></span>
+  </div>
+<% end %>
+
 <div class="inline">
   <%= form_for(:session, :html => { :id => 'phx-signup-form' }) do |f| %>
   <%= f.text_field :username, placeholder: "Username", :required => true %>

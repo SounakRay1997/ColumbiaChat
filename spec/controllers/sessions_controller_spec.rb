@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 describe SessionsController, type: :controller do
-    let(:user_params) { { username: 'Umang_Raj' } }
+    let(:user_params) { { username: 'Umang_Raj', password: 'test', email_confirmed: 1 } }
     let(:params) { {session: user_params} }
     subject { post signin_path, params: params}
     render_views
 
     before(:each) do 
-        @user = User.create({username: "Umang_Raj", email: "umang@columbia.edu", password: "test"})
+        @user = User.create({username: "Umang_Raj", email: "umang@columbia.edu", password: "test", email_confirmed: 1})
     end
 
     it 'logs in existing user' do
@@ -17,8 +17,8 @@ describe SessionsController, type: :controller do
       end
 
     it 'logs in non-existing user' do 
-        post(:create, params: {session: {username: "banana"}})
-        expect(response).to render_template('new')
+        post(:create, params: {session: {username: "banana", password: "lol", email_confirmed: 1}})
+        expect(response).to redirect_to('/signin')
     end
     
     it 'log out existing user' do 
