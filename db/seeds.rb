@@ -13,5 +13,5 @@ user_list = [{username: 'Sounak_Ray', email: 'sr3846@columbia.edu', password: 'l
 ]
 
 user_list.each do |user|
-  User.create!(user)
+  User.create!(user) 
 end
