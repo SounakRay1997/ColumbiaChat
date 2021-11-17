@@ -36,7 +36,7 @@ class RoomsController < ApplicationController
       room_long = 0
     end
     
-    @room = Room.create(name: params["room"]["name"], is_private: false, lat: room_lat, long: room_long, distance: 500)
+    @room = Room.create(distance: params["room"]["distance"], name: params["room"]["name"], is_private: false, lat: room_lat, long: room_long)
   end
 
   def show
