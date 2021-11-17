@@ -1,3 +1,18 @@
+<%- unless @lat_lng %>
+<script>
+function getGeoLocation() {
+  navigator.geolocation.getCurrentPosition(setGeoCookie);
+}
+
+function setGeoCookie(position) {
+  var cookie_val = position.coords.latitude + "|" + position.coords.longitude;
+  document.cookie = "lat_lng=" + escape(cookie_val);
+}
+  getGeoLocation();
+
+</script>
+<%- end %>
+
 <%= form_for (:session) do |f| %>
   <%= f.label :username, 'Enter your username' %>
   <%= f.text_field :username, autocomplete: 'off' %>
