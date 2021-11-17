@@ -2,8 +2,8 @@ require 'json'
 
 class Course < ApplicationRecord
     scope :all_courses, -> {}
-    contents = open("/Users/umangraj/Desktop/ESaaS-Project-iter1-submission/2022-Spring.json","r").read()
-    # contents = open("/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/2022-Spring.json", "r").read()
+    # contents = open("/Users/umangraj/Desktop/ESaaS-Project-iter1-submission/2022-Spring.json","r").read()
+    contents = open("/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/2022-Spring.json", "r").read()
     courses = contents.split("\n") 
     courses.each do |course|
         course_hash = JSON.parse(course)

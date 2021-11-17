@@ -9,7 +9,19 @@ class UsersController < ApplicationController
       @room_name = get_name(@user, @current_user)
       @single_room = Room.where(name: @room_name).first || Room.create_private_room([@user, @current_user], @room_name)
       @messages = @single_room.messages
-  
+      @departments = Course.distinct.pluck(:department_code)
+      if params["dept_id"].nil?
+        @select_departments = Course.all.pluck(:course_title, :course_subtitle).uniq!
+      else
+        @select_departments = Course.where(department_code: params["dept_id"]).pluck(:course_title, :course_subtitle).uniq!
+      end
+      if @select_departments
+        @select_departments.each do |n|
+          if n[1].nil?
+            n[1] = ""
+          end 
+        end 
+      end 
       render "rooms/index"
     end
 
