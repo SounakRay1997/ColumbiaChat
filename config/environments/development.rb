@@ -17,7 +17,7 @@ Rails.application.configure do
     :address  => "smtp.gmail.com",
     :port  => 587,
     :user_name  => "columbiachat@gmail.com",
-    :password => "****************",
+    :password => "ColumbiaChat2021",
     :authentication  => :login
   }
   # Do not eager load code on boot.
