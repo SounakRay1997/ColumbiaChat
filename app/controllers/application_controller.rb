@@ -14,11 +14,9 @@ class ApplicationController < ActionController::Base
         session[:user_id] = user.id
         @current_user = user
         redirect_to root_path
-        return
       else
         flash[:message]="Incorrect Password"
-        #redirect_to '/signin'
-        return 
+        redirect_to '/signin'
       end
     end
     

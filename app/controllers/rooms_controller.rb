@@ -40,7 +40,7 @@ class RoomsController < ApplicationController
   def isInRadius(lat1, lon1, user_lat, user_long, roomDist)
     dis_miles = Geocoder::Calculations.distance_between([lat1,lon1], [user_lat,user_long])
     dis_feet = dis_miles * 5280
-    return dis_miles <= dis_feet
+    return roomDist >= dis_feet
   end
 
   def show
