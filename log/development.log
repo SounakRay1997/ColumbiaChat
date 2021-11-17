@@ -7409,3 +7409,388 @@ Processing by SessionsController#signup as HTML
 Completed 200 OK in 32ms (Views: 11.6ms | ActiveRecord: 0.5ms | Allocations: 10642)
 
 
+Started GET "/signin" for ::1 at 2021-11-16 22:13:18 -0500
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 1.8ms | Allocations: 1782)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 17ms (Views: 14.8ms | ActiveRecord: 0.0ms | Allocations: 15160)
+
+
+Started POST "/signin" for ::1 at 2021-11-16 22:13:31 -0500
+Processing by SessionsController#create as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"vuzFvBuKQEE5rI3vtvHk0EwYTpAvrh5gkush0EjjKVVyI1uws/5t3yQtk6FHRTfgoLute3SLkGCdmMUPPs/ohA==", "session"=>{"username"=>"sounak_ray", "password"=>"[FILTERED]"}, "commit"=>"Sign In"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "sounak_ray"], ["LIMIT", 1]]
+  ↳ app/controllers/sessions_controller.rb:4:in `create'
+Redirected to http://localhost:3000/
+Completed 302 Found in 29ms (ActiveRecord: 1.6ms | Allocations: 9578)
+
+
+Started GET "/" for ::1 at 2021-11-16 22:13:31 -0500
+Processing by RoomsController#index as TURBO_STREAM
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 26], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:6:in `current_user'
+  Rendering rooms/index.html.erb within layouts/application
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" != ?[0m  [["id", 26]]
+  ↳ app/views/rooms/index.html.erb:9
+  Rendered collection of users/_user.html.erb [9 times] (Duration: 0.9ms | Allocations: 498)
+  Rendered layouts/_new_room_form.html.erb (Duration: 6.7ms | Allocations: 2360)
+  [1m[36mRoom Load (0.1ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" WHERE "rooms"."is_private" = ?[0m  [["is_private", 0]]
+  ↳ app/views/rooms/index.html.erb:18
+  Rendered collection of rooms/_room.html.erb [1 times] (Duration: 0.3ms | Allocations: 147)
+  Rendered rooms/index.html.erb within layouts/application (Duration: 14.2ms | Allocations: 6115)
+[Webpacker] Everything's up-to-date. Nothing to do
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 26], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:6:in `current_user'
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 26], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:6:in `current_user'
+Completed 200 OK in 33ms (Views: 22.9ms | ActiveRecord: 0.8ms | Allocations: 17444)
+
+
+Started GET "/cable" for ::1 at 2021-11-16 22:13:31 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-16 22:13:31 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from users
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from rooms
+Started DELETE "/signout" for ::1 at 2021-11-16 22:13:34 -0500
+Processing by SessionsController#destroy as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"b8OJRz2dqV3ROtoaBdnwL/Gjx9zPxe8f4j8P6D+werSjDBdLlemEw8y7xFT0bSMfHQAkN5TgYR/tTOs3SZy7ZQ=="}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 26], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:6:in `current_user'
+Redirected to http://localhost:3000/
+Completed 302 Found in 3ms (ActiveRecord: 0.3ms | Allocations: 936)
+
+
+Started GET "/" for ::1 at 2021-11-16 22:13:34 -0500
+Processing by RoomsController#index as TURBO_STREAM
+Redirected to http://localhost:3000/signin
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms | Allocations: 481)
+
+
+Started GET "/signin" for ::1 at 2021-11-16 22:13:34 -0500
+Processing by SessionsController#new as TURBO_STREAM
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 1.2ms | Allocations: 414)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 10ms (Views: 9.2ms | ActiveRecord: 0.0ms | Allocations: 4547)
+
+
+Unsubscribing from channel: {"channel":"Turbo::StreamsChannel","signed_stream_name":"InVzZXJzIg==--6e96098dcc94959cd703679af5ec0153abfce7e5de26cbd138d00f56a572890d"}
+Unsubscribing from channel: {"channel":"Turbo::StreamsChannel","signed_stream_name":"InJvb21zIg==--b4a24ac0c21f158dd3591bafaa0dd971a60990d0313a072defa95c3352565830"}
+Turbo::StreamsChannel stopped streaming from users
+Turbo::StreamsChannel stopped streaming from rooms
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-16 22:38:59 -0500
+Started GET "/cable" for ::1 at 2021-11-16 22:40:28 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-16 22:40:28 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Started GET "/signup" for ::1 at 2021-11-16 22:49:16 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by SessionsController#signup as HTML
+  Rendering sessions/signup.html.erb within layouts/application
+  Rendered sessions/signup.html.erb within layouts/application (Duration: 2.5ms | Allocations: 826)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 25ms (Views: 23.3ms | ActiveRecord: 0.0ms | Allocations: 4974)
+
+
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from users
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from rooms
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 01:50:02 -0500
+Turbo::StreamsChannel stopped streaming from users
+Turbo::StreamsChannel stopped streaming from rooms
+Started GET "/cable" for ::1 at 2021-11-17 01:50:50 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 01:50:50 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from users
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from rooms
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 01:51:12 -0500
+Turbo::StreamsChannel stopped streaming from users
+Turbo::StreamsChannel stopped streaming from rooms
+Started GET "/cable" for ::1 at 2021-11-17 01:55:24 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 01:55:24 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from users
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from rooms
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 02:11:26 -0500
+Turbo::StreamsChannel stopped streaming from users
+Turbo::StreamsChannel stopped streaming from rooms
+Started GET "/cable" for ::1 at 2021-11-17 02:13:40 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 02:13:40 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from users
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from rooms
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 02:49:51 -0500
+Turbo::StreamsChannel stopped streaming from users
+Turbo::StreamsChannel stopped streaming from rooms
+Started GET "/cable" for ::1 at 2021-11-17 03:01:13 -0500
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 03:01:13 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 03:01:13 -0500
+Started GET "/cable" for ::1 at 2021-11-17 06:33:03 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 06:33:03 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 06:33:03 -0500
+Started GET "/cable" for ::1 at 2021-11-17 09:11:12 -0500
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 09:11:12 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 09:11:12 -0500
+Started GET "/cable" for ::1 at 2021-11-17 09:13:40 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 09:13:40 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 09:13:40 -0500
+Started GET "/cable" for ::1 at 2021-11-17 09:16:02 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 09:16:02 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 09:16:02 -0500
+Started GET "/cable" for ::1 at 2021-11-17 09:17:01 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 09:17:01 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 09:17:01 -0500
+Started GET "/cable" for ::1 at 2021-11-17 09:21:18 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 09:21:18 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 09:21:18 -0500
+Started GET "/cable" for ::1 at 2021-11-17 09:23:14 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 09:23:14 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 09:23:14 -0500
+Started GET "/cable" for ::1 at 2021-11-17 09:27:14 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 09:27:14 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 09:27:14 -0500
+Started GET "/cable" for ::1 at 2021-11-17 09:30:19 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 09:30:19 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 09:30:19 -0500
+Started GET "/cable" for ::1 at 2021-11-17 09:45:15 -0500
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 09:45:15 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 09:45:15 -0500
+Started GET "/cable" for ::1 at 2021-11-17 09:46:14 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 09:46:14 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 09:46:14 -0500
+Started GET "/cable" for ::1 at 2021-11-17 09:47:15 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 09:47:15 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 09:47:15 -0500
+Started GET "/cable" for ::1 at 2021-11-17 09:51:07 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 09:51:07 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 09:51:07 -0500
+Started GET "/cable" for ::1 at 2021-11-17 09:54:06 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 09:54:06 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 09:54:06 -0500
+Started GET "/cable" for ::1 at 2021-11-17 09:57:15 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 09:57:15 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 09:57:15 -0500
+Started GET "/cable" for ::1 at 2021-11-17 10:08:13 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 10:08:13 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 10:08:13 -0500
+Started GET "/cable" for ::1 at 2021-11-17 10:09:17 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 10:09:17 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 10:09:17 -0500
+Started GET "/cable" for ::1 at 2021-11-17 10:14:17 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 10:14:17 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 10:14:17 -0500
+Started GET "/cable" for ::1 at 2021-11-17 10:20:11 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 10:20:11 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 10:20:11 -0500
+Started GET "/cable" for ::1 at 2021-11-17 10:22:15 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 10:22:15 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 10:22:15 -0500
+Started GET "/cable" for ::1 at 2021-11-17 10:23:15 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 10:23:15 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 10:23:15 -0500
+Started GET "/cable" for ::1 at 2021-11-17 10:25:16 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 10:25:16 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 10:25:16 -0500
+Started GET "/cable" for ::1 at 2021-11-17 10:32:05 -0500
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 10:32:05 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 10:32:05 -0500
+Started GET "/cable" for ::1 at 2021-11-17 10:33:15 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 10:33:15 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 10:33:15 -0500
+Started GET "/cable" for ::1 at 2021-11-17 10:34:17 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 10:34:17 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 10:34:17 -0500
+Started GET "/cable" for ::1 at 2021-11-17 10:42:15 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 10:42:15 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 10:42:15 -0500
+Started GET "/cable" for ::1 at 2021-11-17 10:44:16 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 10:44:16 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 10:44:16 -0500
+Started GET "/cable" for ::1 at 2021-11-17 10:50:14 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 10:50:14 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 10:50:14 -0500
+Started GET "/cable" for ::1 at 2021-11-17 10:55:07 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 10:55:07 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 10:55:07 -0500
+Started GET "/cable" for ::1 at 2021-11-17 11:12:12 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 11:12:12 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 11:12:12 -0500
+Started GET "/cable" for ::1 at 2021-11-17 11:13:15 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 11:13:15 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 11:13:15 -0500
+Started GET "/cable" for ::1 at 2021-11-17 11:23:15 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 11:23:15 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 11:23:15 -0500
+Started GET "/cable" for ::1 at 2021-11-17 11:35:24 -0500
+  [1m[35m (2.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 11:35:24 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 11:35:24 -0500
+Started GET "/cable" for ::1 at 2021-11-17 11:48:18 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 11:48:18 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 11:48:18 -0500
+Started GET "/cable" for ::1 at 2021-11-17 11:49:09 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 11:49:09 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 11:49:09 -0500
+Started GET "/cable" for ::1 at 2021-11-17 11:59:18 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 11:59:18 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 11:59:18 -0500
+Started GET "/cable" for ::1 at 2021-11-17 12:04:22 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 12:04:22 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 12:04:22 -0500
+Started GET "/cable" for ::1 at 2021-11-17 12:13:11 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 12:13:11 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 12:13:11 -0500
+Started GET "/cable" for ::1 at 2021-11-17 12:14:06 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 12:14:06 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 12:14:06 -0500
+Started GET "/cable" for ::1 at 2021-11-17 12:20:53 -0500
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 12:20:53 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 12:20:53 -0500
+Started GET "/cable" for ::1 at 2021-11-17 12:23:44 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 12:23:44 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 12:23:44 -0500
+Started GET "/cable" for ::1 at 2021-11-17 12:27:46 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 12:27:46 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 12:27:46 -0500
+Started GET "/" for ::1 at 2021-11-17 12:29:33 -0500
+Processing by RoomsController#index as HTML
+Redirected to http://localhost:3000/signin
+Completed 302 Found in 6ms (ActiveRecord: 0.0ms | Allocations: 475)
+
+
+Started GET "/signin" for ::1 at 2021-11-17 12:29:33 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 1.2ms | Allocations: 408)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 11ms (Views: 10.3ms | ActiveRecord: 0.0ms | Allocations: 4414)
+
+
+Started GET "/cable" for ::1 at 2021-11-17 12:29:41 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 12:29:41 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 12:29:41 -0500
+Started GET "/cable" for ::1 at 2021-11-17 12:43:41 -0500
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 12:43:41 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 12:43:41 -0500
+Started GET "/signin" for ::1 at 2021-11-17 12:47:30 -0500
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 1.8ms | Allocations: 1782)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 19ms (Views: 16.5ms | ActiveRecord: 0.0ms | Allocations: 15148)
+
+
+Started GET "/cable" for ::1 at 2021-11-17 12:49:44 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 12:49:44 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 12:49:44 -0500
