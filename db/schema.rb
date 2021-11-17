@@ -47,11 +47,11 @@ ActiveRecord::Schema.define(version: 2021_11_16_030008) do
     t.string "password"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.float "lat", default: 0.0
-    t.float "long", default: 0.0
     t.boolean "email_confirmed", default: false
     t.string "confirm_token"
     t.string "name"
+    t.float "lat", default: 0.0
+    t.float "long", default: 0.0
   end
 
   add_foreign_key "messages", "rooms"
