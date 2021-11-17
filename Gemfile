@@ -7,7 +7,7 @@ ruby '2.6.6'
 gem 'rails', '~> 6.0.4'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
-
+gem 'geocoder'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 gem 'sassc', '~> 2.1.0'

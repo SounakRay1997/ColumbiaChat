@@ -10,11 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_15_214729) do
+
+ActiveRecord::Schema.define(version: 2021_11_16_030008) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
 
   create_table "messages", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "room_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "room_id", null: false
     t.text "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -23,8 +28,8 @@ ActiveRecord::Schema.define(version: 2021_11_15_214729) do
   end
 
   create_table "participants", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "room_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "room_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["room_id"], name: "index_participants_on_room_id"
@@ -36,6 +41,9 @@ ActiveRecord::Schema.define(version: 2021_11_15_214729) do
     t.boolean "is_private", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "lat", default: 0.0
+    t.float "long", default: 0.0
+    t.float "distance", default: 0.0
   end
 
   create_table "users", force: :cascade do |t|
@@ -47,6 +55,8 @@ ActiveRecord::Schema.define(version: 2021_11_15_214729) do
     t.boolean "email_confirmed", default: false
     t.string "confirm_token"
     t.string "name"
+    t.float "lat", default: 0.0
+    t.float "long", default: 0.0
   end
 
   add_foreign_key "messages", "rooms"
