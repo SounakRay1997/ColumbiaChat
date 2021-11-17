@@ -42,7 +42,7 @@ end
 group :production do 
   # Use Redis adapter to run Action Cable in production
   gem 'redis', '~> 4.0'
-  gem 'pg', '< 1.0'
+  gem 'pg', '< 1.0' 
 end
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
