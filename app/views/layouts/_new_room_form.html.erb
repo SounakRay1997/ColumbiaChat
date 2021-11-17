@@ -6,7 +6,7 @@
   <%= f.select :private_room, options_for_select([["Yes", "Yes"], ["No", "No"]], ["Yes", "Yes"])%>
   <br/>
   <% if @user_names %>
-   <%= f.select(:selected_users, @user_names.map {|user| [user, user]}, {:prompt => "Select username"}, {:multiple => true, :size => 5} ) %>
+   <%= f.select(:selected_users, @user_names.map {|user| [user, user]}, {:prompt => "Select username", :include_hidden => false}, {:multiple => true, :size => 5} ) %>
   <% end %>
   <br/>
   <%= f.submit data: { disable_with: false } %>

@@ -20,7 +20,6 @@ class RoomsController < ApplicationController
         n[1] = ""
       end 
     end 
-    puts @select_departments
 
   end
 
@@ -29,10 +28,11 @@ class RoomsController < ApplicationController
       @room = Room.create(name: params["room"]["name"], is_private: false)
     else
       @room = Room.create(name: params["room"]["name"], is_private: true)
-      puts params
-      params["room"]["selected_users"].each do |user|
-        user = User.where(username: user)
-        Participant.create(user_id: user.id, room_id: @room.ids)
+      sel_users = params["room"][:selected_users]
+      puts sel_users
+      sel_users.each do |s_user|
+          user = User.where(username: s_user)
+          Participant.create(user_id: user.first.id, room_id: @room.id)
       end
     end
   end
