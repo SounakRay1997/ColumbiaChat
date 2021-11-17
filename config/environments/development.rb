@@ -2,7 +2,7 @@ Rails.application.configure do
   # Configure 'rails notes' to inspect Cucumber files
   config.annotations.register_directories('features')
   config.annotations.register_extensions('feature') { |tag| /#\s*(#{tag}):?\s*(.*)$/ }
-
+  config.action_mailer.default_url_options = { :host => "localhost:3000" }
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -10,6 +10,16 @@ Rails.application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  ActionMailer::Base.smtp_settings = {
+    :address  => "smtp.gmail.com",
+    :port  => 587,
+    :user_name  => "columbiachat@gmail.com",
+    :password => "ColumbiaChat2021",
+    :authentication  => :login
+  }
   # Do not eager load code on boot.
   config.eager_load = false
 

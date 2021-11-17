@@ -2,6 +2,19 @@ class SessionsController < ApplicationController
 
     def create
       user = User.find_by(username: params[:session][:username])
+      password = params[:session][:password]
+      if user
+        if user.email_confirmed
+          log_in(user, password)
+        else
+          flash[:message]="Please activate your account by following the instructions in the confirmation email you received. If you did not receive the mail please check your spam folder."
+          redirect_to '/signin'
+        end
+      else
+        flash[:message]="Incorrect Username"
+        redirect_to '/signin'
+      end
+      
       if cookies[:lat_lng]
         lat_lng = cookies[:lat_lng].split("|")
         lat_gps = lat_lng[0]
@@ -16,21 +29,18 @@ class SessionsController < ApplicationController
       if user
         user.update(lat: lat_gps, long: long_gps)
         log_in(user)
-      else
-        render 'new'
-      end
+      
     end
-  
+
     def destroy
       log_out if logged_in?
       redirect_to root_path
     end
 
-    
 
     def signup
       @user = User.new
       render 'signup'
     end
-  
+
 end

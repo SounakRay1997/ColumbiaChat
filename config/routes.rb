@@ -8,7 +8,14 @@ Rails.application.routes.draw do
   resources :rooms do
     resources :messages
   end
-  
+
+  resources :users do
+    member do
+      get :confirm_email
+    end
+  end
+
+
 
   get '/signin', to: 'sessions#new'
   get '/signup', to: 'sessions#signup'

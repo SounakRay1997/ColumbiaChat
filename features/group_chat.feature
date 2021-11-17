@@ -13,14 +13,14 @@ Feature: sending message on a private chat
       | ice skating               | false      |
       | halloween party           | false      |
     Given the following users exist:
-      | username                  | email                    | password     |
-      | Umang_Raj                 | ur1236@columbia.edu      | Lol@123      |
-      | Chinmay_Garg              | cg3286@columbia.edu      | Password@123 |
-      | Harrison_Groll            | hsg2136@columbia.edu     | Lol@321      |
-      | Sounak_Ray                | sr3846@columbia.edu      | Password@321 |
+      | username                  | email                    | password     | email_confirmed |
+      | Umang_Raj                 | ur1236@columbia.edu      | Lol@123      |  1              |
+      | Chinmay_Garg              | cg3286@columbia.edu      | Password@123 |  1              |
+      | Harrison_Groll            | hsg2136@columbia.edu     | Lol@321      |  1              |
+      | Sounak_Ray                | sr3846@columbia.edu      | Password@321 |  1              |
 
   Scenario Outline: send a group chat to a group of people
-    When I am logged in as "Umang_Raj"
+    Given I am logged in as "Umang_Raj" with password as "Lol@123"
     And I send a message "<arg1>" to the group "<arg2>"
     Then I should see the message "<arg1>" on the group chat titled "<arg2>"
     And I should not see the message "<arg1>" on the group chat titled "<arg21>"
