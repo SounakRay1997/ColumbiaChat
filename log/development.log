@@ -7794,3 +7794,40 @@ Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 12:49:44 -0500
 Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
 WebSocket error occurred: Broken pipe
 Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 12:49:44 -0500
+Started GET "/cable" for ::1 at 2021-11-17 13:01:43 -0500
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 13:01:43 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 13:01:43 -0500
+Started GET "/cable" for ::1 at 2021-11-17 13:02:52 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 13:02:52 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 13:02:52 -0500
+Started GET "/cable" for ::1 at 2021-11-17 13:25:10 -0500
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 13:25:10 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 13:25:10 -0500
+Started GET "/cable" for ::1 at 2021-11-17 13:25:51 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 13:25:51 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 13:25:51 -0500
+Started GET "/cable" for ::1 at 2021-11-17 13:26:57 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 13:26:57 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 13:26:57 -0500
+Started GET "/cable" for ::1 at 2021-11-17 13:28:01 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 13:28:01 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 13:28:01 -0500
+Started GET "/cable" for ::1 at 2021-11-17 13:30:57 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 13:30:57 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 13:30:57 -0500
+Started GET "/cable" for ::1 at 2021-11-17 13:31:56 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-11-17 13:31:56 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+WebSocket error occurred: Broken pipe
+Finished "/cable/" [WebSocket] for ::1 at 2021-11-17 13:31:56 -0500
