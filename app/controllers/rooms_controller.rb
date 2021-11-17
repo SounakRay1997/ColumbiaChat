@@ -27,8 +27,15 @@ class RoomsController < ApplicationController
 
   def create
     @current_user = current_user
-    room_lat = current_user.lat
-    room_long = current_user.long
+    
+    if current_user && current_user.lat && current_user.long 
+      room_lat = current_user.lat 
+      room_long = current_user.long
+    else 
+      room_lat = 0
+      room_long = 0
+    end
+    
     @room = Room.create(name: params["room"]["name"], is_private: false, lat: room_lat, long: room_long, distance: 500)
   end
 
