@@ -11,9 +11,7 @@ class RoomsController < ApplicationController
         room_dist_req = room.distance
         lat1 = room.lat
         lon1 = room.long
-        dis_miles = Geocoder::Calculations.distance_between([lat1,lon1], [user_lat,user_long])
-        dis_feet = dis_miles * 5280
-        if dis_feet <= room_dist_req
+        if isInRadius(user_lat, user_long, lat1, lon1, room_dist_req)
           tmp_rooms.append(room)
         end
       end
@@ -39,10 +37,28 @@ class RoomsController < ApplicationController
     @room = Room.create(distance: params["room"]["distance"], name: params["room"]["name"], is_private: false, lat: room_lat, long: room_long)
   end
 
+  def isInRadius(lat1, lon1, user_lat, user_long, roomDist)
+    dis_miles = Geocoder::Calculations.distance_between([lat1,lon1], [user_lat,user_long])
+    dis_feet = dis_miles * 5280
+    return dis_miles <= dis_feet
+  end
+
   def show
     @current_user = current_user
     @single_room = Room.find(params[:id])
-    @rooms = Room.public_rooms
+    public_rooms = Room.public_rooms
+    user_lat = current_user.lat
+    user_long = current_user.long
+    tmp_rooms = []
+    public_rooms.each  do |room|
+        room_dist_req = room.distance
+        lat1 = room.lat
+        lon1 = room.long
+        if isInRadius(user_lat, user_long, lat1, lon1, room_dist_req)
+          tmp_rooms.append(room)
+        end
+    end
+    @rooms = tmp_rooms
     @users = User.all_except(@current_user)
     @room = Room.new
     @message = Message.new
