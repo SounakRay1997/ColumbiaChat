@@ -35,6 +35,4 @@ class UsersController < ApplicationController
       "private_#{users[0].id}_#{users[1].id}"
     end
 
-    
-
   end
