@@ -3,7 +3,17 @@ class UsersController < ApplicationController
     def show
       @user = User.find(params[:id])
       @current_user = current_user
-      @rooms = Room.public_rooms
+      public_rooms = Room.public_rooms
+      tmp_rooms = []
+      public_rooms.each  do |room|
+        room_dist_req = room.distance
+        lat1 = room.lat
+        lon1 = room.long
+        if isInRadius(user_lat, user_long, lat1, lon1, room_dist_req)
+          tmp_rooms.append(room)
+        end
+      end
+      @rooms = tmp_rooms
       @users = User.all_except(@current_user)
       @room = Room.new
       @message = Message.new
@@ -12,6 +22,12 @@ class UsersController < ApplicationController
       @messages = @single_room.messages
   
       render "rooms/index"
+    end
+
+    def isInRadius(lat1, lon1, user_lat, user_long, roomDist)
+      dis_miles = Geocoder::Calculations.distance_between([lat1,lon1], [user_lat,user_long])
+      dis_feet = dis_miles * 5280
+      return roomDist >= dis_feet
     end
 
     def create
