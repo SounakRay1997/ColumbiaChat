@@ -21,7 +21,7 @@ Feature: signup on Columbia Chat
   Scenario: when I signup my data should be added to the database
     When I am on the ColumbiaChat signin page
     And I click on "Sign Up"
-    Then I fill in username as "Bruce_Wayne", email as "batman@columbia.edu" and password as "wayne_enterprise" on the signup page and database is updated
+    Then I fill in name as "Bruce Wayne", username as "Bruce_Wayne", email as "batman@columbia.edu" and password as "wayne_enterprise" on the signup page and database is updated
 
   Scenario: when I try to signup with a duplicate username the database should stop me
     When I am on the ColumbiaChat signin page
@@ -50,3 +50,10 @@ Feature: signup on Columbia Chat
     And I fill in name as "Suvansh Dutta", username as "suvansh_dutta", email as "sd3513@columbia.edu" and password as "Lol@1234" and confirm_password as "Lol123"
     And I press "Sign Up"
     Then I should see a message "Password and Confirm Password must match."
+
+  Scenario: when I try to signup with a
+    When I am on the ColumbiaChat signin page
+    And I click on "Sign Up"
+    And I fill in name as "Suvansh Dutta", username as "suvansh_dutta", email as "sd3513@columbia.edu" and password as "Lol@123" and confirm_password as "Lol@123"
+    And I press "Sign Up"
+    Then I should see a message "Please confirm your email address to continue"

@@ -27,7 +27,7 @@ gem 'jbuilder', '~> 2.7'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
-
+gem 'pg', '< 1.0'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -42,7 +42,6 @@ end
 group :production do 
   # Use Redis adapter to run Action Cable in production
   gem 'redis', '~> 4.0'
-  gem 'pg', '< 1.0' 
 end
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.

@@ -67,7 +67,7 @@ To run tests :
 Heroku Link :
 
 
-     https://esaas-chat.herokuapp.com/
+     http://salty-hamlet-69736.herokuapp.com/
 
 
 Link to GitHub Repository :
@@ -79,7 +79,7 @@ Link to GitHub Repository :
 Documentation:
 
 
-We present to you ColumbiaChat(v1.0). In this version we present a few simple pages with html forms which performs all the basic functions that you would expect your everyday chat application to perform. 
+We present to you ColumbiaChat(v1.0). In the first iteration, we presented a few simple pages with html forms which performs all the basic functions that you would expect your everyday chat application to perform. 
 Features implemented in iteration 1 (v 1.0) :
 1. SignUp functionality for users to sign up using username, email and password.
 2. SignIn functionality for users to sign into the chat application using username.
@@ -89,14 +89,20 @@ Features implemented in iteration 1 (v 1.0) :
 6. SignOut functionality
 
 
-In successive iterations, we would work towards implementing LionMail authentication checks for emails during Signup and other validations. We would also be working towards adding new features to the chat functionality such as making groups discoverable only to specific users.
+In the second iteration, we have implemented:
+1. Validation Checks for Name, Username, Password, ConfirmPassword fields with appropriate error messages displayed on the frontend. The checks are as follows:
+a) User is not allowed to sign up, if a person with the same username exists already.
+b) User is not allowed to sign up, if a person doesn't put the same passwords in the Password and ConfirmPassword fields.
+c) User is not allowed to sign up, without using a LionMail email account.
+2. LionMail Email Verification - Every user who creates an email now receives a verification link on their email address, and on clicking on it, and account is created for them on ColumbiaChat platform.
+3. Discoverable groups (Enable location on browser) : When a user wants to create a room, they can now input a distance in feet upto which they want the room to be discoverable. Users within that radius ONLY will be able to view the rooms.
 
-
-Test Coverage : 100% (RSpec + Cucumber) 
+Test Coverage : 91% (RSpec + Cucumber) 
 All models and controllers are being covered.
+Some scenarios like checking if the email was received and the verification of its contents by the lionmail email id can't be tested since that would require executing cucumber scenarios on a private email account. We have added RSpec tests to test ActionMailer functionality so that we're still able to partially test the working of this functionality.
 
 
-We have excluded folders app/mailers, app/jobs and app/channels from SimpleCov coverage because these files do not contain any code (false negatives).
+We have excluded folders app/jobs and app/channels from SimpleCov coverage because these files do not contain any code (false negatives).
 
 
 Cucumber Features (Located in /features):
@@ -107,4 +113,4 @@ Cucumber Features (Located in /features):
 
 
 RSpec Tests (Located in /spec):
-Covers all models and controllers.
+Covers all models, mailer and controllers.

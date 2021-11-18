@@ -33,3 +33,12 @@ And(/^I fill in name as "([^"]*)", username as "([^"]*)", email as "([^"]*)" and
   fill_in("user_password", :with => arg4)
   fill_in("user_password_confirmation", :with => arg5)
 end
+
+Then(/^I fill in name as "([^"]*)", username as "([^"]*)", email as "([^"]*)" and password as "([^"]*)" on the signup page and database is updated$/) do |arg1, arg2, arg3, arg4|
+  fill_in("user_name", :with => arg1)
+  fill_in("user_username", :with => arg2)
+  fill_in("user_email", :with => arg3)
+  fill_in("user_password", :with => arg4)
+  fill_in("user_password_confirmation", :with => arg4)
+  expect{click_button("Sign Up")}.to change(User, :count).by(1)
+end
