@@ -33,3 +33,7 @@ Feature: signin on Columbia Chat
     And I fill in "session_password" with "Lol@321"
     And I press "Sign In"
     Then I should see a message "Please activate your account by following the instructions in the confirmation email you received. If you did not receive the mail please check your spam folder."
+
+
+
+
