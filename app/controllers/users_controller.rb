@@ -9,7 +9,7 @@ class UsersController < ApplicationController
         room_dist_req = room.distance
         lat1 = room.lat
         lon1 = room.long
-        if isInRadius(user_lat, user_long, lat1, lon1, room_dist_req)
+        if isInRadius(current_user.lat, current_user.long, lat1, lon1, room_dist_req)
           tmp_rooms.append(room)
         end
       end
