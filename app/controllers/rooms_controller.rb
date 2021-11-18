@@ -20,11 +20,15 @@ class RoomsController < ApplicationController
     @room = Room.create(distance: params["room"]["distance"], name: params["room"]["name"], is_private: false, lat: room_lat, long: room_long)
   end
 
-  @miles_conv = 5280
+  @miles_conv = 
   
-  def cal(lat1,lon1, user_lat,user_long) Geocoder::Calculations.distance_between([lat1,lon1], [user_lat,user_long]) end
+  
 
-  def isInRadius(lat1, lon1, user_lat, user_long, roomDist) dis_miles = cal(lat1,lon1, user_lat,user_long);dis_feet = dis_miles * @miles_conv;return roomDist >= dis_feet end
+  def isInRadius(lat1, lon1, user_lat, user_long, roomDist) 
+    dis_miles = Geocoder::Calculations.distance_between([lat1,lon1], [user_lat,user_long])
+    dis_feet = dis_miles * 5280.0
+    return roomDist >= dis_feet 
+  end
 
   def show
     @current_user = current_user;@single_room = Room.find(params[:id]);public_rooms = Room.public_rooms;user_lat = current_user.lat;user_long = current_user.long;tmp_rooms = []
