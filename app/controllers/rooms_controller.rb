@@ -25,8 +25,8 @@ class RoomsController < ApplicationController
 
   def create
     @current_user = current_user
-    
-    if current_user && current_user.lat && current_user.long 
+    redirect_to '/signin' unless @current_user
+    if current_user.lat && current_user.long 
       room_lat = current_user.lat 
       room_long = current_user.long
     else 
