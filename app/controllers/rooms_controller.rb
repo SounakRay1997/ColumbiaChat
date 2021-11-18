@@ -18,7 +18,7 @@ class RoomsController < ApplicationController
       room_lat = 0;room_long = 0
     end
     @room = Room.create(distance: params["room"]["distance"], name: params["room"]["name"], is_private: false, lat: room_lat, long: room_long)
-    redirect_to root_route
+    redirect_to :back
   end
 
   @miles_conv = 
