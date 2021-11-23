@@ -34,7 +34,7 @@ group :development, :test do
   gem 'database_cleaner'
   
   # Use sqlite3 as the database for Active Record
-  #gem 'sqlite3', '~> 1.4'
+  gem 'sqlite3', '~> 1.4'
   gem 'rspec-rails'
   gem 'shoulda-matchers', '~> 5.0'
   gem 'rails-controller-testing'

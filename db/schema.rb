@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_18_043509) do
+ActiveRecord::Schema.define(version: 2021_11_17_194103) do
+
+  create_table "courses", force: :cascade do |t|
+    t.string "course_code"
+    t.string "course_title"
+    t.string "class_id"
+    t.string "course_subtitle"
+    t.string "department"
+    t.string "department_code"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "messages", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -39,7 +50,7 @@ ActiveRecord::Schema.define(version: 2021_11_18_043509) do
     t.float "lat", default: 0.0
     t.float "long", default: 0.0
     t.float "distance", default: 0.0
-    t.integer "user_id", default: 3
+    t.string "dept_code", default: "NONE"
   end
 
   create_table "users", force: :cascade do |t|
