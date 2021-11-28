@@ -3,15 +3,20 @@ class UsersController < ApplicationController
     def show
       @user = User.find(params[:id])
       @current_user = current_user
+      user_lat = current_user.lat
+      user_long = current_user.long
       public_rooms = Room.public_rooms
       tmp_rooms = []
       public_rooms.each  do |room|
         room_dist_req = room.distance
         lat1 = room.lat
         lon1 = room.long
-        if isInRadius(current_user.lat, current_user.long, lat1, lon1, room_dist_req)
+        if isInRadius(user_lat, user_long, lat1, lon1, room_dist_req) || (params["dept_id"].nil? && room.dept_code != "NONE") || ( !params["dept_id"].nil? && params["dept_id"] != "ALL" && room.dept_code == params["dept_id"])
+          tmp_rooms.append(room) 
+        end 
+        if params["dept_id"] == "ALL" && room.dept_code != "NONE"
           tmp_rooms.append(room)
-        end
+        end 
       end
       @rooms = tmp_rooms
       @users = User.all_except(@current_user)
@@ -21,7 +26,7 @@ class UsersController < ApplicationController
       @room_name = get_name(@user, @current_user)
       @single_room = Room.where(name: @room_name).first || Room.create_private_room([@user, @current_user], @room_name)
       @messages = @single_room.messages
-      @departments = Course.distinct.pluck(:department_code)
+      @departments = Course.distinct.pluck(:department_code).prepend("ALL")
       @private_rooms = Room.joins("INNER JOIN participants ON rooms.id = participants.room_id AND participants.user_id = #{current_user.id}").uniq unless not current_user
       if not params["dept_id"].nil?
         @rooms = @rooms.dept_rooms(params["dept_id"])

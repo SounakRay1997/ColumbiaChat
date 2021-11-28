@@ -11,24 +11,29 @@ class RoomsController < ApplicationController
         room_dist_req = room.distance
         lat1 = room.lat
         lon1 = room.long
-        puts("HERE XYZ")
-        puts(room.name)
-        if isInRadius(user_lat, user_long, lat1, lon1, room_dist_req)
+        # puts("HERE XYZ")
+        # puts(room.name)
+        if isInRadius(user_lat, user_long, lat1, lon1, room_dist_req) || (params["dept_id"].nil? && room.dept_code != "NONE") || ( !params["dept_id"].nil? && params["dept_id"] != "ALL" && room.dept_code == params["dept_id"])
           tmp_rooms.append(room) 
         end 
+        if params["dept_id"] == "ALL" && room.dept_code != "NONE"
+          tmp_rooms.append(room)
+        end 
+
       end
       @rooms = tmp_rooms
     else 
       @rooms = Room.all
     end
-    if not params["dept_id"].nil?
-      @rooms = @rooms.dept_rooms(params["dept_id"])
-    end
+
+    # if @rooms and not params["dept_id"].nil?
+    #   @rooms = @rooms.dept_rooms(params["dept_id"])
+    # end
     @users = User.all_except(@current_user);@room = Room.new
     @user_names = User.all_except(@current_user).pluck(:username)
     @courses = Course.all 
-    @departments = Course.distinct.pluck(:department_code)
-
+    @departments = Course.distinct.pluck(:department_code).prepend("ALL")
+    
     @private_rooms = Room.joins("INNER JOIN participants ON rooms.id = participants.room_id AND participants.user_id = #{current_user.id}").uniq unless not current_user
   end
 
@@ -46,7 +51,7 @@ class RoomsController < ApplicationController
     else
       @room = Room.create(distance: params["room"]["distance"], name: params["room"]["name"], is_private: true, lat: room_lat, long: room_long)
       sel_users = params["room"][:selected_users]
-      puts sel_users
+      # puts sel_users
       if sel_users
         sel_users.each do |s_user|
             user = User.where(username: s_user)
@@ -62,12 +67,12 @@ class RoomsController < ApplicationController
     @user_names = User.all_except(@current_user).pluck(:username)
     @rooms = Room.public_rooms
     @courses = Course.all 
-    @departments = Course.distinct.pluck(:department_code)
+    @departments = Course.distinct.pluck(:department_code).prepend("ALL")
     @rooms = Room.public_rooms
     if not params["dept_id"].nil?
       @rooms = @rooms.dept_rooms(params["dept_id"])
     end
-    redirect_to root_path
+    render "index"
     
   end
 
@@ -76,7 +81,7 @@ class RoomsController < ApplicationController
   def isInRadius(lat1, lon1, user_lat, user_long, roomDist) 
     dis_miles = Geocoder::Calculations.distance_between([lat1,lon1], [user_lat,user_long])
     dis_feet = dis_miles * 5280.0
-    puts("FEET AWAY", dis_feet, " ALLOWED ", roomDist, " SHOWN: ",  dis_feet <= roomDist   )
+    # puts("FEET AWAY", dis_feet, " ALLOWED ", roomDist, " SHOWN: ",  dis_feet <= roomDist   )
     dis_feet <= roomDist 
     
   end
@@ -93,9 +98,12 @@ class RoomsController < ApplicationController
       room_dist_req = room.distance;
       lat1 = room.lat;
       lon1 = room.long;
-      if isInRadius(user_lat, user_long, lat1, lon1, room_dist_req)
-        tmp_rooms.append(room)  
+      if isInRadius(user_lat, user_long, lat1, lon1, room_dist_req) || (params["dept_id"].nil? && room.dept_code != "NONE") || ( !params["dept_id"].nil? && params["dept_id"] != "ALL" && room.dept_code == params["dept_id"])
+        tmp_rooms.append(room) 
       end 
+      if params["dept_id"] == "ALL" && room.dept_code != "NONE"
+        tmp_rooms.append(room)
+      end  
     end 
     @rooms = tmp_rooms;
     @users = User.all_except(@current_user);
@@ -105,12 +113,11 @@ class RoomsController < ApplicationController
     @messages = @single_room.messages;
 
     @courses = Course.all 
-    @departments = Course.distinct.pluck(:department_code)
+    @departments = Course.distinct.pluck(:department_code).prepend("ALL")
     if not params["dept_id"].nil?
       @rooms = @rooms.dept_rooms(params["dept_id"])
     end
-
-    redirect_to root_path
+    render "index"
   end 
   
 end
