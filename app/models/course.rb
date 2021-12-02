@@ -3,8 +3,9 @@ require 'json'
 class Course < ApplicationRecord
     dept_list = ['COMS', 'ACCT', 'CSOR', 'CHEN', 'CSEE', 'IEOR']
     # contents = open("/Users/umangraj/Desktop/ESaaS-Project-iter1-submission/2022-Spring.json","r").read()
-    contents = open("/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/2022-Spring.json", "r").read()
-    courses = contents.split("\n") 
+    contents = open("2022-Spring.json", "r").read()
+    courses = contents.split("\n")
+    puts "potato" 
     courses.each do |course|
         course_hash = JSON.parse(course)
         # if dept_list.include? course_hash["department_code"]
