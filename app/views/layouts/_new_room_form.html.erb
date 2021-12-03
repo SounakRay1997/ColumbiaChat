@@ -4,12 +4,13 @@
 } ) do |f| %>
   <%= f.label :room_name, "Room Name:" %>
   <%= f.text_field :name, class: "form-control", autocomplete: 'off' %>
+  <br/>
   <%= f.label :room_priv, "Private?:" %>
   <%= f.select :private_room, options_for_select([["Yes", "Yes"], ["No", "No"]], ["Yes", "Yes"])%>
   <br/>
   
   <% if @user_names %>
-   <%= f.select(:selected_users, @user_names.map {|user| [user, user]}, {:prompt => "Select username", :include_hidden => false}, {:multiple => true, :size => 5} ) %>
+   <%= f.select(:selected_users, @user_names.map {|user| [user, user]}, {:prompt => "Select Name", :include_hidden => false}, {:multiple => true, :size => 5} ) %>
   <% end %>
   <br/>
   <%= f.label :room_dist, "Distance (feet):" %>

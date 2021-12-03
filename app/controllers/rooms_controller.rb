@@ -29,8 +29,9 @@ class RoomsController < ApplicationController
     # if @rooms and not params["dept_id"].nil?
     #   @rooms = @rooms.dept_rooms(params["dept_id"])
     # end
-    @users = User.all_except(@current_user);@room = Room.new
-    @user_names = User.all_except(@current_user).pluck(:username)
+    @users = User.all_except(@current_user);
+    @room = Room.new
+    @user_names = User.all_except(@current_user).pluck(:name)
     @courses = Course.all 
     @departments = Course.distinct.pluck(:department_code).prepend("ALL")
     
