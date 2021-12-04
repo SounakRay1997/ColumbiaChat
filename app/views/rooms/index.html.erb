@@ -1,33 +1,44 @@
-<div class="row">
-  <div class="navbar-icon">
-    <span></span>
-    <span></span>
-    <span></span>
+<div class="row wrapper">
+  <div class="sidebar">
+    <div class="navbar-icon">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="signout-button">
+      <%= link_to '', signout_path,  :method => :delete, class: "fas fa-sign-out-alt fa-2x" %>
+    </div>
   </div>
-  <div class="col-md-4 chat-rooms">
-    <h5> <%= @current_user.name %> </h5>
-    <%= link_to 'Sign Out', signout_path,  :method => :delete %>
-    <h5 class="collapsible collapsible-users">Direct Messages</h5>
+  <div class="chat-rooms">
+    <h3> <%= @current_user.name %> </h3>
+    <!-- <%= link_to 'Sign Out', signout_path,  :method => :delete, class: "signout-button" %> -->
+    <h5 class="collapsible collapsible-users open">Direct Messages</h5>
     <div class="users-wrapper">
       <%= turbo_stream_from "users" %>
       <div id="users">
         <%= render @users %>
       </div>
     </div>
-    <h4 class="collapsible collapsible-rooms"> Rooms </h4>
-    <div class="rooms-wrapper">
-      <%= render partial: "layouts/new_room_form" %>
+    <h5 class="collapsible collapsible-rooms">Rooms</h5>
+    <div class="rooms-wrapper collapsed">
+      <h6 class="collapsible collapsible-newroom">Create New Room</h6>
+      <div class="newroom-wrapper collapsed">
+        <%= render partial: "layouts/new_room_form" %>
+      </div>
 
-      <%= form_tag('/rooms', :method => :get) do %>
-        <%= select_tag 'dept_id', options_for_select(@departments.map{|course|["#{course}", course]})%>
-        <%= submit_tag("Search") %>
-      <% end %>
+      <h6 class="collapsible collapsible-searchroom">Search Room</h6>
+      <div class="searchroom-wrapper">
+        <%= form_tag('/rooms', :method => :get, :class => 'searchroom-form') do %>
+          <%= select_tag 'dept_id', options_for_select(@departments.map{|course|["#{course}", course]}), class: 'form-control'%>
+          <%= submit_tag("Search", :class => 'btn btn-primary') %>
+        <% end %>
 
-      <div>
-        <%= turbo_stream_from "rooms" %>
-        <div id="rooms">
-          <%= render @private_rooms %>
-          <%= render @rooms %>
+        <div>
+          <%= turbo_stream_from "rooms" %>
+          <div id="rooms">
+            <%= render @private_rooms %>
+            <%= render @rooms %>
+          </div>
         </div>
       </div>
     </div>
@@ -50,11 +61,23 @@
   var chatRooms = document.querySelector('.chat-rooms');
   var chatWindow = document.querySelector('.chat-window');
   var newMsgForm = document.querySelector('.msg-form');
+  var privateRoom = document.querySelector('#room_private_room')
+  var multipleSelect = document.querySelector('.hide-multiple')
   var collapsibleUsersButton = document.querySelector('.collapsible-users');
   var collapsibleRoomsButton = document.querySelector('.collapsible-rooms');
+  var collapsibleNewRoomButton = document.querySelector('.collapsible-newroom');
+  var collapsibleSearchRoomButton = document.querySelector('.collapsible-searchroom');
   var roomsWrapper = document.querySelector('.rooms-wrapper');
   var usersWrapper = document.querySelector('.users-wrapper');
-  console.log(usersWrapper)
+  var newRoomWrapper = document.querySelector('.newroom-wrapper');
+  var searchRoomWrapper = document.querySelector('.searchroom-wrapper');
+  privateRoom.addEventListener('change', (e) => {
+    if(e.target.value == 'No') {
+      multipleSelect.style.display = 'none';
+    } else {
+      multipleSelect.style.display = 'block';
+    }
+  })
   navIcon.addEventListener('click', () => {
       if(chatRooms.classList.contains('open')) {
           chatRooms.classList.remove('open')
@@ -62,31 +85,58 @@
           chatWindow.classList.add('col-md-12')
           chatWindow.classList.remove('col-md-8')
           chatWindow.classList.remove('offset-md-4')
-          newMsgForm.classList.remove('navbar-open')
+          chatWindow.classList.remove('navbar-open')
+          if(newMsgForm != undefined) {
+            newMsgForm.classList.remove('navbar-open')
+          }
       } else {
           chatRooms.classList.add('open')
           navIcon.classList.add('navbar-open')
           chatWindow.classList.add('navbar-open')
           chatWindow.classList.add('offset-md-4')
           chatWindow.classList.add('col-md-8')
+          chatWindow.classList.add('navbar-open')
           chatWindow.classList.remove('col-md-12')
-          newMsgForm.classList.add('navbar-open')
+          if(newMsgForm != undefined) {
+            newMsgForm.classList.add('navbar-open')
+          }
       }
   });
 
   collapsibleRoomsButton.addEventListener('click', () => {
       if(roomsWrapper.classList.contains('collapsed')) {
+          collapsibleRoomsButton.classList.add('open')
           roomsWrapper.classList.remove('collapsed')
       } else {
+          collapsibleRoomsButton.classList.remove('open')
           roomsWrapper.classList.add('collapsed')
       }
   })
   collapsibleUsersButton.addEventListener('click', () => {
-      console.log(usersWrapper)
       if(usersWrapper.classList.contains('collapsed')) {
+          collapsibleUsersButton.classList.add('open')
           usersWrapper.classList.remove('collapsed')
       } else {
+          collapsibleUsersButton.classList.remove('open')
           usersWrapper.classList.add('collapsed')
+      }
+  })
+  collapsibleNewRoomButton.addEventListener('click', () => {
+      if(newRoomWrapper.classList.contains('collapsed')) {
+          collapsibleNewRoomButton.classList.add('open')
+          newRoomWrapper.classList.remove('collapsed')
+      } else {
+          collapsibleNewRoomButton.classList.remove('open')
+          newRoomWrapper.classList.add('collapsed')
+      }
+  })
+  collapsibleSearchRoomButton.addEventListener('click', () => {
+      if(searchRoomWrapper.classList.contains('collapsed')) {
+          collapsibleSearchRoomButton.classList.add('open')
+          searchRoomWrapper.classList.remove('collapsed')
+      } else {
+          collapsibleSearchRoomButton.classList.remove('open')
+          searchRoomWrapper.classList.add('collapsed')
       }
   })
 </script>

@@ -2,20 +2,25 @@
   controller: "reset-form",
   action: "ajax:success->reset-form#reset"
 } ) do |f| %>
-  <%= f.label :room_name, "Room Name:" %>
-  <%= f.text_field :name, class: "form-control", autocomplete: 'off' %>
-  <br/>
-  <%= f.label :room_priv, "Private?:" %>
-  <%= f.select :private_room, options_for_select([["Yes", "Yes"], ["No", "No"]], ["Yes", "Yes"])%>
-  <br/>
-  
+  <div class="form-group">
+    <%= f.label :room_name, "Room Name:" %>
+    <%= f.text_field :name, class: "form-control", autocomplete: 'off' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :room_priv, "Private:" %>
+    <%= f.select :private_room, options_for_select([["Yes", "Yes"], ["No", "No"]], ["No", "No"]), {}, class: 'form-control' %>
+  </div>
+  <div class="hide-multiple">
   <% if @user_names %>
-   <%= f.select(:selected_users, @user_names.map {|user| [user, user]}, {:prompt => "Select Name", :include_hidden => false}, {:multiple => true, :size => 5} ) %>
+    <%= f.label :selected_users, "Add users to private room:" %>
+    <%= f.select(:selected_users, @user_names.map {|user| [user, user]}, {:include_hidden => false}, {:multiple => true, :size => 5, :class => 'form-control select-multiple'}) %>
   <% end %>
-  <br/>
-  <%= f.label :room_dist, "Distance (feet):" %>
-  <%= f.text_field :distance, class: "form-control", autocomplete: 'off' %>
-  <%= f.submit data: { disable_with: false } %>
+  </div>
+  <div class="form-group">
+    <%= f.label :room_dist, "Distance (feet):" %>
+    <%= f.text_field :distance, class: "form-control", autocomplete: 'off', class: 'form-control' %>
+  </div>
+  <%= f.submit data: { disable_with: false }, class: 'btn btn-primary' %>
   <br/>
   <br/>
   <%
