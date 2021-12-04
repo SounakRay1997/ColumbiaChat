@@ -46,11 +46,11 @@
   <div class="col-md-12 bg-dark text-light chat-window">
   
     <% if @single_room %>
-      <% dis =  " (" + @single_room.getDistanceFromRoom(@single_room, @current_user).to_s + " feet away)" %>
+      <% dis =  " (" + @single_room.getDistanceFromRoom(@single_room, @current_user).round.to_s + " feet away)" %>
       <% if @single_room.getDistanceFromRoom(@single_room, @current_user)  > 20430879 or  @single_room.is_private%>
         <% dis = "" %> 
       <% end %> 
-      <h4 class="text-center chat-title"><%= @user&.username || @single_room.name %> <%=  dis  %></h4>
+      <h4 class="text-center chat-title"><%= @user&.name || @single_room.name %> <%=  dis  %></h4>
       <hr class="chat-title-hr">  
       <%= turbo_stream_from @single_room %>
     <div id="messages">
