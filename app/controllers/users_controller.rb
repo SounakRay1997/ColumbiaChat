@@ -20,7 +20,7 @@ class UsersController < ApplicationController
       end
       @rooms = tmp_rooms
       @users = User.all_except(@current_user)
-      @user_names = User.all_except(@current_user).pluck(:username)
+      @user_names = User.all_except(@current_user).pluck(:name)
       @room = Room.new
       @message = Message.new
       @room_name = get_name(@user, @current_user)

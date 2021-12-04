@@ -55,7 +55,8 @@ class RoomsController < ApplicationController
       # puts sel_users
       if sel_users
         sel_users.each do |s_user|
-            user = User.where(username: s_user)
+            user = User.where(name: s_user)
+            puts "potato"
             Participant.create(user_id: user.first.id, room_id: @room.id)
         end
         Participant.create(user_id: current_user.id, room_id: @room.id) #Add Current User
@@ -65,7 +66,7 @@ class RoomsController < ApplicationController
     @private_rooms = Room.joins("INNER JOIN participants ON rooms.id = participants.room_id AND participants.user_id = #{current_user.id}").uniq unless not current_user
 
     @users = User.all_except(@current_user)
-    @user_names = User.all_except(@current_user).pluck(:username)
+    @user_names = User.all_except(@current_user).pluck(:name)
     @rooms = Room.public_rooms
     @courses = Course.all 
     @departments = Course.distinct.pluck(:department_code).prepend("ALL")
@@ -108,7 +109,7 @@ class RoomsController < ApplicationController
     end 
     @rooms = tmp_rooms;
     @users = User.all_except(@current_user);
-    @user_names = User.all_except(@current_user).pluck(:username);
+    @user_names = User.all_except(@current_user).pluck(:name);
     @room = Room.new;
     @message = Message.new;
     @messages = @single_room.messages;
