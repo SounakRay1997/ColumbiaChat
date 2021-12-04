@@ -77,7 +77,7 @@ class UsersController < ApplicationController
       Please sign in to continue."
         redirect_to '/signin'
       else
-        flash[:message] = "Sorry. User does not exist"
+        flash[:message] = "This user has already been verified. Please use your username/password to login."
         redirect_to '/signin'
       end
     end
