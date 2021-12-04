@@ -1,10 +1,10 @@
-<div class="bg-dark msg-form">
+<div class="msg-color msg-form">
 <%= form_with model: [@single_room, @message],
 data: { 
   controller: "reset-form", 
   action: "ajax:success->reset-form#reset"
 } do |f| %>
-    <%= f.text_field :content, id: 'chat-text', class: "form-control", autocomplete: 'off' %>
-    <%= f.submit data: { disable_with: false }, id: 'create-message-btn', class: "btn btn-primary" %>
+    <%= f.text_field :content,  placeholder: "type a message", id: 'chat-text', class: "form-control", autocomplete: 'off' %>
+    <%= f.submit "Send 🚀", data: { disable_with: false }, id: 'create-message-btn', class: "btn btn-primary" %>
   <% end %>
 </div>

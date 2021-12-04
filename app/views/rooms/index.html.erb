@@ -43,9 +43,12 @@
       </div>
     </div>
   </div>
-  <div class="col-md-12 bg-dark text-light chat-window">
+  <div class="col-md-12 body-cover-color text-light chat-window">
     <% if @single_room %>
-      <h4 class="text-center"> <%= @user&.username || @single_room.name %> </h4>
+    <span class="room-container-span">
+      <h4 class="text-center room-name"> <%= @user&.username || @single_room.name %> </h4>
+      </span>
+      <hr class="room-hr"/>
       <%= turbo_stream_from @single_room %>
     <div id="messages">
     <%= render @messages %>
