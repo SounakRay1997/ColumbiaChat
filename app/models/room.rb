@@ -25,6 +25,17 @@ class Room < ApplicationRecord
   
 end
 
+def getDistanceFromRoom(room, user)
+  lat1 = room.lat
+  lon1 = room.long
+  user_lat = user.lat
+  user_long = user.long
+  dis_miles = Geocoder::Calculations.distance_between([lat1,lon1], [user_lat,user_long])
+  dis_feet = dis_miles * 5280.0
+  return dis_feet.round
+end
+
+
  def self.create_private_room(users, room_name)
   single_room = Room.create(name: room_name, is_private: true)
   users.each do |user|

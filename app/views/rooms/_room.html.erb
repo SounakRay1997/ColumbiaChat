@@ -1,1 +1,5 @@
-<div> <%= link_to room.name, room %> </div>
+<% dis =  " (" + room.getDistanceFromRoom(room, @current_user).to_s + " feet away)" %>
+<% if room.getDistanceFromRoom(room, @current_user)  > 1000 or room.is_private%>
+<% dis = "" %> 
+<% end %> 
+<div> <%= link_to room.name + dis , room %> </div>
