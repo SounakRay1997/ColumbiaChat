@@ -1,1 +1,6 @@
-<div> <%= link_to room.name, room %> </div>
+<% lock = "" %> 
+<% if room.is_private %>
+<% lock = "🔒 " %> 
+<% else lock = "🔑 " %> 
+<% end %> 
+<div> <%= link_to lock + room.name , room %> </div>
