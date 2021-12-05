@@ -93,3 +93,8 @@ div.form-actions {
   background-repeat: no-repeat;
   background-position: center center;
 }
+
+.uppy {
+  position: absolute;
+  margin-left: 4px;
+}

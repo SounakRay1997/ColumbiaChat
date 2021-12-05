@@ -1,22 +1,30 @@
+<style>
+
+
+</style>
 <% lock = "" %> 
 <% if room.is_private %>
 <% lock = " 🔒 " %> 
 <div style="color:#ff8f00;">
 <span class="material-icons">
 lock
-</span> <%= link_to room.name , room %>
+</span> <%= link_to room.name , room , class: "uppy"%>
 </div>
 <% elsif room.distance == Float::MAX %>
 <% lock = " 📔 " %>
 <div style="color:#424242;">
 <span class="material-icons">
 menu_book
-</span> <%= link_to room.name , room %>
+</span> <%= link_to room.name , room , class: "uppy"%>
 </div>
 <% else lock = " 🔓 " %> 
 <div style="color:#ff8f00;">
-<span class="material-icons">
-lock_open
-</span> <%= link_to room.name , room %>
+<span class="material-icons bg-dark">
+
+  lock_open
+<%= link_to room.name , room , class: "uppy"%>
+
+
+</span> 
 </div>
 <% end %> 
