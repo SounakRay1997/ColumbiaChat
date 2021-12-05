@@ -9,7 +9,7 @@
       <%= link_to '', signout_path,  :method => :delete, class: "fas fa-sign-out-alt fa-2x" %>
     </div>
   </div>
-  <div class="chat-rooms">
+  <div class="chat-rooms open">
     <h3> <%= @current_user.name %> </h3>
     <!-- <%= link_to 'Sign Out', signout_path,  :method => :delete, class: "signout-button" %> -->
     <h5 class="collapsible collapsible-users open">Direct Messages</h5>
@@ -19,7 +19,7 @@
         <%= render @users %>
       </div>
     </div>
-    <h5 class="collapsible collapsible-rooms">Rooms</h5>
+    <h5 class="collapsible collapsible-rooms" >Rooms</h5>
     <div class="rooms-wrapper collapsed">
       <h6 class="collapsible collapsible-newroom">Create New Room</h6>
       <div class="newroom-wrapper collapsed">
@@ -43,7 +43,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-12 bg-dark text-light chat-window">
+  <div class="col-md-8 offset-md-4 navbar-open bg-dark text-light chat-window">
   
     <% if @single_room %>
       <% dis =  " (" + @single_room.getDistanceFromRoom(@single_room, @current_user).round.to_s + " feet away)" %>
@@ -69,6 +69,8 @@
   var newMsgForm = document.querySelector('.msg-form');
   var privateRoom = document.querySelector('#room_private_room')
   var multipleSelect = document.querySelector('.hide-multiple')
+  var distanceInput = document.querySelector('.room-distance')
+  var roomNameInput = document.querySelector('#room_name')
   var collapsibleUsersButton = document.querySelector('.collapsible-users');
   var collapsibleRoomsButton = document.querySelector('.collapsible-rooms');
   var collapsibleNewRoomButton = document.querySelector('.collapsible-newroom');
@@ -80,8 +82,10 @@
   privateRoom.addEventListener('change', (e) => {
     if(e.target.value == 'No') {
       multipleSelect.style.display = 'none';
+      distanceInput.style.display = 'flex';
     } else {
       multipleSelect.style.display = 'block';
+      distanceInput.style.display = 'none';
     }
   })
   navIcon.addEventListener('click', () => {
