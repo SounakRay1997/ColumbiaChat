@@ -13,7 +13,7 @@
   <div class="hide-multiple">
   <% if @user_names %>
     <%= f.label :selected_users, "Add users to private room:" %>
-    <%= f.select(:selected_users, @user_names.map {|user| [user, user]}, {:include_hidden => false}, {:multiple => true, :size => 5, :class => 'form-control select-multiple'}) %>
+    <%= f.select :selected_users, @user_names.map {|user| [user, user]}, {:include_hidden => false}, {:multiple => true, :size => 5, :class => 'form-control select-multiple', required: true}%>
   <% end %>
   </div>
   <div class="form-group room-distance">
