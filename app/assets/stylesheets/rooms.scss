@@ -122,8 +122,13 @@ body {
 }
 
 #messages {
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 15px;
+  position: absolute;
+  top: 62px;
+  bottom: 55px;
+  left: 15px;
+  right: 15px;
+  overflow: auto;
 }
 
 .chat-rooms {
@@ -147,12 +152,17 @@ body {
 
 .chat-title {
   position: absolute;
-  top: 0;
+  top: 0px;
+  left: 0px;
+  height: 62px;
   width: 100%;
+  right: 0px;
+  overflow: hidden;
   border-bottom: 2px solid #000;
   padding: 1rem 0;
   margin-top: 0 !important;
   background-color: --bg-dark;
+  padding-bottom: 10px;
   z-index: 2;
 }
 
