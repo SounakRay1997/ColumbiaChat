@@ -4,7 +4,7 @@
 } ) do |f| %>
   <div class="form-group">
     <%= f.label :room_name, "Room Name:" %>
-    <%= f.text_field :name, class: "form-control", autocomplete: 'off' %>
+    <%= f.text_field :name, class: "form-control", autocomplete: 'off', required: true %>
   </div>
   <div class="form-group">
     <%= f.label :room_priv, "Private:" %>
@@ -16,7 +16,7 @@
     <%= f.select(:selected_users, @user_names.map {|user| [user, user]}, {:include_hidden => false}, {:multiple => true, :size => 5, :class => 'form-control select-multiple'}) %>
   <% end %>
   </div>
-  <div class="form-group">
+  <div class="form-group room-distance">
     <%= f.label :room_dist, "Distance (feet):" %>
     <%= f.text_field :distance, class: "form-control", autocomplete: 'off', class: 'form-control' %>
   </div>
