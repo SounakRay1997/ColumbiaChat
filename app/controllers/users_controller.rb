@@ -42,6 +42,11 @@ class UsersController < ApplicationController
       
     end
 
+    def landing 
+      render "rooms/landing"
+    end
+
+
     def create
       #byebug
       @user = User.new(user_params)
