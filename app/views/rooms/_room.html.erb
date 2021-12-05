@@ -19,12 +19,11 @@ menu_book
 </div>
 <% else lock = " 🔓 " %> 
 <div style="color:#ff8f00;">
-<span class="material-icons bg-dark">
-
+<span class="material-icons">
   lock_open
-<%= link_to room.name , room , class: "uppy"%>
+  </span> <%= link_to room.name , room , class: "uppy"%>
 
 
-</span> 
+
 </div>
 <% end %> 
