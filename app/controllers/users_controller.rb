@@ -11,7 +11,7 @@ class UsersController < ApplicationController
         room_dist_req = room.distance
         lat1 = room.lat
         lon1 = room.long
-        if isInRadius(user_lat, user_long, lat1, lon1, room_dist_req) || (params["dept_id"].nil? && room.dept_code != "NONE") || ( !params["dept_id"].nil? && params["dept_id"] != "ALL" && room.dept_code == params["dept_id"])
+        if (isInRadius(user_lat, user_long, lat1, lon1, room_dist_req) && room.distance != Float::MAX) || (params["dept_id"].nil? && room.dept_code != "NONE") || (!params["dept_id"].nil? && params["dept_id"] != "ALL" && room.dept_code == params["dept_id"])
           tmp_rooms.append(room) 
         end 
         if params["dept_id"] == "ALL" && room.dept_code != "NONE"

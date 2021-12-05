@@ -13,7 +13,7 @@ class RoomsController < ApplicationController
         lon1 = room.long
         # puts("HERE XYZ")
         # puts(room.name)
-        if isInRadius(user_lat, user_long, lat1, lon1, room_dist_req) || (params["dept_id"].nil? && room.dept_code != "NONE") || ( !params["dept_id"].nil? && params["dept_id"] != "ALL" && room.dept_code == params["dept_id"])
+        if (isInRadius(user_lat, user_long, lat1, lon1, room_dist_req) && room.distance != Float::MAX) || (params["dept_id"].nil? && room.dept_code != "NONE") || (!params["dept_id"].nil? && params["dept_id"] != "ALL" && room.dept_code == params["dept_id"])
           tmp_rooms.append(room) 
         end 
         if params["dept_id"] == "ALL" && room.dept_code != "NONE"
@@ -36,6 +36,7 @@ class RoomsController < ApplicationController
     @departments = Course.distinct.pluck(:department_code).prepend("ALL")
     
     @private_rooms = Room.joins("INNER JOIN participants ON rooms.id = participants.room_id AND participants.user_id = #{current_user.id}").uniq unless not current_user
+
   end
 
   def create
@@ -100,7 +101,7 @@ class RoomsController < ApplicationController
       room_dist_req = room.distance;
       lat1 = room.lat;
       lon1 = room.long;
-      if isInRadius(user_lat, user_long, lat1, lon1, room_dist_req) || (params["dept_id"].nil? && room.dept_code != "NONE") || ( !params["dept_id"].nil? && params["dept_id"] != "ALL" && room.dept_code == params["dept_id"])
+      if (isInRadius(user_lat, user_long, lat1, lon1, room_dist_req) && room.distance != Float::MAX) || (params["dept_id"].nil? && room.dept_code != "NONE") || (!params["dept_id"].nil? && params["dept_id"] != "ALL" && room.dept_code == params["dept_id"])
         tmp_rooms.append(room) 
       end 
       if params["dept_id"] == "ALL" && room.dept_code != "NONE"
@@ -116,9 +117,9 @@ class RoomsController < ApplicationController
 
     @courses = Course.all 
     @departments = Course.distinct.pluck(:department_code).prepend("ALL")
-    if not params["dept_id"].nil?
-      @rooms = @rooms.dept_rooms(params["dept_id"])
-    end
+    # if not params["dept_id"].nil?
+    #   @rooms = @rooms.dept_rooms(params["dept_id"])
+    # end
     render "index"
   end 
   
