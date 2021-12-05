@@ -4,7 +4,7 @@ data: {
   controller: "reset-form", 
   action: "ajax:success->reset-form#reset"
 } do |f| %>
-    <%= f.text_field :content, id: 'chat-text', :autofocus => true, class: "form-control texty", autocomplete: 'off' %>
-    <%= f.submit data: { disable_with: false }, id: 'create-message-btn', class: "btn btn-primary" %>
+    <%= f.text_field :content, id: 'chat-text', :autofocus => true, class: "form-control texty", autocomplete: 'off', required: true %>
+    <%= f.submit "Send", data: { disable_with: false }, id: 'create-message-btn', class: "btn btn-primary" %>
   <% end %>
 </div>
