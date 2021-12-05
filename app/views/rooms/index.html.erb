@@ -36,7 +36,7 @@
         <div>
           <%= turbo_stream_from "rooms" %>
           <div id="rooms">
-            <%= render @private_rooms %>
+            <%= render @private_rooms.reverse %>
             <%= render @rooms.reverse %>
           </div>
         </div>
