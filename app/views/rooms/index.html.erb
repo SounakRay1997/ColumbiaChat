@@ -20,7 +20,7 @@
       </div>
     </div>
     <h5 class="collapsible collapsible-rooms open" >Rooms</h5>
-    <div class="rooms-wrapper">
+    <div class="rooms-wrapper navbar-open">
       <h6 class="collapsible collapsible-newroom">Create New Room</h6>
       <div class="newroom-wrapper collapsed">
         <%= render partial: "layouts/new_room_form" %>
@@ -43,7 +43,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-8 offset-md-4 navbar-open bg-dark text-light chat-window">
+  <div class="navbar-open bg-dark text-light chat-window">
   
     <% if @single_room %>
       <% dis =  " (" + @single_room.getDistanceFromRoom(@single_room, @current_user).round.to_s + " feet away)" %>
@@ -57,7 +57,7 @@
 <%
 =end%>
       <%= turbo_stream_from @single_room %>
-    <div id="messages">
+    <div id="messages" class="navbar-open">
     <%= render @messages %>
     </div>
     <%= render partial: "layouts/new_message_form" %>
@@ -67,6 +67,7 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
+  chatWindowWidthCalculator(true);
   var navIcon = document.querySelector('.navbar-icon');
   var chatRooms = document.querySelector('.chat-rooms');
   var chatWindow = document.querySelector('.chat-window');
@@ -75,6 +76,7 @@
   var multipleSelect = document.querySelector('.hide-multiple')
   var distanceInput = document.querySelector('.room-distance')
   var roomNameInput = document.querySelector('#room_name')
+  var messagesDiv = document.querySelector('#messages')
   var collapsibleUsersButton = document.querySelector('.collapsible-users');
   var collapsibleRoomsButton = document.querySelector('.collapsible-rooms');
   var collapsibleNewRoomButton = document.querySelector('.collapsible-newroom');
@@ -83,12 +85,19 @@
   var usersWrapper = document.querySelector('.users-wrapper');
   var newRoomWrapper = document.querySelector('.newroom-wrapper');
   var searchRoomWrapper = document.querySelector('.searchroom-wrapper');
+  multipleSelect.style.height = '0';
+  multipleSelect.style.visibility = 'hidden';
+  multipleSelect.style.pointerEvents = 'none';
   privateRoom.addEventListener('change', (e) => {
     if(e.target.value == 'No') {
-      multipleSelect.style.display = 'none';
+      multipleSelect.style.height = '0';
+      multipleSelect.style.visibility = 'hidden';
+      multipleSelect.style.pointerEvents = 'none';
       distanceInput.style.display = 'flex';
     } else {
-      multipleSelect.style.display = 'block';
+      multipleSelect.style.height = 'fit-content';
+      multipleSelect.style.visibility = 'initial';
+      multipleSelect.style.pointerEvents = 'all';
       distanceInput.style.display = 'none';
     }
   })
@@ -96,10 +105,12 @@
       if(chatRooms.classList.contains('open')) {
           chatRooms.classList.remove('open')
           navIcon.classList.remove('navbar-open')
-          chatWindow.classList.add('col-md-12')
-          chatWindow.classList.remove('col-md-8')
-          chatWindow.classList.remove('offset-md-4')
+          // chatWindow.classList.add('col-md-12')
+          // chatWindow.classList.remove('col-md-8')
+          // chatWindow.classList.remove('offset-md-4')
           chatWindow.classList.remove('navbar-open')
+          messagesDiv.classList.remove('navbar-open')
+          chatWindowWidthCalculator(false);
           if(newMsgForm != undefined) {
             newMsgForm.classList.remove('navbar-open')
           }
@@ -107,10 +118,12 @@
           chatRooms.classList.add('open')
           navIcon.classList.add('navbar-open')
           chatWindow.classList.add('navbar-open')
-          chatWindow.classList.add('offset-md-4')
-          chatWindow.classList.add('col-md-8')
+          // chatWindow.classList.add('offset-md-4')
+          // chatWindow.classList.add('col-md-8')
           chatWindow.classList.add('navbar-open')
-          chatWindow.classList.remove('col-md-12')
+          // chatWindow.classList.remove('col-md-12')
+          messagesDiv.classList.add('navbar-open')
+          chatWindowWidthCalculator(true);
           if(newMsgForm != undefined) {
             newMsgForm.classList.add('navbar-open')
           }
@@ -153,4 +166,24 @@
           searchRoomWrapper.classList.add('collapsed')
       }
   })
+  if(messagesDiv != null) {
+    console.log('here')
+    messagesDiv.scrollTop = messagesDiv.scrollHeight
+  }
+
+  function chatWindowWidthCalculator(flag) {
+    var chatRooms = document.querySelector('.chat-rooms');
+    var chatWindow = document.querySelector('.chat-window');
+    var sidebar = document.querySelector('.sidebar');
+    console.log(window.innerWidth)
+    console.log(chatRooms.clientWidth)
+    console.log(sidebar.clientWidth)
+    if(flag) { //Navbar open
+      console.log("navbar open")
+      chatWindow.style.width = window.innerWidth - chatRooms.clientWidth - sidebar.clientWidth + "px";
+    } else {
+      console.log("navbar closed")
+      chatWindow.style.width = window.innerWidth - sidebar.clientWidth + "px";
+    }
+  }
 </script>
