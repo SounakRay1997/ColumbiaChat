@@ -19,14 +19,14 @@
         <%= render @users %>
       </div>
     </div>
-    <h5 class="collapsible collapsible-rooms" >Rooms</h5>
-    <div class="rooms-wrapper collapsed">
+    <h5 class="collapsible collapsible-rooms open" >Rooms</h5>
+    <div class="rooms-wrapper">
       <h6 class="collapsible collapsible-newroom">Create New Room</h6>
       <div class="newroom-wrapper collapsed">
         <%= render partial: "layouts/new_room_form" %>
       </div>
 
-      <h6 class="collapsible collapsible-searchroom">Search Room</h6>
+      <h6 class="collapsible collapsible-searchroom open">Search Room</h6>
       <div class="searchroom-wrapper">
         <%= form_tag('/rooms', :method => :get, :class => 'searchroom-form') do %>
           <%= select_tag 'dept_id', options_for_select(@departments.map{|course|["#{course}", course]}), class: 'form-control'%>
@@ -51,7 +51,11 @@
         <% dis = "" %> 
       <% end %> 
       <h4 class="text-center chat-title"><%= @user&.name || @single_room.name %> <%=  dis  %></h4>
-      <hr class="chat-title-hr">  
+      <%
+=begin%>
+ <hr class="chat-title-hr">   
+<%
+=end%>
       <%= turbo_stream_from @single_room %>
     <div id="messages">
     <%= render @messages %>

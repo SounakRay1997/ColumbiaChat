@@ -113,6 +113,8 @@ body {
   padding-left: 80px;
   padding-right: 20px;
   position: relative;
+  z-index: 1;
+  overflow-x: hidden;
 }
 
 .chat-window.navbar-open {
@@ -141,6 +143,17 @@ body {
 }
 .chat-rooms.open {
   transform: translateX(0%);
+}
+
+.chat-title {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  border-bottom: 2px solid #000;
+  padding: 1rem 0;
+  margin-top: 0 !important;
+  background-color: --bg-dark;
+  z-index: 2;
 }
 
 .users-wrapper {
