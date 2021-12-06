@@ -4720,3 +4720,1457 @@ Content-Transfer-Encoding: 7bit
   [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
   [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" IS NULL LIMIT ?[0m  [["LIMIT", 1]]
   [1m[35m (0.0ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "courses"[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "courses" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "course_code" varchar, "course_title" varchar, "class_id" varchar, "course_subtitle" varchar, "department" varchar, "department_code" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "messages"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "messages" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "room_id" integer NOT NULL, "content" text, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_messages_on_room_id" ON "messages" ("room_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_messages_on_user_id" ON "messages" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "participants"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "participants" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer NOT NULL, "room_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_participants_on_room_id" ON "participants" ("room_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_participants_on_user_id" ON "participants" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "rooms"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "rooms" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "is_private" boolean DEFAULT 1, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "lat" float DEFAULT 0.0, "long" float DEFAULT 0.0, "distance" float DEFAULT 0.0, "dept_code" varchar DEFAULT 'NONE')[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "users"[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "users" ("id" integer PRIMARY KEY AUTOINCREMENT NOT NULL, "username" varchar, "email" varchar, "password" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, "email_confirmed" boolean DEFAULT 0, "confirm_token" varchar, "name" varchar, "lat" float DEFAULT 0.0, "long" float DEFAULT 0.0)[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "amessages" ("id" integer NOT NULL PRIMARY KEY, "user_id" integer NOT NULL, "room_id" integer NOT NULL, "content" text DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "tindex_amessages_on_user_id" ON "amessages" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "tindex_amessages_on_room_id" ON "amessages" ("room_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "amessages" ("id","user_id","room_id","content","created_at","updated_at")
+                     SELECT "id","user_id","room_id","content","created_at","updated_at" FROM "messages"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "messages"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "messages" ("id" integer NOT NULL PRIMARY KEY, "user_id" integer NOT NULL, "room_id" integer NOT NULL, "content" text DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_a8db0fb63a"
+FOREIGN KEY ("room_id")
+  REFERENCES "rooms" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "index_messages_on_room_id" ON "messages" ("room_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "index_messages_on_user_id" ON "messages" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "messages" ("id","user_id","room_id","content","created_at","updated_at")
+                     SELECT "id","user_id","room_id","content","created_at","updated_at" FROM "amessages"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "amessages"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "amessages" ("id" integer NOT NULL PRIMARY KEY, "user_id" integer NOT NULL, "room_id" integer NOT NULL, "content" text DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "tindex_amessages_on_user_id" ON "amessages" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "tindex_amessages_on_room_id" ON "amessages" ("room_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "amessages" ("id","user_id","room_id","content","created_at","updated_at")
+                     SELECT "id","user_id","room_id","content","created_at","updated_at" FROM "messages"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "messages"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "messages" ("id" integer NOT NULL PRIMARY KEY, "user_id" integer NOT NULL, "room_id" integer NOT NULL, "content" text DEFAULT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_a8db0fb63a"
+FOREIGN KEY ("room_id")
+  REFERENCES "rooms" ("id")
+, CONSTRAINT "fk_rails_273a25a7a6"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "index_messages_on_room_id" ON "messages" ("room_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "index_messages_on_user_id" ON "messages" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "messages" ("id","user_id","room_id","content","created_at","updated_at")
+                     SELECT "id","user_id","room_id","content","created_at","updated_at" FROM "amessages"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "amessages"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aparticipants" ("id" integer NOT NULL PRIMARY KEY, "user_id" integer NOT NULL, "room_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "tindex_aparticipants_on_user_id" ON "aparticipants" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "tindex_aparticipants_on_room_id" ON "aparticipants" ("room_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "aparticipants" ("id","user_id","room_id","created_at","updated_at")
+                     SELECT "id","user_id","room_id","created_at","updated_at" FROM "participants"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "participants"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "participants" ("id" integer NOT NULL PRIMARY KEY, "user_id" integer NOT NULL, "room_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_08123987c8"
+FOREIGN KEY ("room_id")
+  REFERENCES "rooms" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "index_participants_on_room_id" ON "participants" ("room_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "index_participants_on_user_id" ON "participants" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "participants" ("id","user_id","room_id","created_at","updated_at")
+                     SELECT "id","user_id","room_id","created_at","updated_at" FROM "aparticipants"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "aparticipants"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = ON[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = OFF[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TEMPORARY TABLE "aparticipants" ("id" integer NOT NULL PRIMARY KEY, "user_id" integer NOT NULL, "room_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "tindex_aparticipants_on_user_id" ON "aparticipants" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "tindex_aparticipants_on_room_id" ON "aparticipants" ("room_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "aparticipants" ("id","user_id","room_id","created_at","updated_at")
+                     SELECT "id","user_id","room_id","created_at","updated_at" FROM "participants"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE "participants"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE TABLE "participants" ("id" integer NOT NULL PRIMARY KEY, "user_id" integer NOT NULL, "room_id" integer NOT NULL, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL, CONSTRAINT "fk_rails_08123987c8"
+FOREIGN KEY ("room_id")
+  REFERENCES "rooms" ("id")
+, CONSTRAINT "fk_rails_b9a3c50f15"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "index_participants_on_room_id" ON "participants" ("room_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[35mCREATE  INDEX "index_participants_on_user_id" ON "participants" ("user_id")[0m
+  [1m[35m (0.0ms)[0m  [1m[32mINSERT INTO "participants" ("id","user_id","room_id","created_at","updated_at")
+                     SELECT "id","user_id","room_id","created_at","updated_at" FROM "aparticipants"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mDROP TABLE "aparticipants"[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA defer_foreign_keys = 0[0m
+  [1m[35m (0.0ms)[0m  [1m[35mPRAGMA foreign_keys = 1[0m
+  [1m[35m (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20211117194103)[0m
+  [1m[35m (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20211029235656),
+(20211029235937),
+(20211030105122),
+(20211030111236),
+(20211114041914),
+(20211114181022),
+(20211115175837),
+(20211115214729),
+(20211116025517),
+(20211116030008);
+
+[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime(6) NOT NULL, "updated_at" datetime(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "test"], ["created_at", "2021-12-06 00:23:30.482663"], ["updated_at", "2021-12-06 00:23:30.482663"]]
+  [1m[35m (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mActiveRecord::InternalMetadata Load (0.0ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.1ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "schema_sha1"], ["value", "d11d62b5fa6dc90564eb88ae84e39f0d6ba23804"], ["created_at", "2021-12-06 00:23:30.483746"], ["updated_at", "2021-12-06 00:23:30.483746"]]
+  [1m[35m (0.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRoom Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "rooms" WHERE "rooms"."name" = ? LIMIT ?[0m  [["name", "Food lovers"], ["LIMIT", 1]]
+  [1m[36mRoom Create (0.2ms)[0m  [1m[32mINSERT INTO "rooms" ("name", "is_private", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Food lovers"], ["is_private", 0], ["created_at", "2021-10-25 09:53:42"], ["updated_at", "2021-10-29 10:34:32"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered rooms/_room.html.erb (Duration: 0.7ms | Allocations: 564)
+[ActionCable] Broadcasting to Z2lkOi8vY29sdW1iaWEtY2hhdC9Sb29tLzE: "<turbo-stream action=\"append\" target=\"rooms\"><template><style>\n\n\n</style>\n<div style=\"color:#ff8f00;\">\n<span class=\"material-icons\">\n  lock_open\n  </span> <a class=\"uppy\" href=\"/rooms/1\">Food lovers</a>\n\n\n\n</div>\n</template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRoom Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "rooms" WHERE "rooms"."name" = ? LIMIT ?[0m  [["name", "music"], ["LIMIT", 1]]
+  [1m[36mRoom Create (0.0ms)[0m  [1m[32mINSERT INTO "rooms" ("name", "is_private", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "music"], ["is_private", 0], ["created_at", "2021-10-26 10:34:32"], ["updated_at", "2021-10-30 14:45:54"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered rooms/_room.html.erb (Duration: 0.1ms | Allocations: 51)
+[ActionCable] Broadcasting to Z2lkOi8vY29sdW1iaWEtY2hhdC9Sb29tLzI: "<turbo-stream action=\"append\" target=\"rooms\"><template><style>\n\n\n</style>\n<div style=\"color:#ff8f00;\">\n<span class=\"material-icons\">\n  lock_open\n  </span> <a class=\"uppy\" href=\"/rooms/2\">music</a>\n\n\n\n</div>\n</template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRoom Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "rooms" WHERE "rooms"."name" = ? LIMIT ?[0m  [["name", "ice skating"], ["LIMIT", 1]]
+  [1m[36mRoom Create (0.0ms)[0m  [1m[32mINSERT INTO "rooms" ("name", "is_private", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "ice skating"], ["is_private", 0], ["created_at", "2021-10-26 13:32:37"], ["updated_at", "2021-10-30 13:32:37"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered rooms/_room.html.erb (Duration: 0.0ms | Allocations: 51)
+[ActionCable] Broadcasting to Z2lkOi8vY29sdW1iaWEtY2hhdC9Sb29tLzM: "<turbo-stream action=\"append\" target=\"rooms\"><template><style>\n\n\n</style>\n<div style=\"color:#ff8f00;\">\n<span class=\"material-icons\">\n  lock_open\n  </span> <a class=\"uppy\" href=\"/rooms/3\">ice skating</a>\n\n\n\n</div>\n</template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRoom Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "rooms" WHERE "rooms"."name" = ? LIMIT ?[0m  [["name", "halloween party"], ["LIMIT", 1]]
+  [1m[36mRoom Create (0.0ms)[0m  [1m[32mINSERT INTO "rooms" ("name", "is_private", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "halloween party"], ["is_private", 0], ["created_at", "2021-10-27 14:45:54"], ["updated_at", "2021-10-31 10:34:32"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered rooms/_room.html.erb (Duration: 0.0ms | Allocations: 51)
+[ActionCable] Broadcasting to Z2lkOi8vY29sdW1iaWEtY2hhdC9Sb29tLzQ: "<turbo-stream action=\"append\" target=\"rooms\"><template><style>\n\n\n</style>\n<div style=\"color:#ff8f00;\">\n<span class=\"material-icons\">\n  lock_open\n  </span> <a class=\"uppy\" href=\"/rooms/4\">halloween party</a>\n\n\n\n</div>\n</template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Umang_Raj"], ["email", "ur1236@columbia.edu"], ["password", "Lol@123"], ["created_at", "2021-12-06 00:23:30.584563"], ["updated_at", "2021-12-06 00:23:30.584563"], ["email_confirmed", 1], ["confirm_token", "mHms7a38VjI5lzaTRM1aAg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.3ms | Allocations: 145)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/1\">/users/1</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Chinmay_Garg"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "cg3286@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Chinmay_Garg"], ["email", "cg3286@columbia.edu"], ["password", "Password@123"], ["created_at", "2021-12-06 00:23:30.586029"], ["updated_at", "2021-12-06 00:23:30.586029"], ["email_confirmed", 1], ["confirm_token", "hfaHaApX56kCVnXvB9eVBw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/2\">/users/2</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Harrison_Groll"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "hsg2136@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Harrison_Groll"], ["email", "hsg2136@columbia.edu"], ["password", "Lol@321"], ["created_at", "2021-12-06 00:23:30.586872"], ["updated_at", "2021-12-06 00:23:30.586872"], ["email_confirmed", 1], ["confirm_token", "8p-CIjawJTZsVHUPdqneRw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/3\">/users/3</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Sounak_Ray"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sr3846@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Sounak_Ray"], ["email", "sr3846@columbia.edu"], ["password", "Password@321"], ["created_at", "2021-12-06 00:23:30.587665"], ["updated_at", "2021-12-06 00:23:30.587665"], ["email_confirmed", 1], ["confirm_token", "Sp5DRSNkGTCOFC4KcclNTA"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/4\">/users/4</a> </div></template></turbo-stream>"
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:30 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 10.5ms | Allocations: 1687)
+[Webpacker] Compiling...
+[Webpacker] Compiled all packs in /Users/sounakray/RubymineProjects/ESaaS-Project-demo-heroku/public/packs-test
+[Webpacker] Hash: 511d6606289cdd0fe009
+Version: webpack 4.46.0
+Time: 390ms
+Built at: 12/05/2021 7:23:31 PM
+                                                   Asset       Size               Chunks                         Chunk Names
+                  js/application-cb1f70f9338e19a4ef69.js    443 KiB          application  [emitted] [immutable]  application
+              js/application-cb1f70f9338e19a4ef69.js.map    498 KiB          application  [emitted] [dev]        application
+    js/vendors~actioncable-a9a439982dea30932847.chunk.js   35.5 KiB  vendors~actioncable  [emitted] [immutable]  vendors~actioncable
+js/vendors~actioncable-a9a439982dea30932847.chunk.js.map     32 KiB  vendors~actioncable  [emitted] [dev]        vendors~actioncable
+                                           manifest.json  584 bytes                       [emitted]              
+Entrypoint application = js/application-cb1f70f9338e19a4ef69.js js/application-cb1f70f9338e19a4ef69.js.map
+[./app/javascript/channels sync recursive _channel\.js$] ./app/javascript/channels sync _channel\.js$ 160 bytes {application} [built]
+[./app/javascript/channels/index.js] 211 bytes {application} [built]
+[./app/javascript/controllers/application.js] 245 bytes {application} [built]
+[./app/javascript/controllers/hello_controller.js] 3.09 KiB {application} [built]
+[./app/javascript/controllers/index.js] 389 bytes {application} [built]
+[./app/javascript/controllers/reset_form_controller.js] 3.28 KiB {application} [built]
+[./app/javascript/packs/application.js] 805 bytes {application} [built]
+[./node_modules/webpack/buildin/module.js] (webpack)/buildin/module.js 552 bytes {application} [built]
+    + 19 hidden modules
+
+Completed 200 OK in 1193ms (Views: 1190.8ms | ActiveRecord: 0.0ms | Allocations: 43944)
+Started POST "/signin" for 127.0.0.1 at 2021-12-05 19:23:31 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"session"=>{"username"=>"Umang_Raj", "password"=>"[FILTERED]"}, "commit"=>"Sign In"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? AND "users"."id" != ? LIMIT ?[0m  [["username", "Umang_Raj"], ["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms | Allocations: 1412)
+Started GET "/" for 127.0.0.1 at 2021-12-05 19:23:31 -0500
+Processing by RoomsController#index as HTML
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRoom Load (0.0ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" WHERE "rooms"."is_private" = ?[0m  [["is_private", 0]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "users"."name" FROM "users" WHERE "users"."id" != ?[0m  [["id", 1]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT DISTINCT "courses"."department_code" FROM "courses"[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRoom Load (0.1ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" INNER JOIN participants ON rooms.id = participants.room_id AND participants.user_id = 1[0m
+  Rendering rooms/index.html.erb within layouts/application
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" != ?[0m  [["id", 1]]
+  Rendered collection of users/_user.html.erb [3 times] (Duration: 0.2ms | Allocations: 218)
+  Rendered layouts/_new_room_form.html.erb (Duration: 2.9ms | Allocations: 2959)
+  Rendered collection of templates [0 times] (Duration: 0.0ms | Allocations: 3)
+  Rendered collection of rooms/_room.html.erb [4 times] (Duration: 0.3ms | Allocations: 444)
+  Rendered rooms/index.html.erb within layouts/application (Duration: 5.2ms | Allocations: 5785)
+[Webpacker] Everything's up-to-date. Nothing to do
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Completed 200 OK in 17ms (Views: 6.9ms | ActiveRecord: 0.6ms | Allocations: 18074)
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRoom Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "rooms" WHERE "rooms"."name" = ? LIMIT ?[0m  [["name", "Food lovers"], ["LIMIT", 1]]
+  [1m[36mRoom Create (0.2ms)[0m  [1m[32mINSERT INTO "rooms" ("name", "is_private", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Food lovers"], ["is_private", 0], ["created_at", "2021-10-25 09:53:42"], ["updated_at", "2021-10-29 10:34:32"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered rooms/_room.html.erb (Duration: 0.1ms | Allocations: 57)
+[ActionCable] Broadcasting to Z2lkOi8vY29sdW1iaWEtY2hhdC9Sb29tLzE: "<turbo-stream action=\"append\" target=\"rooms\"><template><style>\n\n\n</style>\n<div style=\"color:#ff8f00;\">\n<span class=\"material-icons\">\n  lock_open\n  </span> <a class=\"uppy\" href=\"/rooms/1\">Food lovers</a>\n\n\n\n</div>\n</template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRoom Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "rooms" WHERE "rooms"."name" = ? LIMIT ?[0m  [["name", "music"], ["LIMIT", 1]]
+  [1m[36mRoom Create (0.1ms)[0m  [1m[32mINSERT INTO "rooms" ("name", "is_private", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "music"], ["is_private", 0], ["created_at", "2021-10-26 10:34:32"], ["updated_at", "2021-10-30 14:45:54"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered rooms/_room.html.erb (Duration: 0.1ms | Allocations: 51)
+[ActionCable] Broadcasting to Z2lkOi8vY29sdW1iaWEtY2hhdC9Sb29tLzI: "<turbo-stream action=\"append\" target=\"rooms\"><template><style>\n\n\n</style>\n<div style=\"color:#ff8f00;\">\n<span class=\"material-icons\">\n  lock_open\n  </span> <a class=\"uppy\" href=\"/rooms/2\">music</a>\n\n\n\n</div>\n</template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRoom Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "rooms" WHERE "rooms"."name" = ? LIMIT ?[0m  [["name", "ice skating"], ["LIMIT", 1]]
+  [1m[36mRoom Create (0.0ms)[0m  [1m[32mINSERT INTO "rooms" ("name", "is_private", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "ice skating"], ["is_private", 0], ["created_at", "2021-10-26 13:32:37"], ["updated_at", "2021-10-30 13:32:37"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered rooms/_room.html.erb (Duration: 0.1ms | Allocations: 51)
+[ActionCable] Broadcasting to Z2lkOi8vY29sdW1iaWEtY2hhdC9Sb29tLzM: "<turbo-stream action=\"append\" target=\"rooms\"><template><style>\n\n\n</style>\n<div style=\"color:#ff8f00;\">\n<span class=\"material-icons\">\n  lock_open\n  </span> <a class=\"uppy\" href=\"/rooms/3\">ice skating</a>\n\n\n\n</div>\n</template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRoom Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "rooms" WHERE "rooms"."name" = ? LIMIT ?[0m  [["name", "halloween party"], ["LIMIT", 1]]
+  [1m[36mRoom Create (0.0ms)[0m  [1m[32mINSERT INTO "rooms" ("name", "is_private", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "halloween party"], ["is_private", 0], ["created_at", "2021-10-27 14:45:54"], ["updated_at", "2021-10-31 10:34:32"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered rooms/_room.html.erb (Duration: 0.1ms | Allocations: 51)
+[ActionCable] Broadcasting to Z2lkOi8vY29sdW1iaWEtY2hhdC9Sb29tLzQ: "<turbo-stream action=\"append\" target=\"rooms\"><template><style>\n\n\n</style>\n<div style=\"color:#ff8f00;\">\n<span class=\"material-icons\">\n  lock_open\n  </span> <a class=\"uppy\" href=\"/rooms/4\">halloween party</a>\n\n\n\n</div>\n</template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Umang_Raj"], ["email", "ur1236@columbia.edu"], ["password", "Lol@123"], ["created_at", "2021-12-06 00:23:31.823899"], ["updated_at", "2021-12-06 00:23:31.823899"], ["email_confirmed", 1], ["confirm_token", "mnXSEbqgmLjWeGvYLJUSXg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 41)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/1\">/users/1</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Chinmay_Garg"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "cg3286@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Chinmay_Garg"], ["email", "cg3286@columbia.edu"], ["password", "Password@123"], ["created_at", "2021-12-06 00:23:31.824884"], ["updated_at", "2021-12-06 00:23:31.824884"], ["email_confirmed", 1], ["confirm_token", "_b6oBi7btzPNDGEcLsAR9Q"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/2\">/users/2</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Harrison_Groll"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "hsg2136@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Harrison_Groll"], ["email", "hsg2136@columbia.edu"], ["password", "Lol@321"], ["created_at", "2021-12-06 00:23:31.825856"], ["updated_at", "2021-12-06 00:23:31.825856"], ["email_confirmed", 1], ["confirm_token", "12WWBcvHXWY1rte7dFdR5Q"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/3\">/users/3</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Sounak_Ray"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sr3846@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Sounak_Ray"], ["email", "sr3846@columbia.edu"], ["password", "Password@321"], ["created_at", "2021-12-06 00:23:31.827018"], ["updated_at", "2021-12-06 00:23:31.827018"], ["email_confirmed", 1], ["confirm_token", "vklnZTATTxKrlecGpYcVfw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/4\">/users/4</a> </div></template></turbo-stream>"
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:31 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.3ms | Allocations: 353)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 2ms (Views: 1.4ms | ActiveRecord: 0.0ms | Allocations: 2125)
+Started POST "/signin" for 127.0.0.1 at 2021-12-05 19:23:31 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"session"=>{"username"=>"Umang_Raj", "password"=>"[FILTERED]"}, "commit"=>"Sign In"}
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? AND "users"."id" != ? LIMIT ?[0m  [["username", "Umang_Raj"], ["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms | Allocations: 1171)
+Started GET "/" for 127.0.0.1 at 2021-12-05 19:23:31 -0500
+Processing by RoomsController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRoom Load (0.0ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" WHERE "rooms"."is_private" = ?[0m  [["is_private", 0]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "users"."name" FROM "users" WHERE "users"."id" != ?[0m  [["id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT DISTINCT "courses"."department_code" FROM "courses"[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRoom Load (0.1ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" INNER JOIN participants ON rooms.id = participants.room_id AND participants.user_id = 1[0m
+  Rendering rooms/index.html.erb within layouts/application
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" != ?[0m  [["id", 1]]
+  Rendered collection of users/_user.html.erb [3 times] (Duration: 0.4ms | Allocations: 113)
+  Rendered layouts/_new_room_form.html.erb (Duration: 1.1ms | Allocations: 818)
+  Rendered collection of templates [0 times] (Duration: 0.0ms | Allocations: 3)
+  Rendered collection of rooms/_room.html.erb [4 times] (Duration: 0.5ms | Allocations: 196)
+  Rendered rooms/index.html.erb within layouts/application (Duration: 2.5ms | Allocations: 1855)
+[Webpacker] Everything's up-to-date. Nothing to do
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Completed 200 OK in 8ms (Views: 5.4ms | ActiveRecord: 0.2ms | Allocations: 5244)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRoom Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "rooms" WHERE "rooms"."name" = ? LIMIT ?[0m  [["name", "Food Lovers"], ["LIMIT", 1]]
+  [1m[36mRoom Create (0.2ms)[0m  [1m[32mINSERT INTO "rooms" ("name", "is_private", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Food Lovers"], ["is_private", 0], ["created_at", "2021-12-06 00:23:31.853586"], ["updated_at", "2021-12-06 00:23:31.853586"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered rooms/_room.html.erb (Duration: 0.1ms | Allocations: 51)
+[ActionCable] Broadcasting to Z2lkOi8vY29sdW1iaWEtY2hhdC9Sb29tLzE: "<turbo-stream action=\"append\" target=\"rooms\"><template><style>\n\n\n</style>\n<div style=\"color:#ff8f00;\">\n<span class=\"material-icons\">\n  lock_open\n  </span> <a class=\"uppy\" href=\"/rooms/1\">Food Lovers</a>\n\n\n\n</div>\n</template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRoom Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "rooms" WHERE "rooms"."name" = ? LIMIT ?[0m  [["name", "music"], ["LIMIT", 1]]
+  [1m[36mRoom Create (0.0ms)[0m  [1m[32mINSERT INTO "rooms" ("name", "is_private", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "music"], ["is_private", 0], ["created_at", "2021-12-06 00:23:31.855500"], ["updated_at", "2021-12-06 00:23:31.855500"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered rooms/_room.html.erb (Duration: 0.1ms | Allocations: 51)
+[ActionCable] Broadcasting to Z2lkOi8vY29sdW1iaWEtY2hhdC9Sb29tLzI: "<turbo-stream action=\"append\" target=\"rooms\"><template><style>\n\n\n</style>\n<div style=\"color:#ff8f00;\">\n<span class=\"material-icons\">\n  lock_open\n  </span> <a class=\"uppy\" href=\"/rooms/2\">music</a>\n\n\n\n</div>\n</template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRoom Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "rooms" WHERE "rooms"."name" = ? LIMIT ?[0m  [["name", "ice skating"], ["LIMIT", 1]]
+  [1m[36mRoom Create (0.0ms)[0m  [1m[32mINSERT INTO "rooms" ("name", "is_private", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "ice skating"], ["is_private", 0], ["created_at", "2021-12-06 00:23:31.856731"], ["updated_at", "2021-12-06 00:23:31.856731"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered rooms/_room.html.erb (Duration: 0.1ms | Allocations: 51)
+[ActionCable] Broadcasting to Z2lkOi8vY29sdW1iaWEtY2hhdC9Sb29tLzM: "<turbo-stream action=\"append\" target=\"rooms\"><template><style>\n\n\n</style>\n<div style=\"color:#ff8f00;\">\n<span class=\"material-icons\">\n  lock_open\n  </span> <a class=\"uppy\" href=\"/rooms/3\">ice skating</a>\n\n\n\n</div>\n</template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRoom Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "rooms" WHERE "rooms"."name" = ? LIMIT ?[0m  [["name", "halloween party"], ["LIMIT", 1]]
+  [1m[36mRoom Create (0.0ms)[0m  [1m[32mINSERT INTO "rooms" ("name", "is_private", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "halloween party"], ["is_private", 0], ["created_at", "2021-12-06 00:23:31.857699"], ["updated_at", "2021-12-06 00:23:31.857699"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered rooms/_room.html.erb (Duration: 0.1ms | Allocations: 51)
+[ActionCable] Broadcasting to Z2lkOi8vY29sdW1iaWEtY2hhdC9Sb29tLzQ: "<turbo-stream action=\"append\" target=\"rooms\"><template><style>\n\n\n</style>\n<div style=\"color:#ff8f00;\">\n<span class=\"material-icons\">\n  lock_open\n  </span> <a class=\"uppy\" href=\"/rooms/4\">halloween party</a>\n\n\n\n</div>\n</template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Umang_Raj"], ["email", "ur1236@columbia.edu"], ["password", "Lol@123"], ["created_at", "2021-12-06 00:23:31.860463"], ["updated_at", "2021-12-06 00:23:31.860463"], ["email_confirmed", 1], ["confirm_token", "fccLOFqO56G2oMz7CYPFEg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.3ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/1\">/users/1</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Chinmay_Garg"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "cg3286@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Chinmay_Garg"], ["email", "cg3286@columbia.edu"], ["password", "Password@123"], ["created_at", "2021-12-06 00:23:31.862124"], ["updated_at", "2021-12-06 00:23:31.862124"], ["email_confirmed", 1], ["confirm_token", "x7bd6gpf9AgRxXP0UmPCQw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/2\">/users/2</a> </div></template></turbo-stream>"
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Harrison_Groll"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "hsg2136@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Harrison_Groll"], ["email", "hsg2136@columbia.edu"], ["password", "Lol@321"], ["created_at", "2021-12-06 00:23:31.864526"], ["updated_at", "2021-12-06 00:23:31.864526"], ["email_confirmed", 1], ["confirm_token", "eNKhDQ7OdBTLILbQKGNZnQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/3\">/users/3</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Sounak_Ray"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sr3846@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Sounak_Ray"], ["email", "sr3846@columbia.edu"], ["password", "Password@321"], ["created_at", "2021-12-06 00:23:31.867242"], ["updated_at", "2021-12-06 00:23:31.867242"], ["email_confirmed", 1], ["confirm_token", "O3BeIuIT3UXeiwcrHfzk8g"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/4\">/users/4</a> </div></template></turbo-stream>"
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:31 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.3ms | Allocations: 345)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 3ms (Views: 2.9ms | ActiveRecord: 0.0ms | Allocations: 2114)
+Started POST "/signin" for 127.0.0.1 at 2021-12-05 19:23:31 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"session"=>{"username"=>"Umang_Raj", "password"=>"[FILTERED]"}, "commit"=>"Sign In"}
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? AND "users"."id" != ? LIMIT ?[0m  [["username", "Umang_Raj"], ["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms | Allocations: 1171)
+Started GET "/" for 127.0.0.1 at 2021-12-05 19:23:31 -0500
+Processing by RoomsController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRoom Load (0.0ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" WHERE "rooms"."is_private" = ?[0m  [["is_private", 0]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "users"."name" FROM "users" WHERE "users"."id" != ?[0m  [["id", 1]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT DISTINCT "courses"."department_code" FROM "courses"[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRoom Load (0.1ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" INNER JOIN participants ON rooms.id = participants.room_id AND participants.user_id = 1[0m
+  Rendering rooms/index.html.erb within layouts/application
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" != ?[0m  [["id", 1]]
+  Rendered collection of users/_user.html.erb [3 times] (Duration: 0.1ms | Allocations: 112)
+  Rendered layouts/_new_room_form.html.erb (Duration: 1.2ms | Allocations: 815)
+  Rendered collection of templates [0 times] (Duration: 0.0ms | Allocations: 3)
+  Rendered collection of rooms/_room.html.erb [4 times] (Duration: 0.2ms | Allocations: 196)
+  Rendered rooms/index.html.erb within layouts/application (Duration: 2.8ms | Allocations: 1849)
+[Webpacker] Everything's up-to-date. Nothing to do
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Completed 200 OK in 8ms (Views: 4.8ms | ActiveRecord: 0.3ms | Allocations: 5229)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRoom Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "rooms" WHERE "rooms"."name" = ? LIMIT ?[0m  [["name", "Food Lovers"], ["LIMIT", 1]]
+  [1m[36mRoom Create (0.2ms)[0m  [1m[32mINSERT INTO "rooms" ("name", "is_private", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "Food Lovers"], ["is_private", 0], ["created_at", "2021-12-06 00:23:31.900781"], ["updated_at", "2021-12-06 00:23:31.900781"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered rooms/_room.html.erb (Duration: 0.1ms | Allocations: 51)
+[ActionCable] Broadcasting to Z2lkOi8vY29sdW1iaWEtY2hhdC9Sb29tLzE: "<turbo-stream action=\"append\" target=\"rooms\"><template><style>\n\n\n</style>\n<div style=\"color:#ff8f00;\">\n<span class=\"material-icons\">\n  lock_open\n  </span> <a class=\"uppy\" href=\"/rooms/1\">Food Lovers</a>\n\n\n\n</div>\n</template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRoom Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "rooms" WHERE "rooms"."name" = ? LIMIT ?[0m  [["name", "music"], ["LIMIT", 1]]
+  [1m[36mRoom Create (0.0ms)[0m  [1m[32mINSERT INTO "rooms" ("name", "is_private", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "music"], ["is_private", 0], ["created_at", "2021-12-06 00:23:31.902378"], ["updated_at", "2021-12-06 00:23:31.902378"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered rooms/_room.html.erb (Duration: 0.1ms | Allocations: 51)
+[ActionCable] Broadcasting to Z2lkOi8vY29sdW1iaWEtY2hhdC9Sb29tLzI: "<turbo-stream action=\"append\" target=\"rooms\"><template><style>\n\n\n</style>\n<div style=\"color:#ff8f00;\">\n<span class=\"material-icons\">\n  lock_open\n  </span> <a class=\"uppy\" href=\"/rooms/2\">music</a>\n\n\n\n</div>\n</template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRoom Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "rooms" WHERE "rooms"."name" = ? LIMIT ?[0m  [["name", "ice skating"], ["LIMIT", 1]]
+  [1m[36mRoom Create (0.0ms)[0m  [1m[32mINSERT INTO "rooms" ("name", "is_private", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "ice skating"], ["is_private", 0], ["created_at", "2021-12-06 00:23:31.903231"], ["updated_at", "2021-12-06 00:23:31.903231"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered rooms/_room.html.erb (Duration: 0.1ms | Allocations: 51)
+[ActionCable] Broadcasting to Z2lkOi8vY29sdW1iaWEtY2hhdC9Sb29tLzM: "<turbo-stream action=\"append\" target=\"rooms\"><template><style>\n\n\n</style>\n<div style=\"color:#ff8f00;\">\n<span class=\"material-icons\">\n  lock_open\n  </span> <a class=\"uppy\" href=\"/rooms/3\">ice skating</a>\n\n\n\n</div>\n</template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mRoom Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "rooms" WHERE "rooms"."name" = ? LIMIT ?[0m  [["name", "halloween party"], ["LIMIT", 1]]
+  [1m[36mRoom Create (0.0ms)[0m  [1m[32mINSERT INTO "rooms" ("name", "is_private", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["name", "halloween party"], ["is_private", 0], ["created_at", "2021-12-06 00:23:31.904517"], ["updated_at", "2021-12-06 00:23:31.904517"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered rooms/_room.html.erb (Duration: 0.1ms | Allocations: 51)
+[ActionCable] Broadcasting to Z2lkOi8vY29sdW1iaWEtY2hhdC9Sb29tLzQ: "<turbo-stream action=\"append\" target=\"rooms\"><template><style>\n\n\n</style>\n<div style=\"color:#ff8f00;\">\n<span class=\"material-icons\">\n  lock_open\n  </span> <a class=\"uppy\" href=\"/rooms/4\">halloween party</a>\n\n\n\n</div>\n</template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Umang_Raj"], ["email", "ur1236@columbia.edu"], ["password", "Lol@123"], ["created_at", "2021-12-06 00:23:31.918878"], ["updated_at", "2021-12-06 00:23:31.918878"], ["email_confirmed", 1], ["confirm_token", "x5zIBCDcNRVt55rhuq27Uw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/1\">/users/1</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Chinmay_Garg"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "cg3286@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Chinmay_Garg"], ["email", "cg3286@columbia.edu"], ["password", "Password@123"], ["created_at", "2021-12-06 00:23:31.920465"], ["updated_at", "2021-12-06 00:23:31.920465"], ["email_confirmed", 1], ["confirm_token", "R2R69klkWg3ZMvauLIXmFA"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/2\">/users/2</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Harrison_Groll"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "hsg2136@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Harrison_Groll"], ["email", "hsg2136@columbia.edu"], ["password", "Lol@321"], ["created_at", "2021-12-06 00:23:31.921424"], ["updated_at", "2021-12-06 00:23:31.921424"], ["email_confirmed", 1], ["confirm_token", "sY0rJHS0UWhwROdp8aURUw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/3\">/users/3</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Sounak_Ray"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sr3846@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Sounak_Ray"], ["email", "sr3846@columbia.edu"], ["password", "Password@321"], ["created_at", "2021-12-06 00:23:31.922317"], ["updated_at", "2021-12-06 00:23:31.922317"], ["email_confirmed", 1], ["confirm_token", "mihSIv3D1xdI8ihj2knBIQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/4\">/users/4</a> </div></template></turbo-stream>"
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:31 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.3ms | Allocations: 345)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 2ms (Views: 1.4ms | ActiveRecord: 0.0ms | Allocations: 2116)
+Started POST "/signin" for 127.0.0.1 at 2021-12-05 19:23:31 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"session"=>{"username"=>"Umang_Raj", "password"=>"[FILTERED]"}, "commit"=>"Sign In"}
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? AND "users"."id" != ? LIMIT ?[0m  [["username", "Umang_Raj"], ["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 1ms (ActiveRecord: 0.2ms | Allocations: 1171)
+Started GET "/" for 127.0.0.1 at 2021-12-05 19:23:31 -0500
+Processing by RoomsController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRoom Load (0.0ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" WHERE "rooms"."is_private" = ?[0m  [["is_private", 0]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "users"."name" FROM "users" WHERE "users"."id" != ?[0m  [["id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT DISTINCT "courses"."department_code" FROM "courses"[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRoom Load (0.1ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" INNER JOIN participants ON rooms.id = participants.room_id AND participants.user_id = 1[0m
+  Rendering rooms/index.html.erb within layouts/application
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" != ?[0m  [["id", 1]]
+  Rendered collection of users/_user.html.erb [3 times] (Duration: 0.1ms | Allocations: 112)
+  Rendered layouts/_new_room_form.html.erb (Duration: 0.5ms | Allocations: 815)
+  Rendered collection of templates [0 times] (Duration: 0.0ms | Allocations: 3)
+  Rendered collection of rooms/_room.html.erb [4 times] (Duration: 0.1ms | Allocations: 196)
+  Rendered rooms/index.html.erb within layouts/application (Duration: 1.3ms | Allocations: 1849)
+[Webpacker] Everything's up-to-date. Nothing to do
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Completed 200 OK in 4ms (Views: 2.6ms | ActiveRecord: 0.2ms | Allocations: 5234)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Umang_Raj"], ["email", "ur1236@columbia.edu"], ["password", "Lol@123"], ["created_at", "2021-12-06 00:23:31.938543"], ["updated_at", "2021-12-06 00:23:31.938543"], ["email_confirmed", 1], ["confirm_token", "54ptBJcIEvaVSysh4c6R3w"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/1\">/users/1</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Chinmay_Garg"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "cg3286@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Chinmay_Garg"], ["email", "cg3286@columbia.edu"], ["password", "Password@123"], ["created_at", "2021-12-06 00:23:31.939861"], ["updated_at", "2021-12-06 00:23:31.939861"], ["email_confirmed", 1], ["confirm_token", "tWphy0uty9njAfpt9cCyhw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/2\">/users/2</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Harrison_Groll"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "hsg2136@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Harrison_Groll"], ["email", "hsg2136@columbia.edu"], ["password", "Lol@321"], ["created_at", "2021-12-06 00:23:31.940755"], ["updated_at", "2021-12-06 00:23:31.940755"], ["email_confirmed", 1], ["confirm_token", "aDZVdkhwt3ESARcoxI-BDw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/3\">/users/3</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Sounak_Ray"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sr3846@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Sounak_Ray"], ["email", "sr3846@columbia.edu"], ["password", "Password@321"], ["created_at", "2021-12-06 00:23:31.941612"], ["updated_at", "2021-12-06 00:23:31.941612"], ["email_confirmed", 1], ["confirm_token", "vzNBLV5e1P50IGCjyJadTQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/4\">/users/4</a> </div></template></turbo-stream>"
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:31 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.3ms | Allocations: 345)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 2ms (Views: 1.4ms | ActiveRecord: 0.0ms | Allocations: 2114)
+Started POST "/signin" for 127.0.0.1 at 2021-12-05 19:23:31 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"session"=>{"username"=>"Umang_Raj", "password"=>"[FILTERED]"}, "commit"=>"Sign In"}
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? AND "users"."id" != ? LIMIT ?[0m  [["username", "Umang_Raj"], ["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 1ms (ActiveRecord: 0.2ms | Allocations: 1171)
+Started GET "/" for 127.0.0.1 at 2021-12-05 19:23:31 -0500
+Processing by RoomsController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRoom Load (0.0ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" WHERE "rooms"."is_private" = ?[0m  [["is_private", 0]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "users"."name" FROM "users" WHERE "users"."id" != ?[0m  [["id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT DISTINCT "courses"."department_code" FROM "courses"[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRoom Load (0.1ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" INNER JOIN participants ON rooms.id = participants.room_id AND participants.user_id = 1[0m
+  Rendering rooms/index.html.erb within layouts/application
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" != ?[0m  [["id", 1]]
+  Rendered collection of users/_user.html.erb [3 times] (Duration: 0.1ms | Allocations: 112)
+  Rendered layouts/_new_room_form.html.erb (Duration: 0.5ms | Allocations: 815)
+  Rendered collection of templates [0 times] (Duration: 0.0ms | Allocations: 3)
+  Rendered collection of templates [0 times] (Duration: 0.0ms | Allocations: 3)
+  Rendered rooms/index.html.erb within layouts/application (Duration: 1.1ms | Allocations: 1617)
+[Webpacker] Everything's up-to-date. Nothing to do
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Completed 200 OK in 4ms (Views: 2.5ms | ActiveRecord: 0.2ms | Allocations: 4874)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Umang_Raj"], ["email", "ur1236@columbia.edu"], ["password", "Lol@123"], ["created_at", "2021-12-06 00:23:31.959682"], ["updated_at", "2021-12-06 00:23:31.959682"], ["email_confirmed", 1], ["confirm_token", "0EmhfX2VBZJWWp6T7p88_Q"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/1\">/users/1</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Chinmay_Garg"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "cg3286@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.6ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Chinmay_Garg"], ["email", "cg3286@columbia.edu"], ["password", "Password@123"], ["created_at", "2021-12-06 00:23:31.962001"], ["updated_at", "2021-12-06 00:23:31.962001"], ["email_confirmed", 1], ["confirm_token", "FBYRfkH6jQ9YQKhJPyYpbQ"]]
+  [1m[35m (0.3ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/2\">/users/2</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Harrison_Groll"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "hsg2136@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Harrison_Groll"], ["email", "hsg2136@columbia.edu"], ["password", "Lol@321"], ["created_at", "2021-12-06 00:23:31.965156"], ["updated_at", "2021-12-06 00:23:31.965156"], ["email_confirmed", 1], ["confirm_token", "GWgPqhajl8Meg-KkqIm2bw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/3\">/users/3</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Sounak_Ray"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sr3846@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Sounak_Ray"], ["email", "sr3846@columbia.edu"], ["password", "Password@321"], ["created_at", "2021-12-06 00:23:31.966910"], ["updated_at", "2021-12-06 00:23:31.966910"], ["email_confirmed", 1], ["confirm_token", "7bj8woxHZFIOoAoDjT65iQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/4\">/users/4</a> </div></template></turbo-stream>"
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:31 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.4ms | Allocations: 345)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 3ms (Views: 2.5ms | ActiveRecord: 0.0ms | Allocations: 2114)
+Started POST "/signin" for 127.0.0.1 at 2021-12-05 19:23:31 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"session"=>{"username"=>"Umang_Raj", "password"=>"[FILTERED]"}, "commit"=>"Sign In"}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? AND "users"."id" != ? LIMIT ?[0m  [["username", "Umang_Raj"], ["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 2ms (ActiveRecord: 0.5ms | Allocations: 1171)
+Started GET "/" for 127.0.0.1 at 2021-12-05 19:23:31 -0500
+Processing by RoomsController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRoom Load (0.0ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" WHERE "rooms"."is_private" = ?[0m  [["is_private", 0]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "users"."name" FROM "users" WHERE "users"."id" != ?[0m  [["id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT DISTINCT "courses"."department_code" FROM "courses"[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRoom Load (0.1ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" INNER JOIN participants ON rooms.id = participants.room_id AND participants.user_id = 1[0m
+  Rendering rooms/index.html.erb within layouts/application
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" != ?[0m  [["id", 1]]
+  Rendered collection of users/_user.html.erb [3 times] (Duration: 0.1ms | Allocations: 112)
+  Rendered layouts/_new_room_form.html.erb (Duration: 1.1ms | Allocations: 815)
+  Rendered collection of templates [0 times] (Duration: 0.0ms | Allocations: 3)
+  Rendered collection of templates [0 times] (Duration: 0.0ms | Allocations: 3)
+  Rendered rooms/index.html.erb within layouts/application (Duration: 2.0ms | Allocations: 1617)
+[Webpacker] Everything's up-to-date. Nothing to do
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Completed 200 OK in 7ms (Views: 4.3ms | ActiveRecord: 0.3ms | Allocations: 4864)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Umang_Raj"], ["email", "ur1236@columbia.edu"], ["password", "Lol@123"], ["created_at", "2021-12-06 00:23:31.999420"], ["updated_at", "2021-12-06 00:23:31.999420"], ["email_confirmed", 1], ["confirm_token", "NYR6rHxEVN5Bx-CDNGJaDw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/1\">/users/1</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Chinmay_Garg"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "cg3286@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Chinmay_Garg"], ["email", "cg3286@columbia.edu"], ["password", "Password@123"], ["created_at", "2021-12-06 00:23:32.001383"], ["updated_at", "2021-12-06 00:23:32.001383"], ["email_confirmed", 1], ["confirm_token", "qM9rIY4f-CfE7ivZ7peNzg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/2\">/users/2</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Harrison_Groll"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "hsg2136@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Harrison_Groll"], ["email", "hsg2136@columbia.edu"], ["password", "Lol@321"], ["created_at", "2021-12-06 00:23:32.002951"], ["updated_at", "2021-12-06 00:23:32.002951"], ["email_confirmed", 1], ["confirm_token", "WjaQ095EUnsLroZ4R22byw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/3\">/users/3</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Sounak_Ray"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sr3846@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Sounak_Ray"], ["email", "sr3846@columbia.edu"], ["password", "Password@321"], ["created_at", "2021-12-06 00:23:32.004436"], ["updated_at", "2021-12-06 00:23:32.004436"], ["email_confirmed", 1], ["confirm_token", "YgXyA2_er25QWd0YhFknYg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/4\">/users/4</a> </div></template></turbo-stream>"
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.7ms | Allocations: 345)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 4ms (Views: 3.6ms | ActiveRecord: 0.0ms | Allocations: 2114)
+Started POST "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"session"=>{"username"=>"Umang_Raj", "password"=>"[FILTERED]"}, "commit"=>"Sign In"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? AND "users"."id" != ? LIMIT ?[0m  [["username", "Umang_Raj"], ["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 2ms (ActiveRecord: 0.5ms | Allocations: 1171)
+Started GET "/" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by RoomsController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRoom Load (0.0ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" WHERE "rooms"."is_private" = ?[0m  [["is_private", 0]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "users"."name" FROM "users" WHERE "users"."id" != ?[0m  [["id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT DISTINCT "courses"."department_code" FROM "courses"[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRoom Load (0.1ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" INNER JOIN participants ON rooms.id = participants.room_id AND participants.user_id = 1[0m
+  Rendering rooms/index.html.erb within layouts/application
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" != ?[0m  [["id", 1]]
+  Rendered collection of users/_user.html.erb [3 times] (Duration: 0.1ms | Allocations: 112)
+  Rendered layouts/_new_room_form.html.erb (Duration: 1.0ms | Allocations: 815)
+  Rendered collection of templates [0 times] (Duration: 0.0ms | Allocations: 3)
+  Rendered collection of templates [0 times] (Duration: 0.0ms | Allocations: 3)
+  Rendered rooms/index.html.erb within layouts/application (Duration: 1.6ms | Allocations: 1617)
+[Webpacker] Everything's up-to-date. Nothing to do
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Completed 200 OK in 5ms (Views: 3.4ms | ActiveRecord: 0.2ms | Allocations: 4872)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Umang_Raj"], ["email", "ur1236@columbia.edu"], ["password", "Lol@123"], ["created_at", "2021-12-06 00:23:32.038171"], ["updated_at", "2021-12-06 00:23:32.038171"], ["email_confirmed", 1], ["confirm_token", "I3BVTptk1HJ1A45zCoMspg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/1\">/users/1</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Chinmay_Garg"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "cg3286@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Chinmay_Garg"], ["email", "cg3286@columbia.edu"], ["password", "Password@123"], ["created_at", "2021-12-06 00:23:32.039438"], ["updated_at", "2021-12-06 00:23:32.039438"], ["email_confirmed", 1], ["confirm_token", "sUCQm2WqKf674iDx2XS3hg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/2\">/users/2</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Harrison_Groll"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "hsg2136@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Harrison_Groll"], ["email", "hsg2136@columbia.edu"], ["password", "Lol@321"], ["created_at", "2021-12-06 00:23:32.040283"], ["updated_at", "2021-12-06 00:23:32.040283"], ["email_confirmed", 1], ["confirm_token", "Y2zONPD6OZ5yZ8RxxD-trA"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/3\">/users/3</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Sounak_Ray"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sr3846@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Sounak_Ray"], ["email", "sr3846@columbia.edu"], ["password", "Password@321"], ["created_at", "2021-12-06 00:23:32.041086"], ["updated_at", "2021-12-06 00:23:32.041086"], ["email_confirmed", 1], ["confirm_token", "VRyEpSJ7F8sruDC4-6szpw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/4\">/users/4</a> </div></template></turbo-stream>"
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.2ms | Allocations: 345)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 1ms (Views: 1.3ms | ActiveRecord: 0.0ms | Allocations: 2116)
+Started POST "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"session"=>{"username"=>"Umang_Raj", "password"=>"[FILTERED]"}, "commit"=>"Sign In"}
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? AND "users"."id" != ? LIMIT ?[0m  [["username", "Umang_Raj"], ["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 1171)
+Started GET "/" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by RoomsController#index as HTML
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRoom Load (0.0ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" WHERE "rooms"."is_private" = ?[0m  [["is_private", 0]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT "users"."name" FROM "users" WHERE "users"."id" != ?[0m  [["id", 1]]
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT DISTINCT "courses"."department_code" FROM "courses"[0m
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRoom Load (0.1ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" INNER JOIN participants ON rooms.id = participants.room_id AND participants.user_id = 1[0m
+  Rendering rooms/index.html.erb within layouts/application
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" != ?[0m  [["id", 1]]
+  Rendered collection of users/_user.html.erb [3 times] (Duration: 0.1ms | Allocations: 112)
+  Rendered layouts/_new_room_form.html.erb (Duration: 0.5ms | Allocations: 815)
+  Rendered collection of templates [0 times] (Duration: 0.0ms | Allocations: 3)
+  Rendered collection of templates [0 times] (Duration: 0.0ms | Allocations: 3)
+  Rendered rooms/index.html.erb within layouts/application (Duration: 1.0ms | Allocations: 1617)
+[Webpacker] Everything's up-to-date. Nothing to do
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+Completed 200 OK in 4ms (Views: 2.3ms | ActiveRecord: 0.2ms | Allocations: 4879)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Umang_Raj"], ["email", "ur1236@columbia.edu"], ["password", "Lol@123"], ["created_at", "2021-12-06 00:23:32.055830"], ["updated_at", "2021-12-06 00:23:32.055830"], ["email_confirmed", 1], ["confirm_token", "VVZICTQzYfcK9PEW6yWA1g"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/1\">/users/1</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Chinmay_Garg"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "cg3286@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Chinmay_Garg"], ["email", "cg3286@columbia.edu"], ["password", "Password@123"], ["created_at", "2021-12-06 00:23:32.057632"], ["updated_at", "2021-12-06 00:23:32.057632"], ["email_confirmed", 1], ["confirm_token", "qqXxtFJ2m7o9HdMRfWcPQQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/2\">/users/2</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Harrison_Groll"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "hsg2136@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "confirm_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["username", "Harrison_Groll"], ["email", "hsg2136@columbia.edu"], ["password", "Lol@321"], ["created_at", "2021-12-06 00:23:32.058510"], ["updated_at", "2021-12-06 00:23:32.058510"], ["confirm_token", "7p6u1CHq9AiMjLRFS1y7qg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/3\">/users/3</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Sounak_Ray"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sr3846@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Sounak_Ray"], ["email", "sr3846@columbia.edu"], ["password", "Password@321"], ["created_at", "2021-12-06 00:23:32.059301"], ["updated_at", "2021-12-06 00:23:32.059301"], ["email_confirmed", 1], ["confirm_token", "vXDd2rEvkRWJcJBq7oVQsA"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/4\">/users/4</a> </div></template></turbo-stream>"
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.2ms | Allocations: 345)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 2ms (Views: 1.4ms | ActiveRecord: 0.0ms | Allocations: 2114)
+Started POST "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"session"=>{"username"=>"Suvansh_Dutta", "password"=>"[FILTERED]"}, "commit"=>"Sign In"}
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Suvansh_Dutta"], ["LIMIT", 1]]
+Redirected to http://www.example.com/signin
+Completed 302 Found in 0ms (ActiveRecord: 0.0ms | Allocations: 320)
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.2ms | Allocations: 349)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 1ms (Views: 1.1ms | ActiveRecord: 0.0ms | Allocations: 2220)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Umang_Raj"], ["email", "ur1236@columbia.edu"], ["password", "Lol@123"], ["created_at", "2021-12-06 00:23:32.068360"], ["updated_at", "2021-12-06 00:23:32.068360"], ["email_confirmed", 1], ["confirm_token", "4cGgePnf2hn-H7D7FxhMfQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/1\">/users/1</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Chinmay_Garg"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "cg3286@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Chinmay_Garg"], ["email", "cg3286@columbia.edu"], ["password", "Password@123"], ["created_at", "2021-12-06 00:23:32.069575"], ["updated_at", "2021-12-06 00:23:32.069575"], ["email_confirmed", 1], ["confirm_token", "1Ukt8upq1_Bv_6oQ93FCog"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/2\">/users/2</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Harrison_Groll"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "hsg2136@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "confirm_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["username", "Harrison_Groll"], ["email", "hsg2136@columbia.edu"], ["password", "Lol@321"], ["created_at", "2021-12-06 00:23:32.070434"], ["updated_at", "2021-12-06 00:23:32.070434"], ["confirm_token", "Ao9HeGIwJS36h8rOEe2a-Q"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/3\">/users/3</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Sounak_Ray"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sr3846@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Sounak_Ray"], ["email", "sr3846@columbia.edu"], ["password", "Password@321"], ["created_at", "2021-12-06 00:23:32.071246"], ["updated_at", "2021-12-06 00:23:32.071246"], ["email_confirmed", 1], ["confirm_token", "H_LpAvAu8LDP-KnplukYZQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/4\">/users/4</a> </div></template></turbo-stream>"
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.2ms | Allocations: 345)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 1ms (Views: 1.3ms | ActiveRecord: 0.0ms | Allocations: 2114)
+Started POST "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"session"=>{"username"=>"Umang_Raj", "password"=>"[FILTERED]"}, "commit"=>"Sign In"}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? AND "users"."id" != ? LIMIT ?[0m  [["username", "Umang_Raj"], ["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/signin
+Completed 302 Found in 2ms (ActiveRecord: 0.2ms | Allocations: 1164)
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.3ms | Allocations: 349)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 2ms (Views: 1.5ms | ActiveRecord: 0.0ms | Allocations: 2224)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Umang_Raj"], ["email", "ur1236@columbia.edu"], ["password", "Lol@123"], ["created_at", "2021-12-06 00:23:32.083304"], ["updated_at", "2021-12-06 00:23:32.083304"], ["email_confirmed", 1], ["confirm_token", "DMniKCrswcAm4PTreQp9MQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/1\">/users/1</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Chinmay_Garg"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "cg3286@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Chinmay_Garg"], ["email", "cg3286@columbia.edu"], ["password", "Password@123"], ["created_at", "2021-12-06 00:23:32.084574"], ["updated_at", "2021-12-06 00:23:32.084574"], ["email_confirmed", 1], ["confirm_token", "6YzOaofAUqrehKaYwnnxHQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/2\">/users/2</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Harrison_Groll"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "hsg2136@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "confirm_token") VALUES (?, ?, ?, ?, ?, ?)[0m  [["username", "Harrison_Groll"], ["email", "hsg2136@columbia.edu"], ["password", "Lol@321"], ["created_at", "2021-12-06 00:23:32.085419"], ["updated_at", "2021-12-06 00:23:32.085419"], ["confirm_token", "RdvwJgTmMYJK_dpt71caZg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/3\">/users/3</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Sounak_Ray"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sr3846@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Sounak_Ray"], ["email", "sr3846@columbia.edu"], ["password", "Password@321"], ["created_at", "2021-12-06 00:23:32.086223"], ["updated_at", "2021-12-06 00:23:32.086223"], ["email_confirmed", 1], ["confirm_token", "Z4ng8wLogDT1ZoNGQGs-Yw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/4\">/users/4</a> </div></template></turbo-stream>"
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.2ms | Allocations: 345)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 1ms (Views: 1.3ms | ActiveRecord: 0.0ms | Allocations: 2114)
+Started POST "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#create as HTML
+  Parameters: {"session"=>{"username"=>"Harrison_Groll", "password"=>"[FILTERED]"}, "commit"=>"Sign In"}
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Harrison_Groll"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? AND "users"."id" != ? LIMIT ?[0m  [["username", "Harrison_Groll"], ["id", 3], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) AND "users"."id" != ? LIMIT ?[0m  [["email", "hsg2136@columbia.edu"], ["id", 3], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/signin
+Completed 302 Found in 1ms (ActiveRecord: 0.2ms | Allocations: 1163)
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.3ms | Allocations: 350)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 2ms (Views: 1.3ms | ActiveRecord: 0.0ms | Allocations: 2251)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Umang_Raj"], ["email", "ur1236@columbia.edu"], ["password", "Lol@123"], ["created_at", "2021-12-06 00:23:32.096765"], ["updated_at", "2021-12-06 00:23:32.096765"], ["email_confirmed", 1], ["confirm_token", "lsU0WHTfmFzwCIfVu9_A2w"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/1\">/users/1</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Chinmay_Garg"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "cg3286@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Chinmay_Garg"], ["email", "cg3286@columbia.edu"], ["password", "Password@123"], ["created_at", "2021-12-06 00:23:32.098534"], ["updated_at", "2021-12-06 00:23:32.098534"], ["email_confirmed", 1], ["confirm_token", "5xpgt5l8gVLd9w05T8I0BA"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/2\">/users/2</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Harrison_Groll"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "hsg2136@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Harrison_Groll"], ["email", "hsg2136@columbia.edu"], ["password", "Lol@321"], ["created_at", "2021-12-06 00:23:32.099442"], ["updated_at", "2021-12-06 00:23:32.099442"], ["email_confirmed", 1], ["confirm_token", "O_uksCKou-dqbM-aQvj93A"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/3\">/users/3</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Sounak_Ray"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sr3846@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Sounak_Ray"], ["email", "sr3846@columbia.edu"], ["password", "Password@321"], ["created_at", "2021-12-06 00:23:32.100469"], ["updated_at", "2021-12-06 00:23:32.100469"], ["email_confirmed", 1], ["confirm_token", "GX2koIDVvHg2F7pGxUAcpQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/4\">/users/4</a> </div></template></turbo-stream>"
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.2ms | Allocations: 345)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 2ms (Views: 1.3ms | ActiveRecord: 0.0ms | Allocations: 2114)
+Started GET "/signup" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#signup as HTML
+  Rendering sessions/signup.html.erb within layouts/application
+  Rendered sessions/signup.html.erb within layouts/application (Duration: 0.6ms | Allocations: 762)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 2ms (Views: 1.7ms | ActiveRecord: 0.0ms | Allocations: 2669)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Umang_Raj"], ["email", "ur1236@columbia.edu"], ["password", "Lol@123"], ["created_at", "2021-12-06 00:23:32.108432"], ["updated_at", "2021-12-06 00:23:32.108432"], ["email_confirmed", 1], ["confirm_token", "gfmLU7aD5b3qcD6x46sSaw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 46)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/1\">/users/1</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Chinmay_Garg"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "cg3286@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Chinmay_Garg"], ["email", "cg3286@columbia.edu"], ["password", "Password@123"], ["created_at", "2021-12-06 00:23:32.115928"], ["updated_at", "2021-12-06 00:23:32.115928"], ["email_confirmed", 1], ["confirm_token", "cv46dpiwszZfINJDSksoTw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/2\">/users/2</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Harrison_Groll"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "hsg2136@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Harrison_Groll"], ["email", "hsg2136@columbia.edu"], ["password", "Lol@321"], ["created_at", "2021-12-06 00:23:32.116834"], ["updated_at", "2021-12-06 00:23:32.116834"], ["email_confirmed", 1], ["confirm_token", "vq7o55_VUMQehPyrp3pb-A"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/3\">/users/3</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Sounak_Ray"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sr3846@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Sounak_Ray"], ["email", "sr3846@columbia.edu"], ["password", "Password@321"], ["created_at", "2021-12-06 00:23:32.117644"], ["updated_at", "2021-12-06 00:23:32.117644"], ["email_confirmed", 1], ["confirm_token", "iuGuxNkAuD2eG9rfr9nODQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/4\">/users/4</a> </div></template></turbo-stream>"
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.2ms | Allocations: 349)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 2ms (Views: 1.3ms | ActiveRecord: 0.0ms | Allocations: 2121)
+Started GET "/signup" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#signup as HTML
+  Rendering sessions/signup.html.erb within layouts/application
+  Rendered sessions/signup.html.erb within layouts/application (Duration: 0.3ms | Allocations: 427)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 2ms (Views: 1.6ms | ActiveRecord: 0.0ms | Allocations: 2196)
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "users"[0m
+Started POST "/users" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by UsersController#create as HTML
+  Parameters: {"user"=>{"name"=>"Bruce Wayne", "username"=>"Bruce_Wayne", "email"=>"batman@columbia.edu", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign Up"}
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Bruce_Wayne"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "batman@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mCACHE User Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Bruce_Wayne"], ["LIMIT", 1]]
+  [1m[36mCACHE User Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "batman@columbia.edu"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "confirm_token", "name") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Bruce_Wayne"], ["email", "batman@columbia.edu"], ["password", "wayne_enterprise"], ["created_at", "2021-12-06 00:23:32.130853"], ["updated_at", "2021-12-06 00:23:32.130853"], ["confirm_token", "zgX317BSd_EuMu7QRTw68A"], ["name", "Bruce Wayne"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 41)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/5\">Bruce Wayne</a> </div></template></turbo-stream>"
+  Rendering user_mailer/registration_confirmation.html.erb within layouts/mailer
+  Rendered user_mailer/registration_confirmation.html.erb within layouts/mailer (Duration: 0.3ms | Allocations: 193)
+  Rendering user_mailer/registration_confirmation.text.erb within layouts/mailer
+  Rendered user_mailer/registration_confirmation.text.erb within layouts/mailer (Duration: 0.2ms | Allocations: 160)
+UserMailer#registration_confirmation: processed outbound mail in 2.6ms
+Delivered mail 61ad5804213bd_428599c3203c828d3@Sounaks-MacBook-Air.local.mail (2.2ms)
+Date: Sun, 05 Dec 2021 19:23:32 -0500
+From: columbiachat@gmail.com
+To: Bruce Wayne <batman@columbia.edu>
+Message-ID: <61ad5804213bd_428599c3203c828d3@Sounaks-MacBook-Air.local.mail>
+Subject: Registration Confirmation
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_61ad580420ece_428599c3203c82782";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_61ad580420ece_428599c3203c82782
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Hi Bruce Wayne,
+
+Thanks for registering! To confirm your registration click the URL below.
+
+http://localhost:3000/users/zgX317BSd_EuMu7QRTw68A/confirm_email
+
+----==_mimepart_61ad580420ece_428599c3203c82782
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+  <p>Hi Bruce Wayne,</p>
+
+  <p>Thanks for registering! To confirm your registration click the URL below.</p>
+
+  <p>http://localhost:3000/users/zgX317BSd_EuMu7QRTw68A/confirm_email</p>
+  </body>
+</html>
+
+----==_mimepart_61ad580420ece_428599c3203c82782--
+
+Redirected to http://www.example.com/signin
+Completed 302 Found in 8ms (ActiveRecord: 0.2ms | Allocations: 9440)
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.2ms | Allocations: 358)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 1ms (Views: 1.3ms | ActiveRecord: 0.0ms | Allocations: 2241)
+  [1m[35m (0.0ms)[0m  [1m[34mSELECT COUNT(*) FROM "users"[0m
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Umang_Raj"], ["email", "ur1236@columbia.edu"], ["password", "Lol@123"], ["created_at", "2021-12-06 00:23:32.141768"], ["updated_at", "2021-12-06 00:23:32.141768"], ["email_confirmed", 1], ["confirm_token", "gRxsjA6OzpVC-ZHyxuWNEg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 46)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/1\">/users/1</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Chinmay_Garg"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "cg3286@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Chinmay_Garg"], ["email", "cg3286@columbia.edu"], ["password", "Password@123"], ["created_at", "2021-12-06 00:23:32.142944"], ["updated_at", "2021-12-06 00:23:32.142944"], ["email_confirmed", 1], ["confirm_token", "2XTS096gdYueaR61zlZ7tw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/2\">/users/2</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Harrison_Groll"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "hsg2136@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Harrison_Groll"], ["email", "hsg2136@columbia.edu"], ["password", "Lol@321"], ["created_at", "2021-12-06 00:23:32.143781"], ["updated_at", "2021-12-06 00:23:32.143781"], ["email_confirmed", 1], ["confirm_token", "GWf-mJhsRR9oMW4NJYvgVQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/3\">/users/3</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Sounak_Ray"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sr3846@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Sounak_Ray"], ["email", "sr3846@columbia.edu"], ["password", "Password@321"], ["created_at", "2021-12-06 00:23:32.144604"], ["updated_at", "2021-12-06 00:23:32.144604"], ["email_confirmed", 1], ["confirm_token", "kn6Nc312enDgW2EZUmPeqg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/4\">/users/4</a> </div></template></turbo-stream>"
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.3ms | Allocations: 345)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 2ms (Views: 1.7ms | ActiveRecord: 0.0ms | Allocations: 2114)
+Started GET "/signup" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#signup as HTML
+  Rendering sessions/signup.html.erb within layouts/application
+  Rendered sessions/signup.html.erb within layouts/application (Duration: 0.3ms | Allocations: 431)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 2ms (Views: 1.4ms | ActiveRecord: 0.0ms | Allocations: 2200)
+Started POST "/users" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by UsersController#create as HTML
+  Parameters: {"user"=>{"name"=>"Umang Raj", "username"=>"Umang_Raj", "email"=>"umang@columbia.edu", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign Up"}
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "umang@columbia.edu"], ["LIMIT", 1]]
+Redirected to http://www.example.com/signup
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 1189)
+Started GET "/signup" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#signup as HTML
+  Rendering sessions/signup.html.erb within layouts/application
+  Rendered sessions/signup.html.erb within layouts/application (Duration: 0.2ms | Allocations: 432)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 1ms (Views: 1.2ms | ActiveRecord: 0.0ms | Allocations: 2297)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Umang_Raj"], ["email", "ur1236@columbia.edu"], ["password", "Lol@123"], ["created_at", "2021-12-06 00:23:32.159071"], ["updated_at", "2021-12-06 00:23:32.159071"], ["email_confirmed", 1], ["confirm_token", "D-A_fVmfS0VaDnJ3s9OZ9w"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/1\">/users/1</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Chinmay_Garg"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "cg3286@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Chinmay_Garg"], ["email", "cg3286@columbia.edu"], ["password", "Password@123"], ["created_at", "2021-12-06 00:23:32.160423"], ["updated_at", "2021-12-06 00:23:32.160423"], ["email_confirmed", 1], ["confirm_token", "W4atsVNw458CWMi_ryf1mA"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/2\">/users/2</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Harrison_Groll"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "hsg2136@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Harrison_Groll"], ["email", "hsg2136@columbia.edu"], ["password", "Lol@321"], ["created_at", "2021-12-06 00:23:32.161263"], ["updated_at", "2021-12-06 00:23:32.161263"], ["email_confirmed", 1], ["confirm_token", "R6GIE0NfYRkNCZSr1_T_vg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/3\">/users/3</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Sounak_Ray"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sr3846@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Sounak_Ray"], ["email", "sr3846@columbia.edu"], ["password", "Password@321"], ["created_at", "2021-12-06 00:23:32.162078"], ["updated_at", "2021-12-06 00:23:32.162078"], ["email_confirmed", 1], ["confirm_token", "wgPiJd5j5RYe3-LG6x49rw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/4\">/users/4</a> </div></template></turbo-stream>"
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.2ms | Allocations: 345)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 1ms (Views: 1.3ms | ActiveRecord: 0.0ms | Allocations: 2114)
+Started GET "/signup" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#signup as HTML
+  Rendering sessions/signup.html.erb within layouts/application
+  Rendered sessions/signup.html.erb within layouts/application (Duration: 0.2ms | Allocations: 427)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 1ms (Views: 1.2ms | ActiveRecord: 0.0ms | Allocations: 2196)
+Started POST "/users" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by UsersController#create as HTML
+  Parameters: {"user"=>{"name"=>"Umang Raj", "username"=>"ur2136", "email"=>"ur1236@columbia.edu", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign Up"}
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "ur2136"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["LIMIT", 1]]
+Redirected to http://www.example.com/signup
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 1150)
+Started GET "/signup" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#signup as HTML
+  Rendering sessions/signup.html.erb within layouts/application
+  Rendered sessions/signup.html.erb within layouts/application (Duration: 0.3ms | Allocations: 432)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 2ms (Views: 1.4ms | ActiveRecord: 0.0ms | Allocations: 2307)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Umang_Raj"], ["email", "ur1236@columbia.edu"], ["password", "Lol@123"], ["created_at", "2021-12-06 00:23:32.176887"], ["updated_at", "2021-12-06 00:23:32.176887"], ["email_confirmed", 1], ["confirm_token", "V2S93YRXIx4CdPVYeC8EWg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/1\">/users/1</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Chinmay_Garg"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "cg3286@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Chinmay_Garg"], ["email", "cg3286@columbia.edu"], ["password", "Password@123"], ["created_at", "2021-12-06 00:23:32.178158"], ["updated_at", "2021-12-06 00:23:32.178158"], ["email_confirmed", 1], ["confirm_token", "_HNnCu1DvGbIkSbD_nBIVQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/2\">/users/2</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Harrison_Groll"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "hsg2136@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Harrison_Groll"], ["email", "hsg2136@columbia.edu"], ["password", "Lol@321"], ["created_at", "2021-12-06 00:23:32.179022"], ["updated_at", "2021-12-06 00:23:32.179022"], ["email_confirmed", 1], ["confirm_token", "vmAKeAvIfdbVXDTFlFdtpg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/3\">/users/3</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Sounak_Ray"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sr3846@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Sounak_Ray"], ["email", "sr3846@columbia.edu"], ["password", "Password@321"], ["created_at", "2021-12-06 00:23:32.179859"], ["updated_at", "2021-12-06 00:23:32.179859"], ["email_confirmed", 1], ["confirm_token", "iI73T-5hCdTPIovfXjcjCA"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/4\">/users/4</a> </div></template></turbo-stream>"
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.2ms | Allocations: 345)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 2ms (Views: 1.4ms | ActiveRecord: 0.0ms | Allocations: 2114)
+Started GET "/signup" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#signup as HTML
+  Rendering sessions/signup.html.erb within layouts/application
+  Rendered sessions/signup.html.erb within layouts/application (Duration: 0.3ms | Allocations: 427)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 1ms (Views: 1.3ms | ActiveRecord: 0.0ms | Allocations: 2196)
+Started POST "/users" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by UsersController#create as HTML
+  Parameters: {"user"=>{"name"=>"Umang Raj", "username"=>"ur2136", "email"=>"ur1236@gmail.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign Up"}
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "ur2136"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "ur1236@gmail.com"], ["LIMIT", 1]]
+Redirected to http://www.example.com/signup
+Completed 302 Found in 8ms (ActiveRecord: 0.1ms | Allocations: 1170)
+Started GET "/signup" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#signup as HTML
+  Rendering sessions/signup.html.erb within layouts/application
+  Rendered sessions/signup.html.erb within layouts/application (Duration: 0.4ms | Allocations: 432)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 2ms (Views: 2.0ms | ActiveRecord: 0.0ms | Allocations: 2309)
+  [1m[35m (0.2ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Umang_Raj"], ["email", "ur1236@columbia.edu"], ["password", "Lol@123"], ["created_at", "2021-12-06 00:23:32.202044"], ["updated_at", "2021-12-06 00:23:32.202044"], ["email_confirmed", 1], ["confirm_token", "Y0m65ZPcf0oUq-O1GUh7rg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/1\">/users/1</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Chinmay_Garg"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "cg3286@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Chinmay_Garg"], ["email", "cg3286@columbia.edu"], ["password", "Password@123"], ["created_at", "2021-12-06 00:23:32.203236"], ["updated_at", "2021-12-06 00:23:32.203236"], ["email_confirmed", 1], ["confirm_token", "gib-s4PHgpIue2a7-7qpEw"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/2\">/users/2</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Harrison_Groll"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "hsg2136@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Harrison_Groll"], ["email", "hsg2136@columbia.edu"], ["password", "Lol@321"], ["created_at", "2021-12-06 00:23:32.204085"], ["updated_at", "2021-12-06 00:23:32.204085"], ["email_confirmed", 1], ["confirm_token", "MvC9Xf-MImUGasOLM_XZyQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/3\">/users/3</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Sounak_Ray"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sr3846@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Sounak_Ray"], ["email", "sr3846@columbia.edu"], ["password", "Password@321"], ["created_at", "2021-12-06 00:23:32.204896"], ["updated_at", "2021-12-06 00:23:32.204896"], ["email_confirmed", 1], ["confirm_token", "ejeq7xY213aqjBBPxSTqaA"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/4\">/users/4</a> </div></template></turbo-stream>"
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.2ms | Allocations: 345)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 1ms (Views: 1.3ms | ActiveRecord: 0.0ms | Allocations: 2114)
+Started GET "/signup" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#signup as HTML
+  Rendering sessions/signup.html.erb within layouts/application
+  Rendered sessions/signup.html.erb within layouts/application (Duration: 0.2ms | Allocations: 427)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 1ms (Views: 1.2ms | ActiveRecord: 0.0ms | Allocations: 2196)
+Started POST "/users" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by UsersController#create as HTML
+  Parameters: {"user"=>{"name"=>"Suvansh Dutta", "username"=>"suvansh_dutta", "email"=>"sd3513@columbia.edu", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign Up"}
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "suvansh_dutta"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sd3513@columbia.edu"], ["LIMIT", 1]]
+Redirected to http://www.example.com/signup
+Completed 302 Found in 1ms (ActiveRecord: 0.1ms | Allocations: 1288)
+Started GET "/signup" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#signup as HTML
+  Rendering sessions/signup.html.erb within layouts/application
+  Rendered sessions/signup.html.erb within layouts/application (Duration: 0.3ms | Allocations: 432)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 2ms (Views: 1.7ms | ActiveRecord: 0.0ms | Allocations: 2307)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Umang_Raj"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "ur1236@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Umang_Raj"], ["email", "ur1236@columbia.edu"], ["password", "Lol@123"], ["created_at", "2021-12-06 00:23:32.220422"], ["updated_at", "2021-12-06 00:23:32.220422"], ["email_confirmed", 1], ["confirm_token", "SdaiE0HkeveUurIJociMYg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/1\">/users/1</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Chinmay_Garg"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "cg3286@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Chinmay_Garg"], ["email", "cg3286@columbia.edu"], ["password", "Password@123"], ["created_at", "2021-12-06 00:23:32.221823"], ["updated_at", "2021-12-06 00:23:32.221823"], ["email_confirmed", 1], ["confirm_token", "j7thBbNcfF8lvzsM4Q1dLg"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/2\">/users/2</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Harrison_Groll"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "hsg2136@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Harrison_Groll"], ["email", "hsg2136@columbia.edu"], ["password", "Lol@321"], ["created_at", "2021-12-06 00:23:32.222654"], ["updated_at", "2021-12-06 00:23:32.222654"], ["email_confirmed", 1], ["confirm_token", "-r84N_TTTUFB6zaXfRjvCA"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/3\">/users/3</a> </div></template></turbo-stream>"
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "Sounak_Ray"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sr3846@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "email_confirmed", "confirm_token") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "Sounak_Ray"], ["email", "sr3846@columbia.edu"], ["password", "Password@321"], ["created_at", "2021-12-06 00:23:32.223460"], ["updated_at", "2021-12-06 00:23:32.223460"], ["email_confirmed", 1], ["confirm_token", "4fiiuUWeCqEpgTafWaaYuQ"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.0ms | Allocations: 40)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/4\">/users/4</a> </div></template></turbo-stream>"
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.2ms | Allocations: 345)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 1ms (Views: 1.3ms | ActiveRecord: 0.0ms | Allocations: 2114)
+Started GET "/signup" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#signup as HTML
+  Rendering sessions/signup.html.erb within layouts/application
+  Rendered sessions/signup.html.erb within layouts/application (Duration: 0.3ms | Allocations: 427)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 1ms (Views: 1.2ms | ActiveRecord: 0.0ms | Allocations: 2196)
+Started POST "/users" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by UsersController#create as HTML
+  Parameters: {"user"=>{"name"=>"Suvansh Dutta", "username"=>"suvansh_dutta", "email"=>"sd3513@columbia.edu", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "commit"=>"Sign Up"}
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "suvansh_dutta"], ["LIMIT", 1]]
+  [1m[36mUser Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sd3513@columbia.edu"], ["LIMIT", 1]]
+  [1m[36mCACHE User Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "suvansh_dutta"], ["LIMIT", 1]]
+  [1m[36mCACHE User Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER(?) LIMIT ?[0m  [["email", "sd3513@columbia.edu"], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Create (0.0ms)[0m  [1m[32mINSERT INTO "users" ("username", "email", "password", "created_at", "updated_at", "confirm_token", "name") VALUES (?, ?, ?, ?, ?, ?, ?)[0m  [["username", "suvansh_dutta"], ["email", "sd3513@columbia.edu"], ["password", "Lol@123"], ["created_at", "2021-12-06 00:23:32.232802"], ["updated_at", "2021-12-06 00:23:32.232802"], ["confirm_token", "55CmKPIpZjbum068dzK-aQ"], ["name", "Suvansh Dutta"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendered users/_user.html.erb (Duration: 0.1ms | Allocations: 41)
+[ActionCable] Broadcasting to users: "<turbo-stream action=\"append\" target=\"users\"><template><div> <a href=\"/users/5\">Suvansh Dutta</a> </div></template></turbo-stream>"
+  Rendering user_mailer/registration_confirmation.html.erb within layouts/mailer
+  Rendered user_mailer/registration_confirmation.html.erb within layouts/mailer (Duration: 0.1ms | Allocations: 58)
+  Rendering user_mailer/registration_confirmation.text.erb within layouts/mailer
+  Rendered user_mailer/registration_confirmation.text.erb within layouts/mailer (Duration: 0.0ms | Allocations: 50)
+UserMailer#registration_confirmation: processed outbound mail in 0.9ms
+Delivered mail 61ad580439509_428599c3203c83036@Sounaks-MacBook-Air.local.mail (1.1ms)
+Date: Sun, 05 Dec 2021 19:23:32 -0500
+From: columbiachat@gmail.com
+To: Suvansh Dutta <sd3513@columbia.edu>
+Message-ID: <61ad580439509_428599c3203c83036@Sounaks-MacBook-Air.local.mail>
+Subject: Registration Confirmation
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="--==_mimepart_61ad580439262_428599c3203c829da";
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+
+----==_mimepart_61ad580439262_428599c3203c829da
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Hi Suvansh Dutta,
+
+Thanks for registering! To confirm your registration click the URL below.
+
+http://localhost:3000/users/55CmKPIpZjbum068dzK-aQ/confirm_email
+
+----==_mimepart_61ad580439262_428599c3203c829da
+Content-Type: text/html;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+  <p>Hi Suvansh Dutta,</p>
+
+  <p>Thanks for registering! To confirm your registration click the URL below.</p>
+
+  <p>http://localhost:3000/users/55CmKPIpZjbum068dzK-aQ/confirm_email</p>
+  </body>
+</html>
+
+----==_mimepart_61ad580439262_428599c3203c829da--
+
+Redirected to http://www.example.com/signin
+Completed 302 Found in 4ms (ActiveRecord: 0.2ms | Allocations: 6421)
+Started GET "/signin" for 127.0.0.1 at 2021-12-05 19:23:32 -0500
+Processing by SessionsController#new as HTML
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 0.3ms | Allocations: 350)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 2ms (Views: 1.5ms | ActiveRecord: 0.0ms | Allocations: 2218)
+  [1m[35m (0.3ms)[0m  [1m[31mrollback transaction[0m

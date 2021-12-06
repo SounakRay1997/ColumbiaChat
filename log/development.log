@@ -29112,3 +29112,97 @@ Turbo::StreamsChannel is transmitting the subscription confirmation
 Turbo::StreamsChannel is streaming from users
 Turbo::StreamsChannel is transmitting the subscription confirmation
 Turbo::StreamsChannel is streaming from rooms
+Started GET "/cable" for ::1 at 2021-12-05 19:15:47 -0500
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/cable/" [WebSocket] for ::1 at 2021-12-05 19:15:47 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from rooms
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from users
+Finished "/cable/" [WebSocket] for ::1 at 2021-12-05 19:15:48 -0500
+Turbo::StreamsChannel stopped streaming from rooms
+Turbo::StreamsChannel stopped streaming from users
+Started GET "/" for ::1 at 2021-12-05 19:15:50 -0500
+Processing by RoomsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:6:in `current_user'
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:6:in `current_user'
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:6:in `current_user'
+  [1m[36mRoom Load (0.5ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" WHERE "rooms"."is_private" = ?[0m  [["is_private", 0]]
+  ↳ app/controllers/rooms_controller.rb:10:in `index'
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "users"."name" FROM "users" WHERE "users"."id" != ?[0m  [["id", 2]]
+  ↳ app/controllers/rooms_controller.rb:34:in `index'
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT DISTINCT "courses"."department_code" FROM "courses"[0m
+  ↳ app/controllers/rooms_controller.rb:36:in `index'
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:6:in `current_user'
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:6:in `current_user'
+  [1m[36mRoom Load (0.1ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" INNER JOIN participants ON rooms.id = participants.room_id AND participants.user_id = 2[0m
+  ↳ app/controllers/rooms_controller.rb:38:in `uniq'
+  Rendering rooms/index.html.erb within layouts/application
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" != ?[0m  [["id", 2]]
+  ↳ app/views/rooms/index.html.erb:19
+  Rendered collection of users/_user.html.erb [1 times] (Duration: 0.4ms | Allocations: 202)
+  Rendered layouts/_new_room_form.html.erb (Duration: 3.0ms | Allocations: 3054)
+  Rendered collection of rooms/_room.html.erb [6 times] (Duration: 0.4ms | Allocations: 547)
+  Rendered collection of rooms/_room.html.erb [117 times] (Duration: 3.1ms | Allocations: 5691)
+  Rendered rooms/index.html.erb within layouts/application (Duration: 10.0ms | Allocations: 12667)
+[Webpacker] Everything's up-to-date. Nothing to do
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:6:in `current_user'
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:6:in `current_user'
+Completed 200 OK in 109ms (Views: 40.7ms | ActiveRecord: 3.8ms | Allocations: 64730)
+
+
+Started GET "/cable" for ::1 at 2021-12-05 19:15:50 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-12-05 19:15:50 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from users
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from rooms
+Started DELETE "/signout" for ::1 at 2021-12-05 19:15:53 -0500
+Processing by SessionsController#destroy as TURBO_STREAM
+  Parameters: {"authenticity_token"=>"TUoYG5wKQ2PstBv4ZyDpw5nSSlOstGHLE63ehFUkKkWyyAxeWmof2dQ+ydO1cpNjJ7+hUWB24FJ4EckvB78gfA=="}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:6:in `current_user'
+Redirected to http://localhost:3000/
+Completed 302 Found in 3ms (ActiveRecord: 0.2ms | Allocations: 952)
+
+
+Started GET "/" for ::1 at 2021-12-05 19:15:53 -0500
+Processing by RoomsController#index as TURBO_STREAM
+Redirected to http://localhost:3000/signin
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "users"."name" FROM "users" WHERE "users"."id" IS NOT NULL[0m
+  ↳ app/controllers/rooms_controller.rb:34:in `index'
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT DISTINCT "courses"."department_code" FROM "courses"[0m
+  ↳ app/controllers/rooms_controller.rb:36:in `index'
+Completed 302 Found in 5ms (ActiveRecord: 0.3ms | Allocations: 1617)
+
+
+Started GET "/signin" for ::1 at 2021-12-05 19:15:53 -0500
+Processing by SessionsController#new as TURBO_STREAM
+  Rendering sessions/new.html.erb within layouts/application
+  Rendered sessions/new.html.erb within layouts/application (Duration: 1.7ms | Allocations: 1539)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 6ms (Views: 5.8ms | ActiveRecord: 0.0ms | Allocations: 6130)
+
+
+Unsubscribing from channel: {"channel":"Turbo::StreamsChannel","signed_stream_name":"InVzZXJzIg==--3dd415d26f22c8cc443e81caffc74af9d7ec8bd485f680b58ed300a5496328bd"}
+Unsubscribing from channel: {"channel":"Turbo::StreamsChannel","signed_stream_name":"InJvb21zIg==--d53debfa6b530fff15b02f175dd0986c11edb5444665a5b25b90974976cfd2a2"}
+Turbo::StreamsChannel stopped streaming from rooms
+Turbo::StreamsChannel stopped streaming from users
+Started GET "/signup" for ::1 at 2021-12-05 19:15:55 -0500
+Processing by SessionsController#signup as HTML
+  Rendering sessions/signup.html.erb within layouts/application
+  Rendered sessions/signup.html.erb within layouts/application (Duration: 1.9ms | Allocations: 817)
+[Webpacker] Everything's up-to-date. Nothing to do
+Completed 200 OK in 10ms (Views: 9.2ms | ActiveRecord: 0.0ms | Allocations: 4985)
+
+
