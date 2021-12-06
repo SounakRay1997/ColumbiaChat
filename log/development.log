@@ -29294,3 +29294,54 @@ Turbo::StreamsChannel is streaming from rooms
 Finished "/cable/" [WebSocket] for ::1 at 2021-12-05 19:45:11 -0500
 Turbo::StreamsChannel stopped streaming from users
 Turbo::StreamsChannel stopped streaming from rooms
+Started GET "/" for ::1 at 2021-12-05 21:12:13 -0500
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by RoomsController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:6:in `current_user'
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:6:in `current_user'
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:6:in `current_user'
+  [1m[36mRoom Load (0.9ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" WHERE "rooms"."is_private" = ?[0m  [["is_private", 0]]
+  ↳ app/controllers/rooms_controller.rb:10:in `index'
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "users"."name" FROM "users" WHERE "users"."id" != ?[0m  [["id", 1]]
+  ↳ app/controllers/rooms_controller.rb:34:in `index'
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT DISTINCT "courses"."department_code" FROM "courses"[0m
+  ↳ app/controllers/rooms_controller.rb:36:in `index'
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:6:in `current_user'
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:6:in `current_user'
+  [1m[36mRoom Load (0.2ms)[0m  [1m[34mSELECT "rooms".* FROM "rooms" INNER JOIN participants ON rooms.id = participants.room_id AND participants.user_id = 1[0m
+  ↳ app/controllers/rooms_controller.rb:38:in `uniq'
+  Rendering rooms/index.html.erb within layouts/application
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" != ?[0m  [["id", 1]]
+  ↳ app/views/rooms/index.html.erb:19
+  Rendered collection of users/_user.html.erb [1 times] (Duration: 0.4ms | Allocations: 202)
+  Rendered layouts/_new_room_form.html.erb (Duration: 2.8ms | Allocations: 3054)
+  Rendered collection of rooms/_room.html.erb [6 times] (Duration: 0.4ms | Allocations: 547)
+  Rendered collection of rooms/_room.html.erb [117 times] (Duration: 2.2ms | Allocations: 5691)
+  Rendered rooms/index.html.erb within layouts/application (Duration: 8.9ms | Allocations: 13240)
+[Webpacker] Everything's up-to-date. Nothing to do
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:6:in `current_user'
+  [1m[36mCACHE User Load (0.0ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/application_controller.rb:6:in `current_user'
+Completed 200 OK in 99ms (Views: 47.4ms | ActiveRecord: 2.5ms | Allocations: 77535)
+
+
+Started GET "/cable" for ::1 at 2021-12-05 21:12:13 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-12-05 21:12:13 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from users
+Turbo::StreamsChannel is transmitting the subscription confirmation
+Turbo::StreamsChannel is streaming from rooms
+Started GET "/cable" for ::1 at 2021-12-05 21:12:50 -0500
+Started GET "/cable/" [WebSocket] for ::1 at 2021-12-05 21:12:50 -0500
+Successfully upgraded to WebSocket (REQUEST_METHOD: GET, HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)
+Finished "/cable/" [WebSocket] for ::1 at 2021-12-05 21:14:41 -0500
+Turbo::StreamsChannel stopped streaming from users
+Turbo::StreamsChannel stopped streaming from rooms
