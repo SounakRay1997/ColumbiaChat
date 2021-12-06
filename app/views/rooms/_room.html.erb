@@ -6,9 +6,10 @@
 <% if room.is_private %>
 <% lock = " 🔒 " %> 
 <div style="color:#ff8f00;">
+  <% if !room.name.match?('private_\d+_\d+') %>
 <span class="material-icons">
 lock
-</span> <%= link_to room.name , room , class: "uppy"%>
+</span> <%= link_to room.name , room , class: "uppy"%><% end %>
 </div>
 <% elsif room.distance == Float::MAX %>
 <% lock = " 📔 " %>
