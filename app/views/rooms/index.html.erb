@@ -32,6 +32,10 @@
           <%= select_tag 'dept_id', options_for_select(@departments.map{|course|["#{course}", course]}), class: 'form-control'%>
           <%= submit_tag("Search", :class => 'btn btn-primary') %>
         <% end %>
+        <% if @single_room and  @single_room.getDistanceFromRoom(@single_room, @current_user)  < 20430879 %>
+        <%= image_tag "https://maps.googleapis.com/maps/api/staticmap?zoom=17&size=300x300&markers=size:small%7Ccolor:red%7C#{@single_room.lat},#{@single_room.long}&key=REPLACE_ME", alt: "Map" %>
+        <br /><br />
+    <%  end %>
 
         <div>
           <%= turbo_stream_from "rooms" %>
