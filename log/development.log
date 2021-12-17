@@ -35154,3 +35154,7 @@ Turbo::StreamsChannel is transmitting the subscription confirmation
 Turbo::StreamsChannel is streaming from rooms
 Turbo::StreamsChannel is transmitting the subscription confirmation
 Turbo::StreamsChannel is streaming from Z2lkOi8vY29sdW1iaWEtY2hhdC9Sb29tLzExNw
+DEPRECATION WARNING: Using `bin/rake routes` is deprecated and will be removed in Rails 6.1. Use `bin/rails routes` instead.
+ (called from load at /Users/sounakray/.rvm/gems/ruby-2.6.6/bin/rake:23)
+DEPRECATION WARNING: Using `bin/rake routes` is deprecated and will be removed in Rails 6.1. Use `bin/rails routes` instead.
+ (called from load at /Users/sounakray/.rvm/gems/ruby-2.6.6/bin/rake:23)

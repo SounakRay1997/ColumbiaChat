@@ -40,7 +40,11 @@ class RoomsController < ApplicationController
   end
 
   def create
-    @current_user = current_user; redirect_to '/signin' unless @current_user
+    @current_user = current_user;
+    if !@current_user
+      redirect_to '/signin'
+    end
+
     if current_user && current_user.lat && current_user.long 
       room_lat = current_user.lat
       room_long = current_user.long
@@ -57,7 +61,7 @@ class RoomsController < ApplicationController
       if sel_users
         sel_users.each do |s_user|
             user = User.where(name: s_user)
-            puts "potato"
+            # puts "potato"
             Participant.create(user_id: user.first.id, room_id: @room.id)
         end
         Participant.create(user_id: current_user.id, room_id: @room.id) #Add Current User
@@ -69,14 +73,13 @@ class RoomsController < ApplicationController
     @users = User.all_except(@current_user)
     @user_names = User.all_except(@current_user).pluck(:name)
     @rooms = Room.public_rooms
-    @courses = Course.all 
+    @courses = Course.all
     @departments = Course.distinct.pluck(:department_code).prepend("ALL")
     @rooms = Room.public_rooms
     if not params["dept_id"].nil?
       @rooms = @rooms.dept_rooms(params["dept_id"])
     end
     render "index"
-    
   end
 
   @miles_conv = 5280.0

@@ -15,9 +15,6 @@ Rails.application.routes.draw do
     end
   end
 
-
-  get '/landing', to: "rooms#landing"
-
   get '/signin', to: 'sessions#new'
   get '/signup', to: 'sessions#signup'
   post '/signin', to: 'sessions#create'
