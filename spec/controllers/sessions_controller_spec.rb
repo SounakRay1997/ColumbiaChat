@@ -11,9 +11,13 @@ describe SessionsController, type: :controller do
     end
 
     it 'logs in existing user' do
+        @request.cookies[:lat_lng] = "0|0"
         post(:create, params: params)
         expect(response).to redirect_to(root_path)
         expect(response).to have_http_status(302)
+        # cookies[:lat_lng] = "0|0"
+        puts cookies[:lat_lng]
+        expect(cookies[:lat_lng]).to eq "0|0"
     end
 
     it 'logs in existing user whose email is not confirmed' do
