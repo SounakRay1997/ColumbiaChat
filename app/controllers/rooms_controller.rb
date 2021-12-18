@@ -1,14 +1,12 @@
 class RoomsController < ApplicationController
   def index
     @current_user = current_user
-    puts @current_user.nil?
     return redirect_to '/signin' unless @current_user
 
     public_rooms = Room.public_rooms
     user_lat = current_user.lat
     user_long = current_user.long
     tmp_rooms = []
-    
     public_rooms.each  do |room| 
       room_dist_req = room.distance
       lat1 = room.lat
@@ -19,6 +17,7 @@ class RoomsController < ApplicationController
       if params["dept_id"] == "ALL" && room.dept_code != "NONE"
         tmp_rooms.append(room)
       end 
+
     end
 
     @rooms = tmp_rooms
@@ -39,14 +38,12 @@ class RoomsController < ApplicationController
     room_lat = current_user.lat
     room_long = current_user.long
 
+    room_dist = Float(params["room"]["distance"]) <= 0.5 ? Float::MAX/10 : params["room"]["distance"]
+
     if params["room"]["private_room"] == "No"
-      if params["room"]["distance"] == 0
-        @room = Room.create(distance: Float::MAX - 1, name: params["room"]["name"], is_private: false, lat: room_lat, long: room_long)
-      else 
-        @room = Room.create(distance: params["room"]["distance"], name: params["room"]["name"], is_private: false, lat: room_lat, long: room_long)
-      end 
+      @room = Room.create(distance: room_dist , name: params["room"]["name"], is_private: false, lat: room_lat, long: room_long)
     else
-      @room = Room.create(distance: params["room"]["distance"], name: params["room"]["name"], is_private: true, lat: room_lat, long: room_long)
+      @room = Room.create(distance: room_dist, name: params["room"]["name"], is_private: true, lat: room_lat, long: room_long)
       sel_users = params["room"][:selected_users]
       if sel_users
         sel_users.each do |s_user|
