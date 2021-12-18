@@ -88,7 +88,7 @@ If you face permission issues during yarn installation run :
 
   
 
-7. Open the app on your local browser using localhost:3000.
+7. Open the app on your local browser using ```localhost:3000```.
 
   
 
