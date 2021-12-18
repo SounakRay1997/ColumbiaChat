@@ -11,11 +11,13 @@ class User < ApplicationRecord
     validates :password, confirmation: { case_sensitive: true }
     after_create_commit { broadcast_append_to "users" }
 
+    # :nocov:
     def email_activate
         self.email_confirmed = true
         self.confirm_token = nil
         save!(:validate => false)
     end
+    # :nocov:
 
     private
     def confirmation_token

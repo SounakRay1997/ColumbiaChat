@@ -62,6 +62,7 @@ class UsersController < ApplicationController
       params.require(:user).permit(:email, :password, :username, :password_confirmation, :name)
     end
 
+    # :nocov:
     def confirm_email
       user = User.find_by_confirm_token(params[:id])
       if user
@@ -74,7 +75,8 @@ class UsersController < ApplicationController
         redirect_to '/signin'
       end
     end
-  
+    # :nocov:
+
     private
     def get_name(user1, user2)
       users = [user1, user2].sort
