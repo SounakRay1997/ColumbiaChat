@@ -73,9 +73,9 @@ Step by step instructions to run the program locally, this includes setting any 
 
   
 
-   ``` npm install --global yarn
+   ``` npm install --global yarn```
     
-    rails webpacker:install```
+    ```rails webpacker:install```
 
   
   
@@ -84,7 +84,7 @@ If you face permission issues during yarn installation run :
 
   
 
-    ```sudo chown -R $USER:$GROUP ~/.config```
+  ```sudo chown -R $USER:$GROUP ~/.config```
 
   
 
@@ -110,7 +110,7 @@ Run RSpec Tests using:
 
   
 
-    ```bundle exec rspec```
+   ```bundle exec rspec```
 
   
   
