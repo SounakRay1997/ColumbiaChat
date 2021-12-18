@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 describe UsersController, type: :controller do
-    let(:user_params) { {name: "Umang Raj", username: "Umang_Raj", email: "ur2136@columbia.edu", password: "test", password_confirmation: "test"} }
+    let(:user_params) { {name: "Umang Raj", username: "Umang_Raj", email: "ur2136@columbia.edu", password: "test", password_confirmation: "test", lat: 40.8028039, long: -73.965221} }
     let(:params) { {session: user_params} }
     before(:each) do
-      @user = User.create({name: "Umang Raj", username: "Umang_Raj", email: "ur2136@columbia.edu", password: "test", email_confirmed: 0, confirm_token: 'dsfaecgf'})
+      @user = User.create({name: "Umang Raj", username: "Umang_Raj", email: "ur2136@columbia.edu", password: "test", email_confirmed: 1, lat: 40.8028039, long: -73.965221})
     end
 
     it 'creates a new room' do
@@ -53,4 +53,19 @@ describe UsersController, type: :controller do
       expect(response).to redirect_to('/signin')
       expect(response).to have_http_status(302)
     end
+
+    it 'creates a new room not discoverable to everyone in users controller' do
+      new_room = "my_new_room"
+      x = Room.create(distance: 1.0, name: new_room, is_private: true, lat: 40.8028039, long: -73.965221)
+      expect(x.isInRadius(x.lat, x.long, 40.8136855, -73.9622017, x.distance)).to be_falsey
+
+    end
+
+    it 'creates a new room discoverable to everyone' do
+      new_room = "my_new_room"
+      x = Room.create(distance: 100000.0, name: new_room, is_private: true, lat: 40.8028039, long: -73.965221)
+      expect(x.isInRadius(x.lat, x.long, 40.8136855, -73.9622017, x.distance)).to be_truthy
+
+    end
+
 end 

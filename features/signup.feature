@@ -7,11 +7,11 @@ Feature: signup on Columbia Chat
   Background: there are certain number of users already in the database
 
     Given the following users exist:
-      | username                  | email                    | password     | email_confirmed |
-      | Umang_Raj                 | ur1236@columbia.edu      | Lol@123      | 1               |
-      | Chinmay_Garg              | cg3286@columbia.edu      | Password@123 | 1               |
-      | Harrison_Groll            | hsg2136@columbia.edu     | Lol@321      | 1               |
-      | Sounak_Ray                | sr3846@columbia.edu      | Password@321 | 1               |
+      | username                  | email                    | password     | email_confirmed | name            | lat         | long         |
+      | Umang_Raj                 | ur1236@columbia.edu      | Lol@123      |  1              | Umang Raj       | 40.8027804  | -73.9652053  |
+      | Chinmay_Garg              | cg3286@columbia.edu      | Password@123 |  1              | Chinmay Garg    | 40.8136649  | -73.9622991  |
+      | Harrison_Groll            | hsg2136@columbia.edu     | Lol@321      |  0              | Harrison Groll  | 40.7999209  | -73.9683102  |
+      | Sounak_Ray                | sr3846@columbia.edu      | Password@321 |  1              | Sounak Ray      | 40.8136659  | -73.962224   |
 
   Scenario: able to reach the signup page
     When I am on the ColumbiaChat signin page

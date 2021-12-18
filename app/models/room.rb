@@ -8,19 +8,16 @@ class Room < ApplicationRecord
     after_create_commit { broadcast_append_to self }
 
 
- def broadcast_if_public
-  #userId = self.user_id
-  # user = User.find(userId)
-  # puts("USER IS")
-  # puts(user.name)
-  #broadcast_append_to "rooms" unless self.is_private || !isInRadius(user.lat, user.long, self.lat, self.long, self.distance)
-  broadcast_append_to "rooms" unless self.is_private 
- end
+#  def broadcast_if_public
+#   userId = self.user_id
+#   user = User.find(userId)
+#   broadcast_append_to "rooms" unless self.is_private || !isInRadius(user.lat, user.long, self.lat, self.long, self.distance)
+#   broadcast_append_to "rooms" unless self.is_private 
+#  end
 
  def isInRadius(lat1, lon1, user_lat, user_long, roomDist) 
   dis_miles = Geocoder::Calculations.distance_between([lat1,lon1], [user_lat,user_long])
   dis_feet = dis_miles * 5280.0
-  #puts("FEET AWAY", dis_feet, " ALLOWED ", roomDist, " SHOWN: ",  dis_feet <= roomDist   )
   dis_feet <= roomDist 
   
 end

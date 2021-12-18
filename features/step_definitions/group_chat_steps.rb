@@ -1,7 +1,7 @@
 And (/^I send a message "([^"]*)" to the group "([^"]*)"$/) do |arg1, arg2|
   click_link(arg2)
   fill_in("chat-text", :with => arg1)
-  click_button("Create Message")
+  click_button("Send")
 end
 
 Then(/^I should see the message "([^"]*)" on the group chat titled "([^"]*)"$/) do |arg1, arg2|

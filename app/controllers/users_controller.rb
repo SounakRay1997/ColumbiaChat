@@ -7,7 +7,7 @@ class UsersController < ApplicationController
       user_long = current_user.long
       public_rooms = Room.public_rooms
       tmp_rooms = []
-      public_rooms.each  do |room|
+      public_rooms.each do |room|
         room_dist_req = room.distance
         lat1 = room.lat
         lon1 = room.long
@@ -28,9 +28,9 @@ class UsersController < ApplicationController
       @messages = @single_room.messages
       @departments = Course.distinct.pluck(:department_code).prepend("ALL")
       @private_rooms = Room.joins("INNER JOIN participants ON rooms.id = participants.room_id AND participants.user_id = #{current_user.id}").uniq unless not current_user
-      if not params["dept_id"].nil?
-        @rooms = @rooms.dept_rooms(params["dept_id"])
-      end
+      # if not params["dept_id"].nil?
+      #   @rooms = @rooms.dept_rooms(params["dept_id"])
+      # end
       render "rooms/index"
     end
 
@@ -42,9 +42,6 @@ class UsersController < ApplicationController
       
     end
 
-    def landing 
-      render "rooms/landing"
-    end
 
 
     def create
