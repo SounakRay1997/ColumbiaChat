@@ -3,6 +3,7 @@ class UsersController < ApplicationController
     def show
       @user = User.find(params[:id])
       @current_user = current_user
+      return redirect_to '/signin' unless @current_user
       user_lat = current_user.lat
       user_long = current_user.long
       public_rooms = Room.public_rooms
@@ -28,24 +29,17 @@ class UsersController < ApplicationController
       @messages = @single_room.messages
       @departments = Course.distinct.pluck(:department_code).prepend("ALL")
       @private_rooms = Room.joins("INNER JOIN participants ON rooms.id = participants.room_id AND participants.user_id = #{current_user.id}").uniq unless not current_user
-      # if not params["dept_id"].nil?
-      #   @rooms = @rooms.dept_rooms(params["dept_id"])
-      # end
       render "rooms/index"
     end
 
     def isInRadius(lat1, lon1, user_lat, user_long, roomDist) 
       dis_miles = Geocoder::Calculations.distance_between([lat1,lon1], [user_lat,user_long])
       dis_feet = dis_miles * 5280.0
-      #puts("FEET AWAY", dis_feet, " ALLOWED ", roomDist, " SHOWN: ",  dis_feet <= roomDist   )
-      dis_feet <= roomDist 
+      dis_feet <= roomDist + 30.0
       
     end
 
-
-
     def create
-      #byebug
       @user = User.new(user_params)
       if @user.validate
         @user.save

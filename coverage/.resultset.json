@@ -1,7 +1,7 @@
 {
   "Cucumber Features": {
     "coverage": {
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/models/room.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/models/room.rb": {
         "lines": [
           1,
           1,
@@ -48,14 +48,14 @@
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/models/application_record.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/models/application_record.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/controllers/application_controller.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/controllers/application_controller.rb": {
         "lines": [
           1,
           1,
@@ -90,19 +90,19 @@
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/helpers/application_helper.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/helpers/application_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/helpers/rooms_helper.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/helpers/rooms_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/models/user.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/models/user.rb": {
         "lines": [
           1,
           1,
@@ -133,11 +133,12 @@
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/controllers/sessions_controller.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/controllers/sessions_controller.rb": {
         "lines": [
           1,
           null,
           1,
+          47,
           47,
           47,
           47,
@@ -182,10 +183,11 @@
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/controllers/rooms_controller.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/controllers/rooms_controller.rb": {
         "lines": [
           1,
           1,
+          59,
           59,
           59,
           null,
@@ -193,6 +195,7 @@
           59,
           59,
           59,
+          null,
           59,
           267,
           267,
@@ -206,11 +209,6 @@
           null,
           null,
           59,
-          null,
-          null,
-          null,
-          null,
-          null,
           59,
           59,
           59,
@@ -227,10 +225,13 @@
           null,
           3,
           3,
-          null,
           null,
           3,
           2,
+          0,
+          null,
+          2,
+          null,
           null,
           1,
           1,
@@ -266,10 +267,11 @@
           10,
           null,
           null,
+          null,
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/models/course.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/models/course.rb": {
         "lines": [
           1,
           null,
@@ -288,7 +290,7 @@
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/models/participant.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/models/participant.rb": {
         "lines": [
           1,
           1,
@@ -296,7 +298,7 @@
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/models/message.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/models/message.rb": {
         "lines": [
           1,
           1,
@@ -313,7 +315,7 @@
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/controllers/messages_controller.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/controllers/messages_controller.rb": {
         "lines": [
           1,
           1,
@@ -329,11 +331,12 @@
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/controllers/users_controller.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/controllers/users_controller.rb": {
         "lines": [
           1,
           null,
           1,
+          12,
           12,
           12,
           12,
@@ -361,24 +364,17 @@
           12,
           12,
           12,
-          null,
-          null,
-          null,
           12,
           null,
           null,
           1,
           60,
           60,
-          null,
           60,
           null,
           null,
           null,
-          null,
-          null,
           1,
-          null,
           6,
           6,
           2,
@@ -427,23 +423,23 @@
         ]
       }
     },
-    "timestamp": 1639788646
+    "timestamp": 1639793668
   },
   "RSpec": {
     "coverage": {
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/helpers/application_helper.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/helpers/application_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/helpers/rooms_helper.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/helpers/rooms_helper.rb": {
         "lines": [
           1,
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/controllers/messages_controller.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/controllers/messages_controller.rb": {
         "lines": [
           1,
           1,
@@ -459,7 +455,7 @@
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/controllers/application_controller.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/controllers/application_controller.rb": {
         "lines": [
           1,
           1,
@@ -494,12 +490,18 @@
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/controllers/rooms_controller.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/controllers/rooms_controller.rb": {
         "lines": [
           1,
           1,
           0,
           0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
           null,
           0,
           0,
@@ -507,10 +509,6 @@
           0,
           0,
           0,
-          0,
-          0,
-          0,
-          0,
           null,
           0,
           0,
@@ -518,11 +516,6 @@
           null,
           null,
           0,
-          null,
-          null,
-          null,
-          null,
-          null,
           0,
           0,
           0,
@@ -540,13 +533,6 @@
           0,
           0,
           null,
-          null,
-          0,
-          0,
-          null,
-          0,
-          0,
-          0,
           0,
           0,
           0,
@@ -554,34 +540,45 @@
           0,
           null,
           null,
-          null,
           0,
           0,
-          null,
-          null,
-          1,
-          null,
-          1,
+          0,
           0,
           0,
           0,
           null,
+          0,
+          null,
+          null,
+          null,
+          0,
+          0,
           null,
           null,
           1,
           null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          1,
+          null,
           0,
           0,
           0,
           0,
           null,
           0,
+          null,
           null,
           null,
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/controllers/sessions_controller.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/controllers/sessions_controller.rb": {
         "lines": [
           1,
           null,
@@ -589,6 +586,7 @@
           6,
           6,
           6,
+          6,
           5,
           1,
           1,
@@ -630,7 +628,7 @@
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/controllers/users_controller.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/controllers/users_controller.rb": {
         "lines": [
           1,
           null,
@@ -647,39 +645,33 @@
           0,
           0,
           0,
-          null,
-          0,
           0,
           null,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
           0,
           0,
           null,
           null,
-          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
           0,
           null,
           null,
           1,
           0,
           0,
-          null,
           0,
           null,
           null,
           null,
-          null,
-          null,
           1,
-          null,
           5,
           5,
           1,
@@ -727,7 +719,7 @@
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/models/message.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/models/message.rb": {
         "lines": [
           1,
           1,
@@ -744,14 +736,14 @@
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/models/application_record.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/models/application_record.rb": {
         "lines": [
           1,
           1,
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/models/participant.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/models/participant.rb": {
         "lines": [
           1,
           1,
@@ -759,7 +751,7 @@
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/models/room.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/models/room.rb": {
         "lines": [
           1,
           1,
@@ -806,7 +798,7 @@
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/models/user.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/models/user.rb": {
         "lines": [
           1,
           1,
@@ -837,7 +829,7 @@
           null
         ]
       },
-      "/Users/sounakray/RubymineProjects/ESaaS-Project-final-launch/app/models/course.rb": {
+      "/Users/Chinmay/Desktop/Columbia/Fall21/COMSW4995/Project/ESaaS-Project-iter1-submission/app/models/course.rb": {
         "lines": [
           0,
           null,
@@ -859,6 +851,6 @@
         }
       }
     },
-    "timestamp": 1639788637
+    "timestamp": 1639793674
   }
 }

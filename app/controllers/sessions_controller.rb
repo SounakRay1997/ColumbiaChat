@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
 
     def create
+      puts "redriected??"
       user = User.find_by(username: params[:session][:username])
       password = params[:session][:password]
       if user

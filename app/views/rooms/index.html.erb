@@ -33,8 +33,9 @@
           <%= submit_tag("Search", :class => 'btn btn-primary') %>
         <% end %>
         <% if @single_room and  @single_room.getDistanceFromRoom(@single_room, @current_user)  < 20430879 and !@single_room.is_private%>
-        <iframe src="https://maps.google.com/maps?q=<%=@single_room.lat%>,<%=@single_room.long%>&hl=es&z=14&amp;output=embed" width="300" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-        <br /><br />
+        
+        <div><iframe src="https://maps.google.com/maps?q=<%=@single_room.lat%>,<%=@single_room.long%>&hl=en&z=14&amp;output=embed" width="300" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe></div>
+        <h5><%= @single_room.name + " 🎯 "%> </h5>
     <%  end %>
 
         <div>
